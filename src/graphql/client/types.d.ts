@@ -1,0 +1,3 @@
+interface getClientArgs {
+    id: number;
+}
