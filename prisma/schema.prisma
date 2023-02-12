@@ -6,3 +6,9 @@ datasource db {
     provider = "mysql"
     url      = env("DATABASE_URL")
 }
+
+model Client {
+  id    Int     @id @default(autoincrement())
+  email String?
+  name  String  @unique
+}
