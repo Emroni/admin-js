@@ -1,13 +1,14 @@
-interface GraphqlCreateArgs<T> {
+interface GraphqlCreateArgs<T, R = undefined> {
     input: T;
+    relations: R;
 }
 
 interface GraphqlDeleteArgs {
-    id: number | string;
+    id: number;
 }
 
 interface GraphqlGetArgs {
-    id: number | string;
+    id: number;
 }
 
 interface GraphqlUpdateArgs<T> {

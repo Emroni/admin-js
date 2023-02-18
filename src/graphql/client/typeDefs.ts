@@ -1,13 +1,13 @@
 export const types = `
     type Client {
-        id: ID!
         email: String
+        id: ID!
         name: String!
     }
 
     input ClientInput {
         email: String
-        name: String
+        name: String!
     }
 `;
 

@@ -11,4 +11,14 @@ model Client {
     id              Int         @id @default(autoincrement())
     email           String?
     name            String      @unique
+    projects        Project[]
+}
+
+model Project {
+    id              Int         @id @default(autoincrement())
+    name            String
+    billing         String
+    status          String
+    client          Client      @relation(fields: [clientId], references: [id])
+    clientId        Int
 }
