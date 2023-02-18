@@ -12,6 +12,7 @@ export const types = `
 `;
 
 export const queries = `
+    Client: Client
     getClient(id: ID!): Client
     getClients: [Client!]!
 `;

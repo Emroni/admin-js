@@ -1,4 +1,12 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Project } from '@prisma/client';
+
+export const getEntity = (prisma: PrismaClient) => ({
+    client: (parent: Project) => prisma.project.findUnique({
+        where: {
+            id: parent.clientId,
+        },
+    }),
+});
 
 export const getQueries = (prisma: PrismaClient) => ({
     getProject: (_parent: any, args: GraphqlGetArgs) => prisma.project.findUnique({

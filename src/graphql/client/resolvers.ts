@@ -1,5 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 
+export const getEntity = (_prisma: PrismaClient) => ({
+});
+
 export const getQueries = (prisma: PrismaClient) => ({
     getClient: (_parent: any, args: GraphqlGetArgs) => prisma.client.findUnique({
         where: {

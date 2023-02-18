@@ -17,6 +17,7 @@ export const types = `
 `;
 
 export const queries = `
+    Project: Project
     getProject(id: ID!): Project
     getProjects: [Project!]!
 `;

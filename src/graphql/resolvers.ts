@@ -4,6 +4,9 @@ import * as project from './project/resolvers';
 
 const prisma = new PrismaClient();
 
+export const Client = client.getEntity(prisma);
+export const Project = project.getEntity(prisma);
+
 export const Query = {
     ...client.getQueries(prisma),
     ...project.getQueries(prisma),
