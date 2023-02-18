@@ -1,9 +1,13 @@
 import * as client from './client/typeDefs';
 
 export const typeDefs = `
-    ${client.model}
+    ${client.types}
 
     type Query {
-        ${client.query}
+        ${client.queries}
+    }
+
+    type Mutation {
+        ${client.mutations}
     }
 `;

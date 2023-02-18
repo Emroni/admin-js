@@ -1,3 +1,4 @@
-interface getClientArgs {
-    id: number;
+interface ClientInput {
+    email?: string;
+    name: string;
 }
