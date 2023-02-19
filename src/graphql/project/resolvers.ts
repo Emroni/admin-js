@@ -1,23 +1,23 @@
-import { PrismaClient, Project } from '@prisma/client';
+import { prisma } from '../';
 
-export const getEntity = (prisma: PrismaClient) => ({
+export const model = {
     client: (parent: Project) => prisma.project.findUnique({
         where: {
             id: parent.clientId,
         },
     }),
-});
+};
 
-export const getQueries = (prisma: PrismaClient) => ({
+export const queries = {
     getProject: (_parent: any, args: GraphqlGetArgs) => prisma.project.findUnique({
         where: {
             id: Number(args.id),
         },
     }),
     getProjects: () => prisma.project.findMany(),
-});
+};
 
-export const getMutations = (prisma: PrismaClient) => ({
+export const mutations = {
     createProject: (_parent: any, args: GraphqlCreateArgs<ProjectInput>) => prisma.project.create({
         data: parseInput(args.input),
     }),
@@ -32,7 +32,7 @@ export const getMutations = (prisma: PrismaClient) => ({
             id: Number(args.id),
         },
     }),
-});
+};
 
 function parseInput(input: ProjectInput) {
     return {

@@ -1,18 +1,15 @@
-import { PrismaClient } from '@prisma/client';
 import * as client from './client/resolvers';
 import * as project from './project/resolvers';
 
-const prisma = new PrismaClient();
-
-export const Client = client.getEntity(prisma);
-export const Project = project.getEntity(prisma);
+export const Client = client.model;
+export const Project = project.model;
 
 export const Query = {
-    ...client.getQueries(prisma),
-    ...project.getQueries(prisma),
+    ...client.queries,
+    ...project.queries,
 };
 
 export const Mutation = {
-    ...client.getMutations(prisma),
-    ...project.getMutations(prisma),
+    ...client.mutations,
+    ...project.mutations,
 };
