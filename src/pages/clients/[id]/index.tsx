@@ -1,56 +1,24 @@
-import { Card, Page } from '@/components';
-import { gql, useQuery } from '@apollo/client';
+import { Page } from '@/components';
+import { ClientSummary } from '@/partials';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 export default function Client() {
 
+    const [id, setId] = useState<number | null>(null);
     const router = useRouter();
 
-    const query = useQuery<GetClientQuery>(gql`query($id: ID!) {
-        getClient(id: $id) {
-            id
-            name
-            email
+    useEffect(() => {
+        if (router.query.id) {
+            const newId = parseInt(router.query.id as string);
+            setId(newId);
         }
-    }`, {
-        variables: {
-            id: router.query.id,
-        },
-    });
-
-    const client = query.data?.getClient;
+    }, [
+        router.query.id
+    ]);
 
     return <Page title="Client">
-        <Card loading={query.loading} title="Clients">
-            <table>
-                <tbody>
-                    <tr>
-                        <th>
-                            ID
-                        </th>
-                        <td>
-                            {client?.id}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            Name
-                        </th>
-                        <td>
-                            {client?.name}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            Email
-                        </th>
-                        <td>
-                            {client?.email}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </Card>
+        <ClientSummary id={id} />
     </Page>;
 
 }
