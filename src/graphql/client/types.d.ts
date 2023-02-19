@@ -9,3 +9,11 @@ interface ClientInput {
     email: string?;
     name: string;
 }
+
+interface getClientQuery {
+    getClient: Client?;
+}
+
+interface getClientsQuery {
+    getClients: Client[];
+}
