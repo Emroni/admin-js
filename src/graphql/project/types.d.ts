@@ -16,3 +16,11 @@ interface ProjectInput {
     name: string;
     status: ProjectStatus;
 }
+
+interface GetProjectQuery {
+    getProject: Project?;
+}
+
+interface GetProjectsQuery {
+    getProjects: Project[];
+}
