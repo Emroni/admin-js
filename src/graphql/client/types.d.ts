@@ -2,6 +2,7 @@ interface Client {
     email: string?;
     id: number;
     name: string;
+    projects: Project[];
 }
 
 interface ClientInput {

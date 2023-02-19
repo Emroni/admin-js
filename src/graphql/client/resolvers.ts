@@ -1,6 +1,11 @@
 import { PrismaClient } from '@prisma/client';
 
-export const getEntity = (_prisma: PrismaClient) => ({
+export const getEntity = (prisma: PrismaClient) => ({
+    projects: (parent: Client) => prisma.project.findMany({
+        where: {
+            clientId: parent.id,
+        },
+    }),
 });
 
 export const getQueries = (prisma: PrismaClient) => ({

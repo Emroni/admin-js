@@ -3,6 +3,7 @@ export const types = `
         email: String
         id: ID!
         name: String!
+        projects: [Project!]!
     }
 
     input ClientInput {
