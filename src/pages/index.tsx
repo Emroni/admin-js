@@ -1,5 +1,9 @@
-export default function Home() {
+import { Page } from '@/components';
 
-    return <div>Home</div>;
+export default function Dashboard() {
+
+    return <Page title="Dashboard">
+        <div>Dashboard</div>
+    </Page>;
 
 }
