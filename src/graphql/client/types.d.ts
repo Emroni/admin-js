@@ -10,10 +10,10 @@ interface ClientInput {
     name: string;
 }
 
-interface getClientQuery {
+interface GetClientQuery {
     getClient: Client?;
 }
 
-interface getClientsQuery {
+interface GetClientsQuery {
     getClients: Client[];
 }

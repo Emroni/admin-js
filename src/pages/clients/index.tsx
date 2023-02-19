@@ -1,9 +1,11 @@
 import { Card, Page } from '@/components';
 import { gql, useQuery } from '@apollo/client';
+import { Link } from '@mui/material';
+import NextLink from 'next/link';
 
 export default function Clients() {
 
-    const query = useQuery<getClientsQuery>(gql`query {
+    const query = useQuery<GetClientsQuery>(gql`query {
         getClients {
             id
             name
@@ -34,7 +36,9 @@ export default function Clients() {
                                 {client.id}
                             </td>
                             <td>
-                                {client.name}
+                                <Link component={NextLink} href={`/clients/${client.id}`}>
+                                    {client.name}
+                                </Link>
                             </td>
                             <td>
                                 {client.email}
