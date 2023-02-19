@@ -1,12 +1,34 @@
+import { ApolloClient, ApolloProvider, createHttpLink, from, InMemoryCache } from '@apollo/client';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import type { AppProps } from 'next/app';
+import { useEffect, useState } from 'react';
 import theme from '../theme';
 
 export default function App({ Component, pageProps }: AppProps) {
 
+    const [client, setClient] = useState<ApolloClient<any> | null>(null);
+
+    useEffect(() => {
+        // Get http link
+        const httpLink = createHttpLink({
+            uri: '/api/graphql',
+        });
+
+        // Get client
+        const newCient = new ApolloClient({
+            cache: new InMemoryCache(),
+            link: from([httpLink]),
+        });
+        setClient(newCient);
+    }, []);
+
     return <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Component {...pageProps} />
+        {client && (
+            <ApolloProvider client={client}>
+                <Component {...pageProps} />
+            </ApolloProvider>
+        )}
     </ThemeProvider >;
 
 }

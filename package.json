@@ -10,6 +10,7 @@
     "db:migrate": "dotenv -e .env.local prisma migrate dev"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.8",
     "@apollo/server": "^4.3.3",
     "@as-integrations/next": "^1.2.0",
     "@emotion/react": "^11.10.6",
