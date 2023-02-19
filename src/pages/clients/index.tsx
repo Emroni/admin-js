@@ -1,4 +1,4 @@
-import { Page } from '@/components';
+import { Card, Page } from '@/components';
 import { gql, useQuery } from '@apollo/client';
 
 export default function Clients() {
@@ -12,33 +12,38 @@ export default function Clients() {
     }`);
 
     return <Page title="Clients">
-        Clients
-        <table>
-            <tr>
-                <th>
-                    ID
-                </th>
-                <th>
-                    Name
-                </th>
-                <th>
-                    Email
-                </th>
-            </tr>
-            {query.data?.getClients.map((client, index) => (
-                <tr key={index}>
-                    <td>
-                        {client.id}
-                    </td>
-                    <td>
-                        {client.name}
-                    </td>
-                    <td>
-                        {client.email}
-                    </td>
-                </tr>
-            ))}
-        </table>
+        <Card loading={query.loading} title="Clients">
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {query.data?.getClients.map((client, index) => (
+                        <tr key={index}>
+                            <td>
+                                {client.id}
+                            </td>
+                            <td>
+                                {client.name}
+                            </td>
+                            <td>
+                                {client.email}
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </Card>
     </Page>;
 
 }
