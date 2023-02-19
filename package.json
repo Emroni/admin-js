@@ -12,6 +12,9 @@
   "dependencies": {
     "@apollo/server": "^4.3.3",
     "@as-integrations/next": "^1.2.0",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/material": "^5.11.9",
     "@next/font": "13.1.6",
     "@prisma/client": "4.10.1",
     "@types/node": "18.13.0",
