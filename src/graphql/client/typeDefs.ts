@@ -1,14 +1,17 @@
+const fields = `
+    email: String
+    name: String!
+`;
+
 export const types = `
     type Client {
-        email: String
         id: ID!
-        name: String!
+        ${fields}
         projects: [Project!]!
     }
 
     input ClientInput {
-        email: String
-        name: String!
+        ${fields}
     }
 `;
 

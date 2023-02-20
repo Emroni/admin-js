@@ -1,25 +1,23 @@
+const fields = `
+    billing: String!
+    clientId: ID!
+    name: String!
+    status: String!
+`;
+
 export const types = `
     type Project {
-        billing: String!
-        client: Client!
-        clientId: ID!
         id: ID!
-        name: String!
-        status: String!
+        client: Client!
+        ${fields}
     }
 
     input ProjectInput {
-        billing: String!
-        clientId: ID!
-        name: String!
-        status: String!
+        ${fields}
     }
 
     input ProjectFilter {
-        billing: String
-        clientId: ID
-        name: String
-        status: String
+        ${fields.replace(/\!/g, '')}
     }
 `;
 
