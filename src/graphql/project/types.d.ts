@@ -18,10 +18,10 @@ interface ProjectInput {
     status: ProjectStatus;
 }
 
-interface GetProjectQuery {
-    getProject: Project?;
+interface ProjectQuery {
+    project: Project?;
 }
 
-interface GetProjectsQuery {
-    getProjects: Project[];
+interface ProjectsQuery {
+    projects: Project[];
 }

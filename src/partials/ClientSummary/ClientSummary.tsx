@@ -3,8 +3,8 @@ import { gql, useQuery } from '@apollo/client';
 
 export default function Client({ id }: ClientSummaryProps) {
 
-    const query = useQuery<GetClientQuery>(gql`query($id: ID!) {
-        getClient(id: $id) {
+    const query = useQuery<ClientQuery>(gql`query($id: ID!) {
+        client(id: $id) {
             id
             name
             email
@@ -15,7 +15,7 @@ export default function Client({ id }: ClientSummaryProps) {
         },
     });
 
-    const client = query.data?.getClient;
+    const client = query.data?.client;
 
     return <Card loading={query.loading} title="Clients">
         <table>

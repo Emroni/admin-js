@@ -5,8 +5,8 @@ import NextLink from 'next/link';
 
 export default function Project({ id }: ProjectSummaryProps) {
 
-    const query = useQuery<GetProjectQuery>(gql`query($id: ID!) {
-        getProject(id: $id) {
+    const query = useQuery<ProjectQuery>(gql`query($id: ID!) {
+        project(id: $id) {
             billing
             id
             name
@@ -22,7 +22,7 @@ export default function Project({ id }: ProjectSummaryProps) {
         },
     });
 
-    const project = query.data?.getProject;
+    const project = query.data?.project;
 
     return <Card loading={query.loading} title="Projects">
         <table>

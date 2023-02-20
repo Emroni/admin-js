@@ -25,12 +25,12 @@ export const types = `
 
 export const queries = `
     Project: Project
-    getProject(id: ID!): Project
-    getProjects(filter: ProjectFilter): [Project!]!
+    project(id: ID!): Project
+    projects(filter: ProjectFilter): [Project!]!
 `;
 
 export const mutations = `
-    createProject(input: ProjectInput): Project
-    deleteProject(id: ID!): Project
-    updateProject(id: ID!, input: ProjectInput): Project
+    projectCreate(input: ProjectInput): Project
+    projectDelete(id: ID!): Project
+    projectUpdate(id: ID!, input: ProjectInput): Project
 `;

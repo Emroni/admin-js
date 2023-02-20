@@ -9,12 +9,12 @@ export const model = {
 };
 
 export const queries = {
-    getProject: (_parent: any, args: GraphqlGetArgs) => prisma.project.findUnique({
+    project: (_parent: any, args: GraphqlGetArgs) => prisma.project.findUnique({
         where: {
             id: Number(args.id),
         },
     }),
-    getProjects: (_parent: any, args: GraphqlGetArgs<ProjectFilter>) => prisma.project.findMany({
+    projects: (_parent: any, args: GraphqlGetArgs<ProjectFilter>) => prisma.project.findMany({
         where: {
             ...args.filter,
             clientId: args.filter?.clientId ? Number(args.filter?.clientId) : undefined,
@@ -23,15 +23,15 @@ export const queries = {
 };
 
 export const mutations = {
-    createProject: (_parent: any, args: GraphqlCreateArgs<ProjectInput>) => prisma.project.create({
+    projectCreate: (_parent: any, args: GraphqlCreateArgs<ProjectInput>) => prisma.project.create({
         data: parseInput(args.input),
     }),
-    deleteProject: (_parent: any, args: GraphqlDeleteArgs) => prisma.project.delete({
+    projectDelete: (_parent: any, args: GraphqlDeleteArgs) => prisma.project.delete({
         where: {
             id: Number(args.id),
         },
     }),
-    updateProject: (_parent: any, args: GraphqlUpdateArgs<ProjectInput>) => prisma.project.update({
+    projectUpdate: (_parent: any, args: GraphqlUpdateArgs<ProjectInput>) => prisma.project.update({
         data: parseInput(args.input),
         where: {
             id: Number(args.id),

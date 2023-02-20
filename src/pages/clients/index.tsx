@@ -5,8 +5,8 @@ import NextLink from 'next/link';
 
 export default function Clients() {
 
-    const query = useQuery<GetClientsQuery>(gql`query {
-        getClients {
+    const query = useQuery<ClientsQuery>(gql`query {
+        clients {
             id
             name
             email
@@ -30,7 +30,7 @@ export default function Clients() {
                     </tr>
                 </thead>
                 <tbody>
-                    {query.data?.getClients.map((client, index) => (
+                    {query.data?.clients.map((client, index) => (
                         <tr key={index}>
                             <td>
                                 {client.id}

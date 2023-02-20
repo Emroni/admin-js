@@ -14,12 +14,12 @@ export const types = `
 
 export const queries = `
     Client: Client
-    getClient(id: ID!): Client
-    getClients: [Client!]!
+    client(id: ID!): Client
+    clients: [Client!]!
 `;
 
 export const mutations = `
-    createClient(input: ClientInput): Client
-    deleteClient(id: ID!): Client
-    updateClient(id: ID!, input: ClientInput): Client
+    clientCreate(input: ClientInput): Client
+    clientDelete(id: ID!): Client
+    clientUpdate(id: ID!, input: ClientInput): Client
 `;

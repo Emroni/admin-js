@@ -5,8 +5,8 @@ import NextLink from 'next/link';
 
 export default function Projects() {
 
-    const query = useQuery<GetProjectsQuery>(gql`query {
-        getProjects {
+    const query = useQuery<ProjectsQuery>(gql`query {
+        projects {
             billing
             id
             name
@@ -41,7 +41,7 @@ export default function Projects() {
                     </tr>
                 </thead>
                 <tbody>
-                    {query.data?.getProjects.map((project, index) => (
+                    {query.data?.projects.map((project, index) => (
                         <tr key={index}>
                             <td>
                                 {project.id}
