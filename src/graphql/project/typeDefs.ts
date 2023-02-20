@@ -14,12 +14,19 @@ export const types = `
         name: String!
         status: String!
     }
+
+    input ProjectFilter {
+        billing: String
+        clientId: ID
+        name: String
+        status: String
+    }
 `;
 
 export const queries = `
     Project: Project
     getProject(id: ID!): Project
-    getProjects: [Project!]!
+    getProjects(filter: ProjectFilter): [Project!]!
 `;
 
 export const mutations = `

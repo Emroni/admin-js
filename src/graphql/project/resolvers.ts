@@ -14,7 +14,12 @@ export const queries = {
             id: Number(args.id),
         },
     }),
-    getProjects: () => prisma.project.findMany(),
+    getProjects: (_parent: any, args: GraphqlGetArgs<ProjectFilter>) => prisma.project.findMany({
+        where: {
+            ...args.filter,
+            clientId: args.filter?.clientId ? Number(args.filter?.clientId) : undefined,
+        },
+    }),
 };
 
 export const mutations = {

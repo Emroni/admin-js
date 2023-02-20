@@ -1,5 +1,5 @@
-interface GraphqlCreateArgs<T, R = undefined> {
-    input: T;
+interface GraphqlCreateArgs<I, R = undefined> {
+    input: I;
     relations: R;
 }
 
@@ -7,11 +7,12 @@ interface GraphqlDeleteArgs {
     id: number;
 }
 
-interface GraphqlGetArgs {
+interface GraphqlGetArgs<F = undefined> {
+    filter?: F;
     id: number;
 }
 
-interface GraphqlUpdateArgs<T> {
+interface GraphqlUpdateArgs<I> {
     id: number;
-    input: T;
+    input: I;
 }

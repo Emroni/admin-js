@@ -1,4 +1,5 @@
 type ProjectBilling = 'hourly' | 'fixed';
+type ProjectFilter = Partial<ProjectInput>;
 type ProjectStatus = 'billed' | 'complete' | 'in_progress' | 'new' | 'on_hold';
 
 interface Project {
