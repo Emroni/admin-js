@@ -7,8 +7,14 @@ export default function Projects() {
 
     const query = useQuery<GetProjectsQuery>(gql`query {
         getProjects {
+            billing
             id
             name
+            status
+            client {
+                id
+                name
+            }
         }
     }`);
 
@@ -23,6 +29,15 @@ export default function Projects() {
                         <th>
                             Name
                         </th>
+                        <th>
+                            Client
+                        </th>
+                        <th>
+                            Billing
+                        </th>
+                        <th>
+                            Status
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,6 +50,17 @@ export default function Projects() {
                                 <Link component={NextLink} href={`/projects/${project.id}`}>
                                     {project.name}
                                 </Link>
+                            </td>
+                            <td>
+                                <Link component={NextLink} href={`/clients/${project.client.id}`}>
+                                    {project.client.name}
+                                </Link>
+                            </td>
+                            <td>
+                                {project.billing}
+                            </td>
+                            <td>
+                                {project.status}
                             </td>
                         </tr>
                     ))}
