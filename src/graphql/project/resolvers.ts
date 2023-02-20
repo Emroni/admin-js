@@ -1,7 +1,7 @@
 import { prisma } from '../';
 
 export const model = {
-    client: (parent: Project) => prisma.project.findUnique({
+    client: (parent: Project) => prisma.client.findUnique({
         where: {
             id: parent.clientId,
         },
