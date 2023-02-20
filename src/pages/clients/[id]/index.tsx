@@ -1,11 +1,11 @@
 import { Page } from '@/components';
-import { ClientSummary } from '@/partials';
+import { ClientSummary, ProjectsTable } from '@/partials';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 export default function Client() {
 
-    const [id, setId] = useState<number | null>(null);
+    const [id, setId] = useState<number | undefined>(undefined);
     const router = useRouter();
 
     useEffect(() => {
@@ -19,6 +19,7 @@ export default function Client() {
 
     return <Page title="Client">
         <ClientSummary id={id} />
+        <ProjectsTable clientId={id} />
     </Page>;
 
 }
