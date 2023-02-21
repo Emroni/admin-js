@@ -10,11 +10,13 @@ export default function Table({ children, rows, title }: TableProps) {
 
     useEffect(() => {
         // Get columns
-        const newColumns: TableColumn[] = Children.map(children, child => ({
-            align: 'left',
-            label: capitalize(child.props.name),
-            ...child.props,
-        }));
+        const newColumns: TableColumn[] = Children.map(children, child => child?.props)
+            .filter((childProps: any) => childProps)
+            .map((columnProps: TableColumn) => ({
+                align: 'left',
+                label: capitalize(columnProps.name),
+                ...columnProps,
+            }));
         setColumns(newColumns);
     }, [
         children,

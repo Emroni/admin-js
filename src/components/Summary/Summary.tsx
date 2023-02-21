@@ -11,10 +11,12 @@ export default function Summary({ children, entity }: SummaryProps) {
 
     useEffect(() => {
         // Get fields
-        const newFields: SummaryField[] = Children.map(children, child => ({
-            label: capitalize(child.props.name),
-            ...child.props,
-        }));
+        const newFields: SummaryField[] = Children.map(children, child => child?.props)
+            .filter((childProps: any) => childProps)
+            .map((fieldProps: SummaryField) => ({
+                label: capitalize(fieldProps.name),
+                ...fieldProps,
+            }));
         setFields(newFields);
 
         // Get title
