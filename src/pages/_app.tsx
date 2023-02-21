@@ -1,4 +1,5 @@
 import Navigation from '@/components/Navigation/Navigation';
+import { PageProvider } from '@/contexts/Page';
 import { ApolloClient, ApolloProvider, createHttpLink, from, InMemoryCache } from '@apollo/client';
 import { Box, CssBaseline, ThemeProvider } from '@mui/material';
 import type { AppProps } from 'next/app';
@@ -27,10 +28,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <CssBaseline />
         {client && (
             <ApolloProvider client={client}>
-                <Box display="flex" height="100vh" overflow="hidden">
-                    <Navigation />
+                <PageProvider>
                     <Component {...pageProps} />
-                </Box>
+                </PageProvider>
             </ApolloProvider>
         )}
     </ThemeProvider >;

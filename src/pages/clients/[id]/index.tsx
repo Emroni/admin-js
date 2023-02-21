@@ -1,13 +1,13 @@
-import { Page, Summary } from '@/components';
+import { Summary } from '@/components';
+import { usePage } from '@/contexts/Page';
 import { ProjectsTable } from '@/partials';
 import { gql, useQuery } from '@apollo/client';
-import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
-export default function Client() {
+export default function ClientView() {
 
-    const router = useRouter();
-
-    const clientId = parseInt(router.query.id as string);
+    const [client, setClient] = useState<Client | null>(null);
+    const page = usePage();
 
     const query = useQuery<ClientQuery>(gql`query($id: ID!) {
         client(id: $id) {
@@ -17,19 +17,29 @@ export default function Client() {
         }
     }`, {
         variables: {
-            id: clientId,
+            id: page.query.id,
         },
     });
 
-    const client = query.data?.client;
+    useEffect(() => {
+        // Get client
+        const newClient = query.data?.client || null;
+        setClient(newClient);
 
-    return <Page title={client?.name}>
+        // Set page name
+        page.setName(newClient?.name);
+    }, [
+        query.data,
+        page,
+    ]);
+
+    return <>
         <Summary entity={client}>
             <Summary.Field name="id" label="ID" />
             <Summary.Field name="name" />
             <Summary.Field name="email" />
         </Summary>
-        <ProjectsTable clientId={clientId} />
-    </Page>;
+        <ProjectsTable clientId={page.query.id} />
+    </>;
 
 }
