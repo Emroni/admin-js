@@ -9,8 +9,8 @@ export default function Page({ children, title }: PageProps) {
                 Admin | {title}
             </title>
         </Head>
-        <Box flex={1} overflow="auto">
-            <Box component="main" padding={4}>
+        <Box component="main" flex={1} overflow="auto">
+            <Box display="flex" flexDirection="column" flexGrow={1} gap={4} padding={4}>
                 {children}
             </Box>
         </Box>

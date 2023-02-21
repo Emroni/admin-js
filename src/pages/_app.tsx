@@ -1,5 +1,6 @@
+import Navigation from '@/components/Navigation/Navigation';
 import { ApolloClient, ApolloProvider, createHttpLink, from, InMemoryCache } from '@apollo/client';
-import { CssBaseline, ThemeProvider } from '@mui/material';
+import { Box, CssBaseline, ThemeProvider } from '@mui/material';
 import type { AppProps } from 'next/app';
 import { useEffect, useState } from 'react';
 import theme from '../theme';
@@ -26,7 +27,10 @@ export default function App({ Component, pageProps }: AppProps) {
         <CssBaseline />
         {client && (
             <ApolloProvider client={client}>
-                <Component {...pageProps} />
+                <Box display="flex" height="100vh" overflow="hidden">
+                    <Navigation />
+                    <Component {...pageProps} />
+                </Box>
             </ApolloProvider>
         )}
     </ThemeProvider >;
