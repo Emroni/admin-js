@@ -1,4 +1,4 @@
 interface PageProps {
     children: any;
-    title: string;
+    title?: string?;
 }

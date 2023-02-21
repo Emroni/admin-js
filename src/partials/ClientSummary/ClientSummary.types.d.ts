@@ -1,3 +1,0 @@
-interface ClientSummaryProps {
-    id?: number?;
-}

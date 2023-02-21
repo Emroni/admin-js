@@ -1,24 +1,43 @@
-import { Page } from '@/components';
-import { ProjectSummary } from '@/partials';
+import { Page, Summary } from '@/components';
+import { gql, useQuery } from '@apollo/client';
+import { Link } from '@mui/material';
+import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 
 export default function Project() {
 
-    const [id, setId] = useState<number | null>(null);
     const router = useRouter();
-
-    useEffect(() => {
-        if (router.query.id) {
-            const newId = parseInt(router.query.id as string);
-            setId(newId);
+    const query = useQuery<ProjectQuery>(gql`query($id: ID!) {
+        project(id: $id) {
+            billing
+            id
+            name
+            status
+            client {
+                id
+                name
+            }
         }
-    }, [
-        router.query.id
-    ]);
+    }`, {
+        variables: {
+            id: parseInt(router.query.id as string),
+        },
+    });
 
-    return <Page title="Project">
-        <ProjectSummary id={id} />
+    const project = query.data?.project;
+
+    return <Page title={project?.name}>
+        <Summary entity={project}>
+            <Summary.Field name="id" label="ID" />
+            <Summary.Field name="name" />
+            <Summary.Field name="client">
+                <Link component={NextLink} href={`/clients/${project?.client.id}`}>
+                    {project?.client.name}
+                </Link>
+            </Summary.Field>
+            <Summary.Field name="billing" />
+            <Summary.Field name="status" />
+        </Summary>
     </Page>;
 
 }

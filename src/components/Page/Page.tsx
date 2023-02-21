@@ -6,7 +6,7 @@ export default function Page({ children, title }: PageProps) {
     return <>
         <Head>
             <title>
-                Admin | {title}
+                Admin{title ? ` | ${title}` : ''}
             </title>
         </Head>
         <Box component="main" flex={1} overflow="auto">
