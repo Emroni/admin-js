@@ -1,8 +1,6 @@
 import { Summary } from '@/components';
 import { usePage } from '@/contexts/Page';
 import { gql, useQuery } from '@apollo/client';
-import { Link } from '@mui/material';
-import NextLink from 'next/link';
 import { useEffect, useState } from 'react';
 
 export default function ProjectView() {
@@ -42,11 +40,7 @@ export default function ProjectView() {
     return <Summary entity={project}>
         <Summary.Field name="id" label="ID" />
         <Summary.Field name="name" />
-        <Summary.Field name="client">
-            <Link component={NextLink} href={`/clients/${project?.client.id}`}>
-                {project?.client.name}
-            </Link>
-        </Summary.Field>
+        <Summary.Field name="client.name" getLink={`/clients/${project?.client.id}`} />
         <Summary.Field name="billing" />
         <Summary.Field name="status" />
     </Summary>;
