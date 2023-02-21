@@ -1,7 +1,5 @@
-import { Card } from '@/components';
+import { Table } from '@/components';
 import { gql, useQuery } from '@apollo/client';
-import { Link } from '@mui/material';
-import NextLink from 'next/link';
 
 export default function ProjectsTable({ clientId }: ProjectsTableProps) {
 
@@ -27,57 +25,14 @@ export default function ProjectsTable({ clientId }: ProjectsTableProps) {
         },
     });
 
-    return <Card loading={query.loading} title="Projects">
-        <table>
-            <thead>
-                <tr>
-                    <th>
-                        ID
-                    </th>
-                    <th>
-                        Name
-                    </th>
-                    {withClient && (
-                        <th>
-                            Client
-                        </th>
-                    )}
-                    <th>
-                        Billing
-                    </th>
-                    <th>
-                        Status
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                {query.data?.projects.map((project, index) => (
-                    <tr key={index}>
-                        <td>
-                            {project.id}
-                        </td>
-                        <td>
-                            <Link component={NextLink} href={`/projects/${project.id}`}>
-                                {project.name}
-                            </Link>
-                        </td>
-                        {withClient && (
-                            <td>
-                                <Link component={NextLink} href={`/clients/${project.client.id}`}>
-                                    {project.client.name}
-                                </Link>
-                            </td>
-                        )}
-                        <td>
-                            {project.billing}
-                        </td>
-                        <td>
-                            {project.status}
-                        </td>
-                    </tr>
-                ))}
-            </tbody>
-        </table>
-    </Card>;
+    return <Table rows={query.data?.projects} title="Projects">
+        <Table.Column name="id" label="ID" />
+        <Table.Column name="name" getLink={project => `/projects/${project.id}`} />
+        {withClient && (
+            <Table.Column name="client.name" label="Client" getLink={project => `/clients/${project.client.id}`} />
+        )}
+        <Table.Column name="billing" />
+        <Table.Column name="status" />
+    </Table>;
 
 }
