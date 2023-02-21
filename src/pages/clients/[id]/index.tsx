@@ -37,7 +37,7 @@ export default function ClientView() {
         <Summary entity={client}>
             <Summary.Field name="id" label="ID" />
             <Summary.Field name="name" />
-            <Summary.Field name="email" />
+            <Summary.Field name="email" getLink={`mailto:${client?.email}`} />
         </Summary>
         <ProjectsTable clientId={page.query.id} />
     </>;
