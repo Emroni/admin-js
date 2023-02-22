@@ -1,8 +1,10 @@
 import { getNestedValue } from '@/helpers/data';
+import { Edit } from '@mui/icons-material';
 import { capitalize, Link, Table, TableBody, TableCell, TableRow } from '@mui/material';
 import NextLink from 'next/link';
 import { Children, useEffect, useState } from 'react';
 import Card from '../Card/Card';
+import Menu from '../Menu/Menu';
 
 export default function Summary({ children, entity }: SummaryProps) {
 
@@ -27,7 +29,11 @@ export default function Summary({ children, entity }: SummaryProps) {
         entity,
     ]);
 
-    return <Card loading={!entity} title={title}>
+    const action = <Menu>
+        <Menu.Item icon={Edit} label="Edit" link={`/${entity?.__typename.toLowerCase()}s/${entity?.id}/edit`} />
+    </Menu>;
+
+    return <Card action={action} loading={!entity} title={title}>
         <Table>
             <TableBody>
                 {fields.map((field, index) => {
