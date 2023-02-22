@@ -1,24 +1,19 @@
-import { getNestedValue } from '@/helpers/data';
 import { Edit } from '@mui/icons-material';
-import { capitalize, Link, Table, TableBody, TableCell, TableRow } from '@mui/material';
-import NextLink from 'next/link';
+import { capitalize, Table, TableBody } from '@mui/material';
 import { Children, useEffect, useState } from 'react';
 import Card from '../Card/Card';
 import Menu from '../Menu/Menu';
+import SummaryField from '../SummaryField/SummaryField';
 
 export default function Summary({ children, entity }: SummaryProps) {
 
-    const [fields, setFields] = useState<any[]>([]);
+    const [fields, setFields] = useState<SummaryFieldProps[]>([]);
     const [title, setTitle] = useState('');
 
     useEffect(() => {
         // Get fields
-        const newFields: SummaryField[] = Children.map(children, child => child?.props)
-            .filter((childProps: any) => childProps)
-            .map((fieldProps: SummaryField) => ({
-                label: capitalize(fieldProps.name),
-                ...fieldProps,
-            }));
+        const newFields: SummaryFieldProps[] = Children.map(children, child => child?.props)
+            .filter((childProps: any) => childProps);
         setFields(newFields);
 
         // Get title
@@ -36,33 +31,14 @@ export default function Summary({ children, entity }: SummaryProps) {
     return <Card action={action} loading={!entity} title={title}>
         <Table>
             <TableBody>
-                {fields.map((field, index) => {
-                    // Get value
-                    let value = field.children || (entity ? getNestedValue(entity, field.name) : null);
-
-                    // Check link
-                    if (field.getLink) {
-                        const href = typeof field.getLink === 'function' ? field.getLink(entity) : field.getLink;
-                        value = <Link component={NextLink} href={href}>
-                            {value}
-                        </Link>;
-                    }
-
-                    // Return row
-                    return <TableRow key={index}>
-                        <TableCell>
-                            {field.label}
-                        </TableCell>
-                        <TableCell>
-                            {value}
-                        </TableCell>
-                    </TableRow>;
-                })}
+                {fields.map((field, index) => (
+                    <SummaryField entity={entity} key={index} {...field} />
+                ))}
             </TableBody>
         </Table>
     </Card>;
 
 }
 
-const SummaryField = (_: SummaryField) => null;
-Summary.Field = SummaryField;
+const Field = (_: Omit<SummaryFieldProps, 'entity'>) => null;
+Summary.Field = Field;

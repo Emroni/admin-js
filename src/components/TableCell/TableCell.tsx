@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 export default function TableCell({ column, row }: TableCellProps) {
 
-    const  [value, setValue] = useState<any>(null);
+    const [value, setValue] = useState<any>(null);
 
     useEffect(() => {
         let newValue = column.children || getNestedValue(row, column.name);
