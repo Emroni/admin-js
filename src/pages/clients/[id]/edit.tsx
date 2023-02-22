@@ -54,10 +54,10 @@ export default function ClientEdit() {
     }
     
     return <Form initialValues={client} loading={!client || mutation.loading} title={`Edit ${client?.name}`} onSubmit={handleSubmit}>
-        <Form.Field name="name" />
-        <Form.Field name="currency" />
-        <Form.Field name="address" />
+        <Form.Field name="name" required />
+        <Form.Field name="currency" required />
         <Form.Field name="email" />
+        <Form.Field name="address" type="textarea" />
     </Form>;
 
 }

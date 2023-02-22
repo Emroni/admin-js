@@ -5,8 +5,3 @@ interface FormProps {
     title: string;
     onSubmit(data: IndexedObject): void;
 }
-
-interface FormField {
-    label?: string;
-    name: string;
-}

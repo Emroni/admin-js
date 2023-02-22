@@ -13,7 +13,7 @@ export default function FormContent({ fields, loading }: FormContentProps) {
             ))}
         </Box>
         <Box marginTop={3} textAlign="right">
-            <Button disabled={!formik.dirty} type="submit">
+            <Button disabled={!formik.dirty || loading} type="submit">
                 Save
             </Button>
         </Box>

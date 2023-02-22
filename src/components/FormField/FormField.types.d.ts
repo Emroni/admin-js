@@ -1,5 +1,10 @@
+type FormFieldType = 'date' | 'number' | 'text' | 'textarea' | 'time';
+
 interface FormFieldProps {
-    label: string;
+    disabled?: boolean;
+    label?: string;
     loading?: boolean;
     name: string;
+    required?: boolean;
+    type?: FormFieldType;
 }

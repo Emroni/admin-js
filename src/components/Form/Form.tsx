@@ -1,4 +1,3 @@
-import { capitalize } from '@mui/material';
 import { Form as FormikForm, Formik } from 'formik';
 import { Children, useEffect, useState } from 'react';
 import Card from '../Card/Card';
@@ -11,11 +10,7 @@ export default function Form({ children, initialValues, loading, title, onSubmit
     useEffect(() => {
         // Get fields
         const newFields: FormFieldProps[] = Children.map(children, child => child?.props)
-            .filter((childProps: any) => childProps)
-            .map((fieldProps: FormField) => ({
-                label: capitalize(fieldProps.name),
-                ...fieldProps,
-            }));
+            .filter((childProps: any) => childProps);
         setFields(newFields);
     }, [
         children,
@@ -40,5 +35,5 @@ export default function Form({ children, initialValues, loading, title, onSubmit
 
 }
 
-const Field = (_: FormField) => null;
+const Field = (_: FormFieldProps) => null;
 Form.Field = Field;
