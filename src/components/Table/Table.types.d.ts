@@ -2,6 +2,7 @@ interface TableProps {
     children: ReactComponentElement<TableColumn>;
     rows?: IndexedObject[];
     title: string;
+    getRowLink?: string | ((row: IndexedObject) => string);
 }
 
 interface TableColumn {

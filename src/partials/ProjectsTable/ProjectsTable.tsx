@@ -25,11 +25,11 @@ export default function ProjectsTable({ clientId }: ProjectsTableProps) {
         },
     });
 
-    return <Table rows={query.data?.projects} title="Projects">
+    return <Table rows={query.data?.projects} title="Projects" getRowLink={project => `/projects/${project.id}`}>
         <Table.Column name="id" label="ID" />
-        <Table.Column name="name" getLink={project => `/projects/${project.id}`} />
+        <Table.Column name="name" />
         {withClient && (
-            <Table.Column name="client.name" label="Client" getLink={project => `/clients/${project.client.id}`} />
+            <Table.Column name="client.name" label="Client" getLink={project => `/clients/${project.client?.id}`} />
         )}
         <Table.Column name="billing" />
         <Table.Column name="status" />

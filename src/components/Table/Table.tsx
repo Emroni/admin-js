@@ -1,10 +1,9 @@
-import { getNestedValue } from '@/helpers/data';
-import { capitalize, Link, Table as MuiTable, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
-import NextLink from 'next/link';
+import { capitalize, Table as MuiTable, TableBody, TableCell, TableHead, TableRow as MuiTableRow } from '@mui/material';
 import { Children, useEffect, useState } from 'react';
 import Card from '../Card/Card';
+import TableRow from '../TableRow/TableRow';
 
-export default function Table({ children, rows, title }: TableProps) {
+export default function Table({ children, rows, title, getRowLink }: TableProps) {
 
     const [columns, setColumns] = useState<TableColumn[]>([]);
 
@@ -25,39 +24,21 @@ export default function Table({ children, rows, title }: TableProps) {
     return <Card loading={!rows} title={title}>
         <MuiTable>
             <TableHead>
-                <TableRow>
+                <MuiTableRow>
                     {columns.map((column, index) => (
                         <TableCell align={column.align} key={index}>
                             {column.label}
                         </TableCell>
                     ))}
-                </TableRow>
+                </MuiTableRow>
             </TableHead>
             <TableBody>
                 {rows?.map((row, r) => (
-                    <TableRow hover key={r}>
-                        {columns.map((column, c) => {
-                            // Get value
-                            let value = column.children || getNestedValue(row, column.name);
-
-                            // Check link
-                            if (column.getLink) {
-                                const href = typeof column.getLink === 'function' ? column.getLink(row) : column.getLink;
-                                value = <Link component={NextLink} href={href}>
-                                    {value}
-                                </Link>;
-                            }
-
-                            // Return cell
-                            return <TableCell align={column.align} key={c}>
-                                {value}
-                            </TableCell>;
-                        })}
-                    </TableRow>
+                    <TableRow columns={columns} key={r} row={row} getLink={getRowLink} />
                 ))}
             </TableBody>
         </MuiTable>
-    </Card >;
+    </Card>;
 
 }
 
