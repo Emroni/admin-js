@@ -2,6 +2,12 @@ import { createTheme } from '@mui/material';
 
 export default createTheme({
     components: {
+        MuiButton: {
+            defaultProps: {
+                disableElevation: true,
+                variant: 'contained',
+            },
+        },
         MuiTable: {
             defaultProps: {
                 size: 'small',
@@ -10,6 +16,12 @@ export default createTheme({
         MuiTableRow: {
             defaultProps: {
                 hover: true,
+            },
+        },
+        MuiTextField: {
+            defaultProps: {
+                size: 'small',
+                variant: 'outlined',
             },
         },
     },
