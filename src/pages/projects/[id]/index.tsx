@@ -40,7 +40,7 @@ export default function ProjectView() {
     return <Summary entity={project}>
         <Summary.Field name="id" label="ID" />
         <Summary.Field name="name" />
-        <Summary.Field name="client.name" getLink={`/clients/${project?.client.id}`} />
+        <Summary.Field name="client.name" label="Client" getLink={`/clients/${project?.client.id}`} />
         <Summary.Field name="billing" />
         <Summary.Field name="status" />
     </Summary>;

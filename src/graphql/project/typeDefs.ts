@@ -12,7 +12,7 @@ export const types = `
         ${fields}
     }
 
-    input ProjectInput {
+    input ProjectFields {
         ${fields}
     }
 
@@ -28,7 +28,7 @@ export const queries = `
 `;
 
 export const mutations = `
-    projectCreate(input: ProjectInput): Project
+    projectCreate(input: ProjectFields): Project
     projectDelete(id: ID!): Project
-    projectUpdate(id: ID!, input: ProjectInput): Project
+    projectUpdate(id: ID!, input: ProjectFields): Project
 `;

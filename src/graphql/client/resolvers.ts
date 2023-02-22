@@ -18,7 +18,7 @@ export const queries = {
 };
 
 export const mutations = {
-    clientCreate: (_parent: any, args: GraphqlCreateArgs<ClientInput>) => prisma.client.create({
+    clientCreate: (_parent: any, args: GraphqlCreateArgs<ClientFields>) => prisma.client.create({
         data: args.input,
     }),
     clientDelete: (_parent: any, args: GraphqlDeleteArgs) => prisma.client.delete({
@@ -26,7 +26,7 @@ export const mutations = {
             id: Number(args.id),
         },
     }),
-    clientUpdate: (_parent: any, args: GraphqlUpdateArgs<ClientInput>) => prisma.client.update({
+    clientUpdate: (_parent: any, args: GraphqlUpdateArgs<ClientFields>) => prisma.client.update({
         where: {
             id: Number(args.id),
         },

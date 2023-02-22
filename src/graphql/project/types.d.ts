@@ -1,17 +1,13 @@
 type ProjectBilling = 'hourly' | 'fixed';
-type ProjectFilter = Partial<ProjectInput>;
+type ProjectFilter = Partial<ProjectFields>;
 type ProjectStatus = 'billed' | 'complete' | 'in_progress' | 'new' | 'on_hold';
 
-interface Project {
-    billing: ProjectBilling;
+interface Project extends ProjectFields {
     client: Client;
-    clientId: number;
     id: number;
-    name: string;
-    status: ProjectStatus;
 }
 
-interface ProjectInput {
+interface ProjectFields {
     billing: ProjectBilling;
     clientId: number;
     name: string;

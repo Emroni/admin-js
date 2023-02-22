@@ -10,7 +10,7 @@ export const types = `
         projects: [Project!]!
     }
 
-    input ClientInput {
+    input ClientFields {
         ${fields}
     }
 `;
@@ -22,7 +22,7 @@ export const queries = `
 `;
 
 export const mutations = `
-    clientCreate(input: ClientInput): Client
+    clientCreate(input: ClientFields): Client
     clientDelete(id: ID!): Client
-    clientUpdate(id: ID!, input: ClientInput): Client
+    clientUpdate(id: ID!, input: ClientFields): Client
 `;

@@ -1,11 +1,9 @@
-interface Client {
-    email: string?;
+interface Client extends ClientFields {
     id: number;
-    name: string;
     projects: Project[];
 }
 
-interface ClientInput {
+interface  ClientFields {
     email: string?;
     name: string;
 }

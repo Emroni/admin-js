@@ -23,7 +23,7 @@ export const queries = {
 };
 
 export const mutations = {
-    projectCreate: (_parent: any, args: GraphqlCreateArgs<ProjectInput>) => prisma.project.create({
+    projectCreate: (_parent: any, args: GraphqlCreateArgs<ProjectFields>) => prisma.project.create({
         data: parseInput(args.input),
     }),
     projectDelete: (_parent: any, args: GraphqlDeleteArgs) => prisma.project.delete({
@@ -31,7 +31,7 @@ export const mutations = {
             id: Number(args.id),
         },
     }),
-    projectUpdate: (_parent: any, args: GraphqlUpdateArgs<ProjectInput>) => prisma.project.update({
+    projectUpdate: (_parent: any, args: GraphqlUpdateArgs<ProjectFields>) => prisma.project.update({
         data: parseInput(args.input),
         where: {
             id: Number(args.id),
@@ -39,7 +39,7 @@ export const mutations = {
     }),
 };
 
-function parseInput(input: ProjectInput) {
+function parseInput(input: ProjectFields) {
     return {
         ...input,
         client: {
