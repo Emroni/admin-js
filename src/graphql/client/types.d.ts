@@ -1,5 +1,4 @@
-interface Client extends ClientFields {
-    id: number;
+interface Client extends Entity, ClientFields {
     projects: Project[];
 }
 
