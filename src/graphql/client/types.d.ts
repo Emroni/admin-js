@@ -4,6 +4,8 @@ interface Client extends ClientFields {
 }
 
 interface  ClientFields {
+    address: string?;
+    currency: string;
     email: string?;
     name: string;
 }

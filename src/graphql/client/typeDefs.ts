@@ -1,4 +1,6 @@
 const fields = `
+    address: String
+    currency: String!
     email: String
     name: String!
 `;

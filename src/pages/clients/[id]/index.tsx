@@ -11,9 +11,11 @@ export default function ClientView() {
 
     const query = useQuery<ClientQuery>(gql`query($id: ID!) {
         client(id: $id) {
+            address
+            currency
+            email
             id
             name
-            email
         }
     }`, {
         variables: {
@@ -37,7 +39,9 @@ export default function ClientView() {
         <Summary entity={client}>
             <Summary.Field name="id" label="ID" />
             <Summary.Field name="name" />
+            <Summary.Field name="currency" />
             <Summary.Field name="email" getLink={`mailto:${client?.email}`} />
+            <Summary.Field name="address" />
         </Summary>
         <ProjectsTable clientId={page.query.id} />
     </>;
