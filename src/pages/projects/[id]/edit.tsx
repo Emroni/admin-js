@@ -11,6 +11,7 @@ export default function ProjectEdit() {
     const query = useQuery<ProjectQuery>(gql`query($id: ID!) {
         project(id: $id) {
             billing
+            clientId
             id
             name
             status
@@ -24,6 +25,7 @@ export default function ProjectEdit() {
     const [mutate, mutation] = useMutation(gql`mutation($id: ID!, $input: ProjectFields) {
         projectUpdate (id: $id, input: $input) {
             billing
+            clientId
             id
             name
             status
@@ -43,10 +45,14 @@ export default function ProjectEdit() {
     ]);
 
     function handleSubmit(values: IndexedObject) {
+        // TODO: Skip undefined keys (clientId)
         mutate({
             variables: {
                 id: project?.id,
-                input: values,
+                input: {
+                    clientId: project?.clientId,
+                    ...values,
+                },
             },
         });
     }
