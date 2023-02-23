@@ -1,4 +1,4 @@
-import * as Icons from '@mui/icons-material';
+import { MoreVert } from '@mui/icons-material';
 import { IconButton, ListItemIcon, Menu as MuiMenu, MenuItem as MuiMenuItem, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import { Children, useEffect, useState } from 'react';
@@ -34,7 +34,7 @@ export default function Menu({ children }: MenuProps) {
 
     return <>
         <IconButton onClick={e => setAnchor(e.currentTarget)}>
-            <Icons.MoreVert />
+            <MoreVert />
         </IconButton>
         <MuiMenu anchorEl={anchor} anchorOrigin={{ horizontal: 'right', vertical: 'top' }} transformOrigin={{ horizontal: 'right', vertical: 'top' }} open={!!anchor} onClose={() => setAnchor(null)}>
             {items.map((item, index) => (
