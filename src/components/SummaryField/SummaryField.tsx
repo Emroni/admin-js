@@ -1,4 +1,4 @@
-import { getNestedValue } from '@/helpers/data';
+import { getNestedValue } from '@/helpers';
 import { capitalize, Link, TableCell, TableRow } from '@mui/material';
 import NextLink from 'next/link';
 import { useEffect, useState } from 'react';
