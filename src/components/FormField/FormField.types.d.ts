@@ -5,6 +5,12 @@ interface FormFieldProps {
     label?: string;
     loading?: boolean;
     name: string;
+    options?: FormFieldOption[];
     required?: boolean;
     type?: FormFieldType;
+}
+
+interface FormFieldOption {
+    label?: string;
+    value?: number | string;
 }
