@@ -1,14 +1,16 @@
 import { Menu, Summary } from '@/components';
 import { usePage } from '@/contexts/Page';
 import { ProjectsTable } from '@/partials';
-import { gql, useQuery } from '@apollo/client';
-import { Edit } from '@mui/icons-material';
+import { gql, useMutation, useQuery } from '@apollo/client';
+import { Delete, Edit } from '@mui/icons-material';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 export default function ClientView() {
 
     const [client, setClient] = useState<Client | null>(null);
     const page = usePage();
+    const router = useRouter();
 
     const query = useQuery<ClientQuery>(gql`query($id: ID!) {
         client(id: $id) {
@@ -24,6 +26,12 @@ export default function ClientView() {
         },
     });
 
+    const [mutate, mutation] = useMutation(gql`mutation($id: ID!) {
+        clientDelete (id: $id) {
+            id
+        }
+    }`);
+
     useEffect(() => {
         // Get client
         const newClient = query.data?.client || null;
@@ -36,12 +44,24 @@ export default function ClientView() {
         page,
     ]);
 
+    async function handleDelete() {
+        if (client && confirm('Are you sure you want to delete this client?')) {
+            await mutate({
+                variables: {
+                    id: client?.id,
+                },
+            });
+            router.push('/clients');
+        }
+    }
+
     const action = <Menu>
         <Menu.Item icon={Edit} label="Edit" link={`/clients/${client?.id}/edit`} />
+        <Menu.Item color="error" icon={Delete} label="Delete" onClick={handleDelete} />
     </Menu>;
 
     return <>
-        <Summary action={action} entity={client}>
+        <Summary action={action} entity={client} loading={mutation.loading}>
             <Summary.Field name="id" label="ID" />
             <Summary.Field name="name" />
             <Summary.Field name="currency" />
