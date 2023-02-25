@@ -1,4 +1,5 @@
 import { Menu, Summary } from '@/components';
+import { PROJECT_BILLING, PROJECT_STATUS } from '@/constants';
 import { usePage } from '@/contexts/Page';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { Delete, Edit } from '@mui/icons-material';
@@ -67,8 +68,8 @@ export default function ProjectView() {
         <Summary.Field name="id" label="ID" />
         <Summary.Field name="name" />
         <Summary.Field name="client.name" label="Client" getLink={`/clients/${project?.client.id}`} />
-        <Summary.Field name="billing" />
-        <Summary.Field name="status" />
+        <Summary.Field name="billing" options={PROJECT_BILLING} />
+        <Summary.Field name="status" options={PROJECT_STATUS} />
     </Summary>;
 
 }

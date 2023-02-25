@@ -5,14 +5,7 @@ interface FormFieldProps {
     label?: string;
     loading?: boolean;
     name: string;
-    options?: FormFieldOption[];
+    options?: EntityPropertyOption[];
     required?: boolean;
     type?: FormFieldType;
-}
-
-interface FormFieldOption {
-    id?: number | string;
-    label?: string;
-    name?: string;
-    value?: number | string;
 }

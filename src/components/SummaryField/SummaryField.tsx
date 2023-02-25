@@ -3,28 +3,35 @@ import { capitalize, Link, TableCell, TableRow } from '@mui/material';
 import NextLink from 'next/link';
 import { useEffect, useState } from 'react';
 
-export default function SummaryField({ children, entity, label, name, getLink }: SummaryFieldProps) {
+export default function SummaryField({ children, entity, label, name, options, getLink }: SummaryFieldProps) {
 
     const [value, setValue] = useState<any>(null);
 
     useEffect(() => {
         // Get value
-        let value = children || (entity ? getNestedValue(entity, name) : null);
+        let newValue = children || (entity ? getNestedValue(entity, name) : null);
+
+        // Check options
+        const option = options?.find(option => option.value === newValue || option.id === newValue || option.name === newValue);
+        if (option) {
+            newValue = option.label || option.name || newValue;
+        }
 
         // Check link
         if (getLink) {
             const href = typeof getLink === 'function' ? (entity && getLink(entity) || '') : getLink;
-            value = <Link component={NextLink} href={href}>
-                {value}
+            newValue = <Link component={NextLink} href={href}>
+                {newValue}
             </Link>;
         }
 
-        setValue(value);
+        setValue(newValue);
     }, [
         children,
         entity,
         getLink,
         name,
+        options,
     ]);
 
     return <TableRow>

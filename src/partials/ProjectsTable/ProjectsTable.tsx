@@ -1,4 +1,5 @@
 import { Menu, Table } from '@/components';
+import { PROJECT_BILLING, PROJECT_STATUS } from '@/constants';
 import { gql, useQuery } from '@apollo/client';
 import { Add } from '@mui/icons-material';
 
@@ -36,8 +37,8 @@ export default function ProjectsTable({ clientId }: ProjectsTableProps) {
         {withClient && (
             <Table.Column name="client.name" label="Client" getLink={project => `/clients/${project.client?.id}`} />
         )}
-        <Table.Column name="billing" />
-        <Table.Column name="status" />
+        <Table.Column name="billing" options={PROJECT_BILLING} />
+        <Table.Column name="status" options={PROJECT_STATUS}/>
     </Table>;
 
 }

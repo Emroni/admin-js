@@ -10,6 +10,7 @@ interface TableColumn {
     align?: AlignType;
     children?: any;
     label?: string;
+    options?: EntityPropertyOption[];
     name: string;
     getLink?: string | ((row: IndexedObject) => string);
 }

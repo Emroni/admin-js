@@ -3,6 +3,13 @@ interface Entity extends IndexedObject {
     id: number;
 }
 
+interface EntityPropertyOption {
+    id?: number | string;
+    label?: string;
+    name?: string;
+    value?: number | string;
+}
+
 interface IndexedObject<T = any> {
     [num: number]: T;
     [str: string]: T;
