@@ -1,4 +1,4 @@
-import { LinkButton, Summary } from '@/components';
+import { Menu, Summary } from '@/components';
 import { usePage } from '@/contexts/Page';
 import { ProjectsTable } from '@/partials';
 import { gql, useQuery } from '@apollo/client';
@@ -36,12 +36,12 @@ export default function ClientView() {
         page,
     ]);
 
-    const actions = <>
-        <LinkButton icon={Edit} link={`/clients/${client?.id}/edit`} />
-    </>;
+    const action = <Menu>
+        <Menu.Item icon={Edit} label="Edit" link={`/clients/${client?.id}/edit`} />
+    </Menu>;
 
     return <>
-        <Summary actions={actions} entity={client}>
+        <Summary action={action} entity={client}>
             <Summary.Field name="id" label="ID" />
             <Summary.Field name="name" />
             <Summary.Field name="currency" />

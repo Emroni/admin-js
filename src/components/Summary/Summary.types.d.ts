@@ -1,5 +1,5 @@
 interface SummaryProps {
-    actions?: ReactComponentElement<IconButtonProps>;
+    action?: ReactComponentElement<Menu>;
     children: ReactComponentElement<SummaryField>;
     entity?: Entity?;
 }

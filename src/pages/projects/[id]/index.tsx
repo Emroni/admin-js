@@ -1,4 +1,4 @@
-import { LinkButton, Summary } from '@/components';
+import { Menu, Summary } from '@/components';
 import { usePage } from '@/contexts/Page';
 import { gql, useQuery } from '@apollo/client';
 import { Edit } from '@mui/icons-material';
@@ -38,11 +38,11 @@ export default function ProjectView() {
         page,
     ]);
 
-    const actions = <>
-        <LinkButton icon={Edit} link={`/projects/${project?.id}/edit`} />
-    </>;
+    const action = <Menu>
+        <Menu.Item icon={Edit} label="Edit" link={`/projects/${project?.id}/edit`} />
+    </Menu>;
 
-    return <Summary actions={actions} entity={project}>
+    return <Summary action={action} entity={project}>
         <Summary.Field name="id" label="ID" />
         <Summary.Field name="name" />
         <Summary.Field name="client.name" label="Client" getLink={`/clients/${project?.client.id}`} />

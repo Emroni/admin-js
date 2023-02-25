@@ -1,5 +1,5 @@
 interface TableProps {
-    actions?: ReactComponentElement<IconButtonProps>;
+    action?: ReactComponentElement<Menu>;
     children: ReactComponentElement<TableColumn>;
     rows?: IndexedObject[];
     title: string;
