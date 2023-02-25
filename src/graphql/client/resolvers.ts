@@ -2,6 +2,11 @@ import { prisma } from '../';
 
 export const model = {
     projects: (parent: Client) => prisma.project.findMany({
+        orderBy: [
+            {
+                name: 'asc',
+            },
+        ],
         where: {
             clientId: parent.id,
         },
@@ -14,7 +19,13 @@ export const queries = {
             id: Number(args.id),
         },
     }),
-    clients: () => prisma.client.findMany(),
+    clients: () => prisma.client.findMany({
+        orderBy: [
+            {
+                name: 'asc',
+            },
+        ],
+    }),
 };
 
 export const mutations = {
