@@ -8,7 +8,7 @@ export default function FormField({ disabled, label, loading, name, options, req
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         helpers.setValue(e.target.value);
     }
-
+    
     return <TextField
         disabled={disabled || loading}
         fullWidth
@@ -23,8 +23,8 @@ export default function FormField({ disabled, label, loading, name, options, req
         onChange={handleChange}
     >
         {options?.map((option, index) => (
-            <MenuItem key={index} value={option.value}>
-                {option.label}
+            <MenuItem key={index} value={option.value || option.id || option.name}>
+                {option.label || option.name || option.value}
             </MenuItem>
         ))}
     </TextField>;

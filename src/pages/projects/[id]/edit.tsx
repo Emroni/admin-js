@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 
 export default function ProjectEdit() {
 
-    const [clientIds, setClientIds] = useState<FormFieldOption[]>([]);
     const [project, setProject] = useState<Project | null>(null);
     const page = usePage();
 
@@ -38,13 +37,6 @@ export default function ProjectEdit() {
     }`);
 
     useEffect(() => {
-        // Get clientIds
-        const newClientIds = query.data?.clients.map(client => ({
-            label: client.name,
-            value: client.id,
-        })) || [];
-        setClientIds(newClientIds);
-
         // Get project
         const newProject = query.data?.project || null;
         setProject(newProject);
@@ -67,7 +59,7 @@ export default function ProjectEdit() {
 
     return <Form initialValues={project} loading={!project || mutation.loading} title={`Edit ${project?.name}`} onSubmit={handleSubmit}>
         <Form.Field name="name" required />
-        <Form.Field name="clientId" label="Client" options={clientIds} required />
+        <Form.Field name="clientId" label="Client" options={query.data?.clients} required />
         <Form.Field name="billing" required />
         <Form.Field name="status" required />
     </Form>;

@@ -11,6 +11,8 @@ interface FormFieldProps {
 }
 
 interface FormFieldOption {
+    id?: number | string;
     label?: string;
+    name?: string;
     value?: number | string;
 }
