@@ -3,7 +3,7 @@ import { Children, useEffect, useState } from 'react';
 import Card from '../Card/Card';
 import SummaryField from '../SummaryField/SummaryField';
 
-export default function Summary({ children, entity, menu }: SummaryProps) {
+export default function Summary({ actions, children, entity }: SummaryProps) {
 
     const [fields, setFields] = useState<SummaryFieldProps[]>([]);
     const [title, setTitle] = useState('');
@@ -22,7 +22,7 @@ export default function Summary({ children, entity, menu }: SummaryProps) {
         entity,
     ]);
 
-    return <Card menu={menu} loading={!entity} title={title}>
+    return <Card actions={actions} loading={!entity} title={title}>
         <Table>
             <TableBody>
                 {fields.map((field, index) => (

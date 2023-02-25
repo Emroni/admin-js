@@ -1,7 +1,7 @@
 import { Box, Card as MuiCard, CardContent, CardHeader, LinearProgress } from '@mui/material';
 import { Children } from 'react';
 
-export default function Card({ children, loading, menu, title }: CardProps) {
+export default function Card({ actions, children, loading, title }: CardProps) {
 
     return <Box position="relative">
         {loading && (
@@ -10,7 +10,7 @@ export default function Card({ children, loading, menu, title }: CardProps) {
             </Box>
         )}
         <MuiCard>
-            <CardHeader action={menu} title={title} />
+            <CardHeader action={actions} title={title} />
             {Children.map(children, (child, index) => (
                 <CardContent key={index}>
                     {child}

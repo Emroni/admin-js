@@ -1,4 +1,4 @@
-import { Menu, Table } from '@/components';
+import { LinkButton, Table } from '@/components';
 import { gql, useQuery } from '@apollo/client';
 import { Add } from '@mui/icons-material';
 
@@ -14,11 +14,11 @@ export default function Clients() {
         }
     }`);
 
-    const menu = <Menu>
-        <Menu.Item icon={Add} label="Add" link="/clients/add" />
-    </Menu>;
+    const actions = <>
+        <LinkButton icon={Add} link="/clients/add" />
+    </>;
 
-    return <Table menu={menu} rows={query.data?.clients} title="Clients" getRowLink={client => `/clients/${client.id}`}>
+    return <Table actions={actions} rows={query.data?.clients} title="Clients" getRowLink={client => `/clients/${client.id}`}>
         <Table.Column name="id" label="ID" />
         <Table.Column name="name" />
         <Table.Column name="currency" />

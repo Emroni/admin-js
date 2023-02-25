@@ -3,7 +3,7 @@ import { Children, useEffect, useState } from 'react';
 import Card from '../Card/Card';
 import TableRow from '../TableRow/TableRow';
 
-export default function Table({ children, menu, rows, title, getRowLink }: TableProps) {
+export default function Table({ actions, children, rows, title, getRowLink }: TableProps) {
 
     const [columns, setColumns] = useState<TableColumn[]>([]);
 
@@ -21,7 +21,7 @@ export default function Table({ children, menu, rows, title, getRowLink }: Table
         children,
     ]);
 
-    return <Card loading={!rows} menu={menu} title={title}>
+    return <Card actions={actions} loading={!rows} title={title}>
         <MuiTable>
             <TableHead>
                 <MuiTableRow>

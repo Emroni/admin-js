@@ -1,6 +1,6 @@
 interface CardProps {
+    actions?: JSX.Element;
     children: any;
     loading?: boolean;
-    menu?: ReactComponentElement<MenuProps>;
     title: string;
 }

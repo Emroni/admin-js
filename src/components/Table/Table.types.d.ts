@@ -1,6 +1,6 @@
 interface TableProps {
+    actions?: ReactComponentElement<IconButtonProps>;
     children: ReactComponentElement<TableColumn>;
-    menu?: ReactComponentElement<MenuProps>;
     rows?: IndexedObject[];
     title: string;
     getRowLink?: string | ((row: IndexedObject) => string);
