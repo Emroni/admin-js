@@ -25,7 +25,7 @@ export default function ClientAdd() {
         router.push(`/clients/${result.data.clientCreate.id}`);
     }
 
-    return <Form loading={mutation.data || mutation.loading} title="Add Client" onSubmit={handleSubmit}>
+    return <Form loading={!!mutation.data || mutation.loading} title="Add Client" onSubmit={handleSubmit}>
         <Form.Field name="name" required />
         <Form.Field name="currency" required />
         <Form.Field name="email" />
