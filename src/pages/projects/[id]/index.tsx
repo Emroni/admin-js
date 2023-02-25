@@ -53,6 +53,7 @@ export default function ProjectView() {
                     id: project?.id,
                 },
             });
+            mutation.client.clearStore();
             router.push(`/clients/${project?.client.id}`);
         }
     }

@@ -23,6 +23,7 @@ export default function ClientAdd() {
                 input: values,
             },
         });
+        mutation.client.clearStore();
         router.push(`/clients/${result.data.clientCreate.id}`);
     }
 

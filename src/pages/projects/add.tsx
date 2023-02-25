@@ -32,6 +32,7 @@ export default function ProjectAdd() {
                 input: values,
             },
         });
+        mutation.client.clearStore();
         router.push(`/projects/${result.data.projectCreate.id}`);
     }
 

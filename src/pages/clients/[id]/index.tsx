@@ -51,6 +51,7 @@ export default function ClientView() {
                     id: client?.id,
                 },
             });
+            mutation.client.clearStore();
             router.push('/clients');
         }
     }
