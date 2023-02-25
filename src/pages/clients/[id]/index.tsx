@@ -1,7 +1,8 @@
-import { Summary } from '@/components';
+import { Menu, Summary } from '@/components';
 import { usePage } from '@/contexts/Page';
 import { ProjectsTable } from '@/partials';
 import { gql, useQuery } from '@apollo/client';
+import { Edit } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
 
 export default function ClientView() {
@@ -35,8 +36,12 @@ export default function ClientView() {
         page,
     ]);
 
+    const menu = <Menu>
+        <Menu.Item icon={Edit} label="Edit" link={`/clients/${client?.id}/edit`} />
+    </Menu>;
+
     return <>
-        <Summary entity={client}>
+        <Summary entity={client} menu={menu}>
             <Summary.Field name="id" label="ID" />
             <Summary.Field name="name" />
             <Summary.Field name="currency" />
