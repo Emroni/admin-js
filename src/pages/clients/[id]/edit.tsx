@@ -2,12 +2,14 @@ import { Form } from '@/components';
 import { CURRENCIES } from '@/constants';
 import { usePage } from '@/contexts/Page';
 import { gql, useMutation, useQuery } from '@apollo/client';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 export default function ClientEdit() {
 
     const [client, setClient] = useState<Client | null>(null);
     const page = usePage();
+    const router = useRouter();
 
     const query = useQuery<ClientQuery>(gql`query($id: ID!) {
         client(id: $id) {
@@ -45,13 +47,14 @@ export default function ClientEdit() {
         page,
     ]);
 
-    function handleSubmit(values: IndexedObject) {
-        mutate({
+    async function handleSubmit(values: IndexedObject) {
+        const result = await mutate({
             variables: {
                 id: client?.id,
                 input: values,
             },
         });
+        router.push(`/clients/${result.data.clientUpdate.id}`);
     }
     
     return <Form initialValues={client} loading={!client || mutation.loading} title={`Edit ${client?.name}`} onSubmit={handleSubmit}>

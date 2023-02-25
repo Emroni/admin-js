@@ -2,12 +2,14 @@ import { Form } from '@/components';
 import { PROJECT_BILLING, PROJECT_STATUS } from '@/constants';
 import { usePage } from '@/contexts/Page';
 import { gql, useMutation, useQuery } from '@apollo/client';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 export default function ProjectEdit() {
 
     const [project, setProject] = useState<Project | null>(null);
     const page = usePage();
+    const router = useRouter();
 
     const query = useQuery<ClientsQuery & ProjectQuery>(gql`query($id: ID!) {
         clients {
@@ -49,13 +51,14 @@ export default function ProjectEdit() {
         page,
     ]);
 
-    function handleSubmit(values: IndexedObject) {
-        mutate({
+    async function handleSubmit(values: IndexedObject) {
+        const result = await mutate({
             variables: {
                 id: project?.id,
                 input: values,
             },
         });
+        router.push(`/projects/${result.data.projectUpdate.id}`);
     }
 
     return <Form initialValues={project} loading={!project || mutation.loading} title={`Edit ${project?.name}`} onSubmit={handleSubmit}>
