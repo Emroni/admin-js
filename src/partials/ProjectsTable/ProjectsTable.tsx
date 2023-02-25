@@ -1,5 +1,6 @@
-import { Table } from '@/components';
+import { Menu, Table } from '@/components';
 import { gql, useQuery } from '@apollo/client';
+import { Add } from '@mui/icons-material';
 
 export default function ProjectsTable({ clientId }: ProjectsTableProps) {
 
@@ -25,7 +26,11 @@ export default function ProjectsTable({ clientId }: ProjectsTableProps) {
         },
     });
 
-    return <Table rows={query.data?.projects} title="Projects" getRowLink={project => `/projects/${project.id}`}>
+    const menu = <Menu>
+        <Menu.Item icon={Add} label="Add" link="/projects/add" />
+    </Menu>;
+
+    return <Table menu={menu} rows={query.data?.projects} title="Projects" getRowLink={project => `/projects/${project.id}`}>
         <Table.Column name="id" label="ID" />
         <Table.Column name="name" />
         {withClient && (
