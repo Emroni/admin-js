@@ -1,4 +1,5 @@
 import { Form } from '@/components';
+import { CURRENCIES } from '@/constants';
 import { usePage } from '@/contexts/Page';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { useEffect, useState } from 'react';
@@ -55,7 +56,7 @@ export default function ClientEdit() {
     
     return <Form initialValues={client} loading={!client || mutation.loading} title={`Edit ${client?.name}`} onSubmit={handleSubmit}>
         <Form.Field name="name" required />
-        <Form.Field name="currency" required />
+        <Form.Field name="currency" options={CURRENCIES} required />
         <Form.Field name="email" />
         <Form.Field name="address" type="textarea" />
     </Form>;
