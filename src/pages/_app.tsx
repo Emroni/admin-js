@@ -1,7 +1,6 @@
-import Navigation from '@/components/Navigation/Navigation';
 import { PageProvider } from '@/contexts/Page';
 import { ApolloClient, ApolloProvider, createHttpLink, from, InMemoryCache } from '@apollo/client';
-import { Box, CssBaseline, ThemeProvider } from '@mui/material';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import type { AppProps } from 'next/app';
 import { useEffect, useState } from 'react';
 import theme from '../theme';

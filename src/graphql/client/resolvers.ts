@@ -1,6 +1,7 @@
 import { prisma } from '../';
 
 export const model = {
+    deletable: (parent: Client) => model.projects(parent).then(projects => !projects.length),
     projects: (parent: Client) => prisma.project.findMany({
         orderBy: [
             {

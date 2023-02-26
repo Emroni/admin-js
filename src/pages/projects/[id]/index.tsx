@@ -15,6 +15,7 @@ export default function ProjectView() {
     const query = useQuery<ProjectQuery>(gql`query($id: ID!) {
         project(id: $id) {
             billing
+            deletable
             id
             name
             status
@@ -61,7 +62,7 @@ export default function ProjectView() {
 
     const action = <Menu>
         <Menu.Item icon={Edit} label="Edit" link={`/projects/${project?.id}/edit`} />
-        <Menu.Item color="error" icon={Delete} label="Delete" onClick={handleDelete} />
+        <Menu.Item color="error" disabled={!project?.deletable} icon={Delete} label="Delete" onClick={handleDelete} />
     </Menu>;
 
     return <Summary action={action} entity={project} loading={mutation.loading}>

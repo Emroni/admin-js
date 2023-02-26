@@ -9,6 +9,7 @@ export const types = `
     type Project {
         id: ID!
         client: Client!
+        deletable: Boolean!
         ${fields}
     }
 

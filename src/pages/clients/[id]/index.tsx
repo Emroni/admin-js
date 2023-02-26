@@ -16,6 +16,7 @@ export default function ClientView() {
         client(id: $id) {
             address
             currency
+            deletable
             email
             id
             name
@@ -58,7 +59,7 @@ export default function ClientView() {
 
     const action = <Menu>
         <Menu.Item icon={Edit} label="Edit" link={`/clients/${client?.id}/edit`} />
-        <Menu.Item color="error" icon={Delete} label="Delete" onClick={handleDelete} />
+        <Menu.Item color="error" disabled={!client?.deletable} icon={Delete} label="Delete" onClick={handleDelete} />
     </Menu>;
 
     return <>

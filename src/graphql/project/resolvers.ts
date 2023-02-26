@@ -6,6 +6,7 @@ export const model = {
             id: parent.clientId,
         },
     }),
+    deletable: () => true, // TODO: Resolve deletable
 };
 
 export const queries = {
