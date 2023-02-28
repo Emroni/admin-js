@@ -7,7 +7,7 @@ export default function ProjectsTable({ clientId }: ProjectsTableProps) {
 
     const withClient = !clientId;
 
-    const query = useQuery<ProjectsQuery>(gql`query ($filter: ProjectFilter, $withClient: Boolean!) {
+    const query = useQuery<ProjectsQuery>(gql`query ($filter: ProjectsFilter, $withClient: Boolean!) {
         projects (filter: $filter) {
             billing
             id

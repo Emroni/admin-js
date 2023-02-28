@@ -7,9 +7,10 @@ interface GraphqlDeleteArgs {
     id: number;
 }
 
-interface GraphqlGetArgs<F = undefined> {
-    filter?: F;
+interface GraphqlGetArgs {
+    filter?: IndexedObject;
     id: number;
+    order?: IndexedObject<'asc' | 'desc'>[];
 }
 
 interface GraphqlUpdateArgs<I> {

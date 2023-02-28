@@ -15,12 +15,8 @@ export const queries = {
             id: Number(args.id),
         },
     }),
-    projects: (_parent: any, args: GraphqlGetArgs<ProjectFilter>) => prisma.project.findMany({
-        orderBy: [
-            {
-                name: 'asc',
-            },
-        ],
+    projects: (_parent: any, args: GraphqlGetArgs) => prisma.project.findMany({
+        orderBy: args.order || [{ name: 'asc' }],
         where: {
             ...args.filter,
             clientId: args.filter?.clientId ? Number(args.filter?.clientId) : undefined,

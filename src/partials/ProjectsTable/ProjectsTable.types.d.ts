@@ -1,3 +1,3 @@
-interface ProjectsTableProps extends Partial<ProjectFilter> {
+interface ProjectsTableProps extends Partial<ProjectsFilter> {
     
 }

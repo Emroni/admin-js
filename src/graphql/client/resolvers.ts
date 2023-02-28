@@ -20,12 +20,9 @@ export const queries = {
             id: Number(args.id),
         },
     }),
-    clients: () => prisma.client.findMany({
-        orderBy: [
-            {
-                name: 'asc',
-            },
-        ],
+    clients: (_parent: any, args: GraphqlGetArgs) => prisma.client.findMany({
+        orderBy: args.order || [{ name: 'asc' }],
+        where: args.filter,
     }),
 };
 
