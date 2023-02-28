@@ -22,6 +22,7 @@ export const types = `
     }
 
     input ClientsOrder {
+        id: String
         ${fields.replace(/:(.*)$/gm, ': String')}
     }
 `;

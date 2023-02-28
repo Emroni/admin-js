@@ -1,3 +1,5 @@
+type GraphqlOrder = 'asc' | 'desc';
+
 interface GraphqlCreateArgs<I, R = undefined> {
     input: I;
     relations: R;
@@ -10,7 +12,7 @@ interface GraphqlDeleteArgs {
 interface GraphqlGetArgs {
     filter?: IndexedObject;
     id: number;
-    order?: IndexedObject<'asc' | 'desc'>[];
+    order?: IndexedObject<GraphqlOrder>[];
 }
 
 interface GraphqlUpdateArgs<I> {
