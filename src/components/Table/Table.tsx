@@ -7,6 +7,7 @@ import TableRow from '../TableRow/TableRow';
 export default function Table({ action, children, order, rows, title, getRowLink, onOrderChange }: TableProps) {
 
     const [columns, setColumns] = useState<TableColumn[]>([]);
+    const [loadedRows, setLoadedRows] = useState<IndexedObject[]>([]);
 
     useEffect(() => {
         // Get columns
@@ -21,6 +22,15 @@ export default function Table({ action, children, order, rows, title, getRowLink
         setColumns(newColumns);
     }, [
         children,
+    ]);
+
+    useEffect(() => {
+        // Get loaded rows
+        if (rows) {
+            setLoadedRows(rows);
+        }
+    }, [
+        rows,
     ]);
 
     function handleOrderChange(column: TableColumn) {
@@ -60,7 +70,7 @@ export default function Table({ action, children, order, rows, title, getRowLink
                 </MuiTableRow>
             </TableHead>
             <TableBody>
-                {rows?.map((row, r) => (
+                {loadedRows?.map((row, r) => (
                     <TableRow columns={columns} key={r} row={row} getLink={getRowLink} />
                 ))}
             </TableBody>

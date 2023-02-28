@@ -1,7 +1,19 @@
 import { Box, Card as MuiCard, CardContent, CardHeader, Divider, LinearProgress } from '@mui/material';
-import { Children } from 'react';
+import { CSSProperties, useEffect, useState } from 'react';
 
 export default function Card({ action, children, loading, title }: CardProps) {
+
+    const [contentStyles, setContentStyles] = useState<CSSProperties>({});
+
+    useEffect(() => {
+        const newContentStyles: CSSProperties = loading ? {
+            opacity: 0.7,
+            pointerEvents: 'none',
+        } : {};
+        setContentStyles(newContentStyles);
+    }, [
+        loading,
+    ]);
 
     return <Box position="relative">
         {loading && (
@@ -11,12 +23,10 @@ export default function Card({ action, children, loading, title }: CardProps) {
         )}
         <MuiCard>
             <CardHeader action={action} title={title} />
-            <Divider/>
-            {Children.map(children, (child, index) => (
-                <CardContent key={index}>
-                    {child}
-                </CardContent>
-            ))}
+            <Divider />
+            <CardContent sx={contentStyles}>
+                {children}
+            </CardContent>
         </MuiCard>
     </Box>;
 
