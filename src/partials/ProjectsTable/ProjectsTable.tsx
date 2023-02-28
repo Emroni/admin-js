@@ -12,13 +12,15 @@ export default function ProjectsTable({ clientId }: ProjectsTableProps) {
 
     const query = useQuery<ProjectsQuery>(gql`query ($filter: ProjectsFilter, $order: ProjectsOrder, $withClient: Boolean!) {
         projects (filter: $filter, order: [$order]) {
-            billing
-            id
-            name
-            status
-            client @include(if: $withClient) {
+            rows {
+                billing
                 id
                 name
+                status
+                client @include(if: $withClient) {
+                    id
+                    name
+                }
             }
         }
     }`, {
@@ -40,7 +42,14 @@ export default function ProjectsTable({ clientId }: ProjectsTableProps) {
         <Menu.Item icon={Add} label="Add" link={'/projects/add' + (clientId ? `?clientId=${clientId}` : '')} />
     </Menu>;
 
-    return <Table action={action} order={order} rows={query.data?.projects} title="Projects" getRowLink={project => `/projects/${project.id}`} onOrderChange={handleOrderChange}>
+    return <Table
+        action={action}
+        order={order}
+        rows={query.data?.projects.rows}
+        title="Projects"
+        getRowLink={project => `/projects/${project.id}`}
+        onOrderChange={handleOrderChange}
+    >
         <Table.Column name="id" label="ID" />
         <Table.Column name="name" />
         {withClient && (

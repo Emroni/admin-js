@@ -9,11 +9,13 @@ export default function Clients() {
 
     const query = useQuery<ClientsQuery>(gql`query ($order: ClientsOrder) {
         clients (order: [$order]) {
-            address
-            currency
-            email
-            id
-            name
+            rows {
+                address
+                currency
+                email
+                id
+                name
+            }
         }
     }`, {
         variables: {
@@ -30,7 +32,14 @@ export default function Clients() {
         <Menu.Item icon={Add} label="Add" link="/clients/add" />
     </Menu>;
 
-    return <Table action={action} order={order} rows={query.data?.clients} title="Clients" getRowLink={client => `/clients/${client.id}`} onOrderChange={handleOrderChange}>
+    return <Table
+        action={action}
+        order={order}
+        rows={query.data?.clients.rows}
+        title="Clients"
+        getRowLink={client => `/clients/${client.id}`}
+        onOrderChange={handleOrderChange}
+    >
         <Table.Column name="id" label="ID" />
         <Table.Column name="name" />
         <Table.Column name="currency" />
