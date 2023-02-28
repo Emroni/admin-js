@@ -15,12 +15,24 @@ export const queries = {
             id: Number(args.id),
         },
     }),
-    projects: (_parent: any, args: GraphqlGetArgs) => prisma.project.findMany({
-        orderBy: args.order || [{ name: 'asc' }],
-        where: {
-            ...args.filter,
-            clientId: args.filter?.clientId ? Number(args.filter?.clientId) : undefined,
-        },
+    projects: (_parent: any, args: GraphqlGetArgs) => ({
+        page: args.page,
+        perPage: args.perPage,
+        rows: prisma.project.findMany({
+            orderBy: args.order || [{ name: 'asc' }],
+            skip: (args.page && args.perPage && (args.page * args.perPage)),
+            take: args.perPage,
+            where: {
+                ...args.filter,
+                clientId: args.filter?.clientId ? Number(args.filter?.clientId) : undefined,
+            },
+        }),
+        total: prisma.project.count({
+            where: {
+                ...args.filter,
+                clientId: args.filter?.clientId ? Number(args.filter?.clientId) : undefined,
+            },
+        }),
     }),
 };
 

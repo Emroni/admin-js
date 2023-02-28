@@ -16,9 +16,18 @@ export const queries = {
             id: Number(args.id),
         },
     }),
-    clients: (_parent: any, args: GraphqlGetArgs) => prisma.client.findMany({
-        orderBy: args.order || [{ name: 'asc' }],
-        where: args.filter,
+    clients: (_parent: any, args: GraphqlGetArgs) => ({
+        page: args.page,
+        perPage: args.perPage,
+        rows: prisma.client.findMany({
+            orderBy: args.order || [{ name: 'asc' }],
+            skip: (args.page && args.perPage && (args.page * args.perPage)),
+            take: args.perPage,
+            where: args.filter,
+        }),
+        total: prisma.client.count({
+            where: args.filter,
+        }),
     }),
 };
 

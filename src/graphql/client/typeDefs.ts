@@ -13,6 +13,13 @@ export const types = `
         projects: [Project!]!
     }
 
+    type Clients {
+        page: Int
+        perPage: Int
+        rows: [Client!]!
+        total: Int
+    }
+
     input ClientFields {
         ${fields}
     }
@@ -30,7 +37,7 @@ export const types = `
 export const queries = `
     Client: Client
     client(id: ID!): Client
-    clients(filter: ClientsFilter, order: [ClientsOrder]): [Client!]!
+    clients(filter: ClientsFilter, order: [ClientsOrder], page: Int, perPage: Int): Clients
 `;
 
 export const mutations = `

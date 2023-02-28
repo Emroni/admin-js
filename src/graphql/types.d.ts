@@ -13,9 +13,18 @@ interface GraphqlGetArgs {
     filter?: IndexedObject;
     id: number;
     order?: IndexedObject<GraphqlOrder>[];
+    page?: number;
+    perPage?: number;
 }
 
 interface GraphqlUpdateArgs<I> {
     id: number;
     input: I;
+}
+
+interface GraphqlRows<T> {
+    page: number;
+    perPage: number;
+    rows: T[];
+    total: number;
 }

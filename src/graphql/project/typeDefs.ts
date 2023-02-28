@@ -13,6 +13,13 @@ export const types = `
         ${fields}
     }
 
+    type Projects {
+        page: Int
+        perPage: Int
+        rows: [Project!]!
+        total: Int
+    }
+
     input ProjectFields {
         ${fields}
     }
@@ -30,7 +37,7 @@ export const types = `
 export const queries = `
     Project: Project
     project(id: ID!): Project
-    projects(filter: ProjectsFilter, order: [ProjectsOrder]): [Project!]!
+    projects(filter: ProjectsFilter, order: [ProjectsOrder], page: Int, perPage: Int): Projects
 `;
 
 export const mutations = `
