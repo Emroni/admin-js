@@ -17,15 +17,20 @@ export const types = `
         ${fields}
     }
 
-    input ProjectFilter {
+    input ProjectsFilter {
         ${fields.replace(/\!/g, '')}
+    }
+
+    input ProjectsOrder {
+        id: String
+        ${fields.replace(/:(.*)$/gm, ': String')}
     }
 `;
 
 export const queries = `
     Project: Project
     project(id: ID!): Project
-    projects(filter: ProjectFilter): [Project!]!
+    projects(filter: ProjectsFilter, order: [ProjectsOrder]): [Project!]!
 `;
 
 export const mutations = `

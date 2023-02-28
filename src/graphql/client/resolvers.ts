@@ -3,11 +3,7 @@ import { prisma } from '../';
 export const model = {
     deletable: (parent: Client) => model.projects(parent).then(projects => !projects.length),
     projects: (parent: Client) => prisma.project.findMany({
-        orderBy: [
-            {
-                name: 'asc',
-            },
-        ],
+        orderBy: [{ name: 'asc' }], // TODO: Add order
         where: {
             clientId: parent.id,
         },
@@ -20,12 +16,9 @@ export const queries = {
             id: Number(args.id),
         },
     }),
-    clients: () => prisma.client.findMany({
-        orderBy: [
-            {
-                name: 'asc',
-            },
-        ],
+    clients: (_parent: any, args: GraphqlGetArgs) => prisma.client.findMany({
+        orderBy: args.order || [{ name: 'asc' }],
+        where: args.filter,
     }),
 };
 

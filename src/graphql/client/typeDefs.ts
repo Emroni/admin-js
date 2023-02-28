@@ -16,12 +16,21 @@ export const types = `
     input ClientFields {
         ${fields}
     }
+
+    input ClientsFilter {
+        ${fields.replace(/\!/g, '')}
+    }
+
+    input ClientsOrder {
+        id: String
+        ${fields.replace(/:(.*)$/gm, ': String')}
+    }
 `;
 
 export const queries = `
     Client: Client
     client(id: ID!): Client
-    clients: [Client!]!
+    clients(filter: ClientsFilter, order: [ClientsOrder]): [Client!]!
 `;
 
 export const mutations = `

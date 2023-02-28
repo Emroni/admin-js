@@ -1,5 +1,5 @@
 type ProjectBilling = 'hourly' | 'fixed';
-type ProjectFilter = Partial<ProjectFields>;
+type ProjectsFilter = Partial<ProjectFields>;
 type ProjectStatus = 'billed' | 'complete' | 'in_progress' | 'new' | 'on_hold';
 
 interface Project extends Entity, ProjectFields {
