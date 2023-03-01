@@ -34,16 +34,10 @@ export const queries = {
             orderBy: parseOrder('name asc', args.order),
             skip: (args.page && args.perPage && (args.page * args.perPage)),
             take: args.perPage,
-            where: {
-                ...args.filter,
-                clientId: args.filter?.clientId ? Number(args.filter?.clientId) : undefined,
-            },
+            where: parseFilter(args.filter),
         }),
         total: prisma.project.count({
-            where: {
-                ...args.filter,
-                clientId: args.filter?.clientId ? Number(args.filter?.clientId) : undefined,
-            },
+            where: parseFilter(args.filter),
         }),
     }),
 };
@@ -64,6 +58,13 @@ export const mutations = {
         },
     }),
 };
+
+function parseFilter(filter?: ProjectsFilter) {
+    return {
+        ...filter,
+        clientId: filter?.clientId ? Number(filter?.clientId) : undefined,
+    };
+}
 
 function parseInput(input: ProjectFields) {
     return {
