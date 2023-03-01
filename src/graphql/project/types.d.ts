@@ -18,5 +18,5 @@ interface ProjectQuery {
 }
 
 interface ProjectsQuery {
-    projects: Project[];
+    projects: GraphqlList<Project>;
 }

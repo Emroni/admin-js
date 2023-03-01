@@ -8,6 +8,12 @@ export default createTheme({
                 variant: 'contained',
             },
         },
+        MuiSelect: {
+            defaultProps: {
+                size: 'small',
+                variant: 'outlined',
+            },
+        },
         MuiTable: {
             defaultProps: {
                 size: 'small',

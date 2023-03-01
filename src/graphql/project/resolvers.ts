@@ -1,3 +1,4 @@
+import { parseOrder } from '@/helpers';
 import { prisma } from '../';
 
 export const model = {
@@ -15,12 +16,25 @@ export const queries = {
             id: Number(args.id),
         },
     }),
-    projects: (_parent: any, args: GraphqlGetArgs) => prisma.project.findMany({
-        orderBy: args.order || [{ name: 'asc' }],
-        where: {
-            ...args.filter,
-            clientId: args.filter?.clientId ? Number(args.filter?.clientId) : undefined,
-        },
+    projects: (_parent: any, args: GraphqlGetArgs) => ({
+        order: args.order || 'name as',
+        page: args.page,
+        perPage: args.perPage,
+        rows: prisma.project.findMany({
+            orderBy: parseOrder('name as', args.order),
+            skip: (args.page && args.perPage && (args.page * args.perPage)),
+            take: args.perPage,
+            where: {
+                ...args.filter,
+                clientId: args.filter?.clientId ? Number(args.filter?.clientId) : undefined,
+            },
+        }),
+        total: prisma.project.count({
+            where: {
+                ...args.filter,
+                clientId: args.filter?.clientId ? Number(args.filter?.clientId) : undefined,
+            },
+        }),
     }),
 };
 

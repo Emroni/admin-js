@@ -1,11 +1,12 @@
 interface TableProps {
     action?: ReactComponentElement<Menu>;
     children: ReactComponentElement<TableColumn>;
-    order?: TableOrder;
-    rows?: IndexedObject[];
+    data?: GraphqlList;
     title: string;
     getRowLink?: string | ((row: IndexedObject) => string);
-    onOrderChange?(order: TableOrder?): void;
+    onOrderChange?(order: GraphqlOrder?): void;
+    onPageChange?(page: number): void;
+    onPerPageChange?(perPage: number): void;
 }
 
 interface TableColumn {
@@ -16,8 +17,4 @@ interface TableColumn {
     options?: EntityPropertyOption[];
     order?: boolean;
     getLink?: string | ((row: IndexedObject) => string);
-}
-
-interface TableOrder {
-    [index: string]: GraphqlOrder;
 }
