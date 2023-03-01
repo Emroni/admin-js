@@ -14,5 +14,5 @@ interface ClientQuery {
 }
 
 interface ClientsQuery {
-    clients: GraphqlRows<Client>;
+    clients: GraphqlList<Client>;
 }

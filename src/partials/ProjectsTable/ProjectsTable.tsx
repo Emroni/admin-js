@@ -7,11 +7,16 @@ import { useState } from 'react';
 export default function ProjectsTable({ clientId }: ProjectsTableProps) {
 
     const [order, setOrder] = useState('name asc');
+    const [page, setPage] = useState(0);
+    const [perPage, setPerPage] = useState(10);
 
     const withClient = !clientId;
 
-    const query = useQuery<ProjectsQuery>(gql`query ($filter: ProjectsFilter, $order: String, $withClient: Boolean!) {
-        projects (filter: $filter, order: $order) {
+    const query = useQuery<ProjectsQuery>(gql`query ($filter: ProjectsFilter, $order: String, $page: Int, $perPage: Int, $withClient: Boolean!) {
+        projects (filter: $filter, order: $order, page: $page, perPage: $perPage) {
+            order,
+            page,
+            perPage,
             rows {
                 billing
                 id
@@ -22,6 +27,7 @@ export default function ProjectsTable({ clientId }: ProjectsTableProps) {
                     name
                 }
             }
+            total
         }
     }`, {
         variables: {
@@ -29,6 +35,8 @@ export default function ProjectsTable({ clientId }: ProjectsTableProps) {
                 clientId,
             },
             order,
+            page,
+            perPage,
             withClient,
         },
     });
@@ -44,11 +52,12 @@ export default function ProjectsTable({ clientId }: ProjectsTableProps) {
 
     return <Table
         action={action}
-        order={order}
-        rows={query.data?.projects.rows}
+        data={query.data?.projects}
         title="Projects"
         getRowLink={project => `/projects/${project.id}`}
         onOrderChange={handleOrderChange}
+        onPageChange={setPage}
+        onPerPageChange={setPerPage}
     >
         <Table.Column name="id" label="ID" />
         <Table.Column name="name" />

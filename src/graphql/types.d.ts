@@ -20,8 +20,8 @@ interface GraphqlUpdateArgs<I> {
     input: I;
 }
 
-interface GraphqlRows<T> {
-    order: []
+interface GraphqlList<T = IndexedObject> {
+    order: string;
     page: number;
     perPage: number;
     rows: T[];

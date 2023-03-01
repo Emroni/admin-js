@@ -6,9 +6,14 @@ import { useState } from 'react';
 export default function Clients() {
 
     const [order, setOrder] = useState('name asc');
+    const [page, setPage] = useState(0);
+    const [perPage, setPerPage] = useState(10);
 
-    const query = useQuery<ClientsQuery>(gql`query ($order: String) {
-        clients (order: $order) {
+    const query = useQuery<ClientsQuery>(gql`query ($order: String, $page: Int, $perPage: Int) {
+        clients (order: $order, page: $page, perPage: $perPage) {
+            order,
+            page,
+            perPage,
             rows {
                 address
                 currency
@@ -16,10 +21,13 @@ export default function Clients() {
                 id
                 name
             }
+            total
         }
     }`, {
         variables: {
             order,
+            page,
+            perPage,
         },
     });
 
@@ -34,11 +42,12 @@ export default function Clients() {
 
     return <Table
         action={action}
-        order={order}
-        rows={query.data?.clients.rows}
+        data={query.data?.clients}
         title="Clients"
         getRowLink={client => `/clients/${client.id}`}
         onOrderChange={handleOrderChange}
+        onPageChange={setPage}
+        onPerPageChange={setPerPage}
     >
         <Table.Column name="id" label="ID" />
         <Table.Column name="name" />
