@@ -17,11 +17,11 @@ export const queries = {
         },
     }),
     projects: (_parent: any, args: GraphqlGetArgs) => ({
-        order: args.order || 'name as',
+        order: args.order || 'name asc',
         page: args.page,
         perPage: args.perPage,
         rows: prisma.project.findMany({
-            orderBy: parseOrder('name as', args.order),
+            orderBy: parseOrder('name asc', args.order),
             skip: (args.page && args.perPage && (args.page * args.perPage)),
             take: args.perPage,
             where: {
