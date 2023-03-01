@@ -6,9 +6,13 @@ export default function FormField({ disabled, label, loading, name, options, req
     const [field, _meta, helpers] = useField(name);
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-        helpers.setValue(e.target.value);
+        let value: any = e.target.value;
+        if (type === 'number') {
+            value = parseFloat(value);
+        }
+        helpers.setValue(value);
     }
-    
+
     return <TextField
         disabled={disabled || loading}
         fullWidth
@@ -19,7 +23,7 @@ export default function FormField({ disabled, label, loading, name, options, req
         required={required}
         select={!!options}
         type={type}
-        value={field.value || ''}
+        value={(field.value !== null && field.value !== undefined) ? field.value : ''}
         onChange={handleChange}
     >
         {options?.map((option, index) => (

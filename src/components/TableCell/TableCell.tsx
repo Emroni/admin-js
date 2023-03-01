@@ -32,7 +32,7 @@ export default function TableCell({ column, row }: TableCellProps) {
     ]);
 
     return <MuiTableCell align={column.align}>
-        {value || (
+        {(value !== null && value !== undefined) ? value : (
             <span>&nbsp;</span>
         )}
     </MuiTableCell>;
