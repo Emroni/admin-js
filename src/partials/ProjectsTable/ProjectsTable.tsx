@@ -6,12 +6,12 @@ import { useState } from 'react';
 
 export default function ProjectsTable({ clientId }: ProjectsTableProps) {
 
-    const [order, setOrder] = useState<TableOrder>({ name: 'asc' });
+    const [order, setOrder] = useState('name asc');
 
     const withClient = !clientId;
 
-    const query = useQuery<ProjectsQuery>(gql`query ($filter: ProjectsFilter, $order: ProjectsOrder, $withClient: Boolean!) {
-        projects (filter: $filter, order: [$order]) {
+    const query = useQuery<ProjectsQuery>(gql`query ($filter: ProjectsFilter, $order: String, $withClient: Boolean!) {
+        projects (filter: $filter, order: $order) {
             rows {
                 billing
                 id
@@ -33,8 +33,8 @@ export default function ProjectsTable({ clientId }: ProjectsTableProps) {
         },
     });
 
-    function handleOrderChange(order: TableOrder | null) {
-        const newOrder = order || { name: 'asc' };
+    function handleOrderChange(order: string | null) {
+        const newOrder = order || 'name asc';
         setOrder(newOrder);
     }
 

@@ -35,19 +35,10 @@ export default function Table({ action, children, order, rows, title, getRowLink
 
     function handleOrderChange(column: TableColumn) {
         if (column.order && onOrderChange) {
-            if (!order?.[column.name]) {
-                // Set new order
-                onOrderChange({
-                    [column.name]: 'asc',
-                });
-            } else if (order[column.name] !== 'desc') {
-                // Flip existing order
-                onOrderChange({
-                    [column.name]: 'desc',
-                });
-            } else {
-                // Set default order
-                onOrderChange(null);
+            switch (order) {
+                case `${column.name} asc`: onOrderChange(`${column.name} desc`); break;
+                case `${column.name} desc`: onOrderChange(null); break;
+                default: onOrderChange(`${column.name} asc`); break;
             }
         }
     }
@@ -61,8 +52,8 @@ export default function Table({ action, children, order, rows, title, getRowLink
                             {column.label}
                             {column.order && (
                                 <Box display="inline-block" position="relative">
-                                    <ArrowDropUp sx={{ left: 0, opacity: order?.[column.name] === 'asc' ? 1 : 0.3, position: 'absolute', top: -22, width: 20 }} />
-                                    <ArrowDropDown sx={{ left: 0, opacity: order?.[column.name] === 'desc' ? 1 : 0.3, position: 'absolute', top: -12, width: 20 }} />
+                                    <ArrowDropUp sx={{ left: 0, opacity: order === `${column.name} asc` ? 1 : 0.3, position: 'absolute', top: -22, width: 20 }} />
+                                    <ArrowDropDown sx={{ left: 0, opacity: order === `${column.name} desc` ? 1 : 0.3, position: 'absolute', top: -12, width: 20 }} />
                                 </Box>
                             )}
                         </TableCell>

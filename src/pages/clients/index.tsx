@@ -5,10 +5,10 @@ import { useState } from 'react';
 
 export default function Clients() {
 
-    const [order, setOrder] = useState<TableOrder>({ name: 'asc' });
+    const [order, setOrder] = useState('name asc');
 
-    const query = useQuery<ClientsQuery>(gql`query ($order: ClientsOrder) {
-        clients (order: [$order]) {
+    const query = useQuery<ClientsQuery>(gql`query ($order: String) {
+        clients (order: $order) {
             rows {
                 address
                 currency
@@ -23,8 +23,8 @@ export default function Clients() {
         },
     });
 
-    function handleOrderChange(order: TableOrder | null) {
-        const newOrder = order || { name: 'asc' };
+    function handleOrderChange(order: string | null) {
+        const newOrder = order || 'name asc';
         setOrder(newOrder);
     }
 

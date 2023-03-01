@@ -14,10 +14,11 @@ export const types = `
     }
 
     type Projects {
-        page: Int
-        perPage: Int
+        order: String!
+        page: Int!
+        perPage: Int!
         rows: [Project!]!
-        total: Int
+        total: Int!
     }
 
     input ProjectFields {
@@ -27,17 +28,12 @@ export const types = `
     input ProjectsFilter {
         ${fields.replace(/\!/g, '')}
     }
-
-    input ProjectsOrder {
-        id: String
-        ${fields.replace(/:(.*)$/gm, ': String')}
-    }
 `;
 
 export const queries = `
     Project: Project
     project(id: ID!): Project
-    projects(filter: ProjectsFilter, order: [ProjectsOrder], page: Int, perPage: Int): Projects
+    projects(filter: ProjectsFilter, order: String, page: Int, perPage: Int): Projects
 `;
 
 export const mutations = `

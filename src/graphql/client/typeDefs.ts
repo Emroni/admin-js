@@ -14,10 +14,11 @@ export const types = `
     }
 
     type Clients {
-        page: Int
-        perPage: Int
+        order: String!
+        page: Int!
+        perPage: Int!
         rows: [Client!]!
-        total: Int
+        total: Int!
     }
 
     input ClientFields {
@@ -27,17 +28,12 @@ export const types = `
     input ClientsFilter {
         ${fields.replace(/\!/g, '')}
     }
-
-    input ClientsOrder {
-        id: String
-        ${fields.replace(/:(.*)$/gm, ': String')}
-    }
 `;
 
 export const queries = `
     Client: Client
     client(id: ID!): Client
-    clients(filter: ClientsFilter, order: [ClientsOrder], page: Int, perPage: Int): Clients
+    clients(filter: ClientsFilter, order: String, page: Int, perPage: Int): Clients
 `;
 
 export const mutations = `
