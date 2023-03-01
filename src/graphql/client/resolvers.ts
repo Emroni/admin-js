@@ -1,4 +1,4 @@
-import { parseOrder } from '@/helpers';
+import { parseNumber, parseOrder } from '@/helpers';
 import { prisma } from '../';
 import * as projectResolver from '../project/resolvers';
 
@@ -18,7 +18,7 @@ export const model = {
 export const queries = {
     client: (_parent: any, args: GraphqlGetArgs) => prisma.client.findUnique({
         where: {
-            id: Number(args.id),
+            id: parseNumber(args.id),
         },
     }),
     clients: (_parent: any, args: GraphqlGetArgs) => ({
@@ -43,12 +43,12 @@ export const mutations = {
     }),
     clientDelete: (_parent: any, args: GraphqlDeleteArgs) => prisma.client.delete({
         where: {
-            id: Number(args.id),
+            id: parseNumber(args.id),
         },
     }),
     clientUpdate: (_parent: any, args: GraphqlUpdateArgs<ClientFields>) => prisma.client.update({
         where: {
-            id: Number(args.id),
+            id: parseNumber(args.id),
         },
         data: args.input,
     }),

@@ -1,4 +1,4 @@
-import { parseOrder } from '@/helpers';
+import { parseNumber, parseOrder } from '@/helpers';
 import { prisma } from '../';
 import * as taskResolver from '../task/resolvers';
 
@@ -23,7 +23,7 @@ export const model = {
 export const queries = {
     project: (_parent: any, args: GraphqlGetArgs) => prisma.project.findUnique({
         where: {
-            id: Number(args.id),
+            id: parseNumber(args.id),
         },
     }),
     projects: (_parent: any, args: GraphqlGetArgs) => ({
@@ -48,13 +48,13 @@ export const mutations = {
     }),
     projectDelete: (_parent: any, args: GraphqlDeleteArgs) => prisma.project.delete({
         where: {
-            id: Number(args.id),
+            id: parseNumber(args.id),
         },
     }),
     projectUpdate: (_parent: any, args: GraphqlUpdateArgs<ProjectFields>) => prisma.project.update({
         data: parseInput(args.input),
         where: {
-            id: Number(args.id),
+            id: parseNumber(args.id),
         },
     }),
 };
@@ -62,7 +62,7 @@ export const mutations = {
 function parseFilter(filter?: ProjectsFilter) {
     return {
         ...filter,
-        clientId: filter?.clientId ? Number(filter?.clientId) : undefined,
+        clientId: parseNumber(filter?.clientId),
     };
 }
 
@@ -71,7 +71,7 @@ function parseInput(input: ProjectFields) {
         ...input,
         client: {
             connect: {
-                id: Number(input.clientId),
+                id: parseNumber(input.clientId),
             },
         },
         clientId: undefined,
