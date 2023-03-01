@@ -10,6 +10,7 @@ export const types = `
         id: ID!
         client: Client!
         deletable: Boolean!
+        tasks: Tasks!
         ${fields}
     }
 

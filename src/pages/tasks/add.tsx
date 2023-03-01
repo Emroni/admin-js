@@ -39,7 +39,7 @@ export default function TaskAdd() {
 
     return <Form initialValues={page.query} loading={!!mutation.data || mutation.loading} title="Add Task" onSubmit={handleSubmit}>
         <Form.Field name="name" required />
-        <Form.Field name="projectId" label="Client" options={query.data?.projects.rows} required />
+        <Form.Field name="projectId" label="Project" options={query.data?.projects.rows} required />
         <Form.Field name="estimatedHours" required type="number" />
         <Form.Field name="price" required type="number" />
     </Form>;
