@@ -9,7 +9,7 @@ interface GraphqlDeleteArgs {
 
 interface GraphqlGetArgs {
     filter?: IndexedObject;
-    id: number;
+    id?: number;
     order?: string;
     page?: number;
     perPage?: number;

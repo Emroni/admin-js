@@ -1,11 +1,15 @@
 import { parseOrder } from '@/helpers';
 import { prisma } from '../';
+import * as projectResolver from '../project/resolvers';
 
 export const model = {
-    deletable: (parent: Client) => model.projects(parent).then(projects => !projects.length),
-    projects: (parent: Client) => prisma.project.findMany({
-        orderBy: [{ name: 'asc' }], // TODO: Add order
+    deletable: (parent: Client) => prisma.project.count({
         where: {
+            clientId: parent.id,
+        },
+    }).then(count => !count),
+    projects: (parent: Client) => projectResolver.queries.projects(null, {
+        filter: {
             clientId: parent.id,
         },
     }),

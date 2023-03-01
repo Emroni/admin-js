@@ -15,11 +15,11 @@ export default function Clients() {
             page,
             perPage,
             rows {
-                address
-                currency
-                email
                 id
                 name
+                projects {
+                    total
+                }
             }
             total
         }
@@ -49,11 +49,8 @@ export default function Clients() {
         onPageChange={setPage}
         onPerPageChange={setPerPage}
     >
-        <Table.Column name="id" label="ID" />
         <Table.Column name="name" />
-        <Table.Column name="currency" />
-        <Table.Column name="email" getLink={client => `mailto:${client.email}`} />
-        <Table.Column name="address" />
+        <Table.Column name="projects.total" label="Projects" align="right" />
     </Table>;
 
 }

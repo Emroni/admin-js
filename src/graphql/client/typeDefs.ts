@@ -10,7 +10,7 @@ export const types = `
         deletable: Boolean!
         id: ID!
         ${fields}
-        projects: [Project!]!
+        projects: Projects!
     }
 
     type Clients {
