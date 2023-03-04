@@ -11,8 +11,10 @@ export default function ProjectAdd() {
 
     const query = useQuery<ClientsQuery & ProjectQuery>(gql`query {
         clients {
-            id
-            name
+            rows {
+                id
+                name
+            }
         }
     }`);
 
@@ -38,7 +40,7 @@ export default function ProjectAdd() {
 
     return <Form initialValues={page.query} loading={!!mutation.data || mutation.loading} title="Add Project" onSubmit={handleSubmit}>
         <Form.Field name="name" required />
-        <Form.Field name="clientId" label="Client" options={query.data?.clients} required />
+        <Form.Field name="clientId" label="Client" options={query.data?.clients.rows} required />
         <Form.Field name="billing" options={PROJECT_BILLING} required />
         <Form.Field name="status" options={PROJECT_STATUS} required />
     </Form>;

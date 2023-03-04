@@ -1,5 +1,6 @@
-import { parseOrder } from '@/helpers';
+import { parseNumber, parseOrder } from '@/helpers';
 import { prisma } from '../';
+import * as taskResolver from '../task/resolvers';
 
 export const model = {
     client: (parent: Project) => prisma.client.findUnique({
@@ -7,13 +8,22 @@ export const model = {
             id: parent.clientId,
         },
     }),
-    deletable: () => true, // TODO: Resolve deletable
+    deletable: (parent: Project) => prisma.task.count({
+        where: {
+            projectId: parent.id,
+        },
+    }).then(count => !count),
+    tasks: (parent: Project) => taskResolver.queries.tasks(null, {
+        filter: {
+            projectId: parent.id,
+        },
+    }),
 };
 
 export const queries = {
     project: (_parent: any, args: GraphqlGetArgs) => prisma.project.findUnique({
         where: {
-            id: Number(args.id),
+            id: parseNumber(args.id),
         },
     }),
     projects: (_parent: any, args: GraphqlGetArgs) => ({
@@ -24,16 +34,10 @@ export const queries = {
             orderBy: parseOrder('name asc', args.order),
             skip: (args.page && args.perPage && (args.page * args.perPage)),
             take: args.perPage,
-            where: {
-                ...args.filter,
-                clientId: args.filter?.clientId ? Number(args.filter?.clientId) : undefined,
-            },
+            where: parseFilter(args.filter),
         }),
         total: prisma.project.count({
-            where: {
-                ...args.filter,
-                clientId: args.filter?.clientId ? Number(args.filter?.clientId) : undefined,
-            },
+            where: parseFilter(args.filter),
         }),
     }),
 };
@@ -44,23 +48,30 @@ export const mutations = {
     }),
     projectDelete: (_parent: any, args: GraphqlDeleteArgs) => prisma.project.delete({
         where: {
-            id: Number(args.id),
+            id: parseNumber(args.id),
         },
     }),
     projectUpdate: (_parent: any, args: GraphqlUpdateArgs<ProjectFields>) => prisma.project.update({
         data: parseInput(args.input),
         where: {
-            id: Number(args.id),
+            id: parseNumber(args.id),
         },
     }),
 };
+
+function parseFilter(filter?: ProjectsFilter) {
+    return {
+        ...filter,
+        clientId: parseNumber(filter?.clientId),
+    };
+}
 
 function parseInput(input: ProjectFields) {
     return {
         ...input,
         client: {
             connect: {
-                id: Number(input.clientId),
+                id: parseNumber(input.clientId),
             },
         },
         clientId: undefined,

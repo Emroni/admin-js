@@ -1,6 +1,7 @@
 import { Menu, Summary } from '@/components';
 import { PROJECT_BILLING, PROJECT_STATUS } from '@/constants';
 import { usePage } from '@/contexts/Page';
+import { TasksTable } from '@/partials';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { Delete, Edit } from '@mui/icons-material';
 import { useRouter } from 'next/router';
@@ -65,12 +66,15 @@ export default function ProjectView() {
         <Menu.Item color="error" disabled={!project?.deletable} icon={Delete} label="Delete" onClick={handleDelete} />
     </Menu>;
 
-    return <Summary action={action} entity={project} loading={mutation.loading}>
-        <Summary.Field name="id" label="ID" />
-        <Summary.Field name="name" />
-        <Summary.Field name="client.name" label="Client" getLink={`/clients/${project?.client.id}`} />
-        <Summary.Field name="billing" options={PROJECT_BILLING} />
-        <Summary.Field name="status" options={PROJECT_STATUS} />
-    </Summary>;
+    return <>
+        <Summary action={action} entity={project} loading={mutation.loading}>
+            <Summary.Field name="id" label="ID" />
+            <Summary.Field name="name" />
+            <Summary.Field name="client.name" label="Client" getLink={`/clients/${project?.client.id}`} />
+            <Summary.Field name="billing" options={PROJECT_BILLING} />
+            <Summary.Field name="status" options={PROJECT_STATUS} />
+        </Summary>
+        <TasksTable projectId={page.query.id} />
+    </>;
 
 }
