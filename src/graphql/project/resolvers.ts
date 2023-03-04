@@ -1,18 +1,13 @@
 import { parseNumber, parseOrder } from '@/helpers';
 import { prisma } from '../';
+import * as clientResolver from '../client/resolvers';
 import * as taskResolver from '../task/resolvers';
 
 export const model = {
-    client: (parent: Project) => prisma.client.findUnique({
-        where: {
-            id: parent.clientId,
-        },
+    deletable: (parent: Project) => model.tasks(parent).then(tasks => !tasks.total),
+    client: (parent: Project) => clientResolver.queries.client(null, {
+        id: parent.clientId,
     }),
-    deletable: (parent: Project) => prisma.task.count({
-        where: {
-            projectId: parent.id,
-        },
-    }).then(count => !count),
     tasks: (parent: Project) => taskResolver.queries.tasks(null, {
         filter: {
             projectId: parent.id,
@@ -26,17 +21,17 @@ export const queries = {
             id: parseNumber(args.id),
         },
     }),
-    projects: (_parent: any, args: GraphqlGetArgs) => ({
+    projects: async (_parent: any, args: GraphqlGetArgs) => ({
         order: args.order || 'name asc',
         page: args.page,
         perPage: args.perPage,
-        rows: prisma.project.findMany({
+        rows: await prisma.project.findMany({
             orderBy: parseOrder('name asc', args.order),
             skip: (args.page && args.perPage && (args.page * args.perPage)),
             take: args.perPage,
             where: parseFilter(args.filter),
         }),
-        total: prisma.project.count({
+        total: await prisma.project.count({
             where: parseFilter(args.filter),
         }),
     }),

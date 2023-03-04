@@ -9,6 +9,7 @@ export const types = `
     type Task {
         deletable: Boolean!
         id: ID!
+        client: Client!
         project: Project!
         ${fields}
     }
@@ -26,6 +27,7 @@ export const types = `
     }
 
     input TasksFilter {
+        clientId: ID
         ${fields.replace(/\!/g, '')}
     }
 `;

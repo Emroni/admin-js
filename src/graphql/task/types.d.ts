@@ -1,5 +1,3 @@
-type TasksFilter = Partial<TaskFields>;
-
 interface Task extends Entity, TaskFields {
     project: Project;
 }
@@ -17,4 +15,8 @@ interface TaskQuery {
 
 interface TasksQuery {
     tasks: GraphqlList<Task>;
+}
+
+interface TasksFilter extends Partial<TaskFields> {
+    clientId?: number;
 }

@@ -1,13 +1,18 @@
-import { parseNumber, parseOrder } from '@/helpers';
+import { parseFilterIds, parseNumber, parseOrder } from '@/helpers';
 import { prisma } from '../';
+import * as clientResolver from '../client/resolvers';
+import * as projectResolver from '../project/resolvers';
 
 export const model = {
-    project: (parent: Task) => prisma.project.findUnique({
-        where: {
-            id: parent.projectId,
-        },
-    }),
     deletable: () => true, // TODO: Resolve deletable
+    client: (parent: Task) => model.project(parent).then(project => {
+        return clientResolver.queries.client(null, {
+            id: project?.clientId,
+        });
+    }),
+    project: (parent: Task) => projectResolver.queries.project(null, {
+        id: parent.projectId,
+    }),
 };
 
 export const queries = {
@@ -16,17 +21,17 @@ export const queries = {
             id: parseNumber(args.id),
         },
     }),
-    tasks: (_parent: any, args: GraphqlGetArgs) => ({
+    tasks: async (_parent: any, args: GraphqlGetArgs) => ({
         order: args.order || 'id desc',
         page: args.page,
         perPage: args.perPage,
-        rows: prisma.task.findMany({
+        rows: await prisma.task.findMany({
             orderBy: parseOrder('id desc', args.order),
             skip: (args.page && args.perPage && (args.page * args.perPage)),
             take: args.perPage,
             where: parseFilter(args.filter),
         }),
-        total: prisma.task.count({
+        total: await prisma.task.count({
             where: parseFilter(args.filter),
         }),
     }),
@@ -50,10 +55,22 @@ export const mutations = {
 };
 
 function parseFilter(filter?: TasksFilter) {
-    return {
+    const where: any = {
         ...filter,
-        projectId: parseNumber(filter?.projectId),
     };
+
+    if (where.clientId) {
+        where.project = {
+            clientId: parseFilterIds(where.clientId),
+        };
+        delete where.clientId;
+    }
+
+    if (where.projectId) {
+        where.projectId = parseFilterIds(where?.projectId);
+    }
+    
+    return where;
 }
 
 function parseInput(input: TaskFields) {
