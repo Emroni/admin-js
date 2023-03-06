@@ -67,7 +67,7 @@ export default function TaskView() {
     return <Summary action={action} entity={task} loading={mutation.loading}>
         <Summary.Field name="id" label="ID" />
         <Summary.Field name="name" />
-        <Summary.Field name="project.name" label="Client" getLink={`/projects/${task?.project.id}`} />
+        <Summary.Field name="project.name" label="Project" getLink={`/projects/${task?.project.id}`} />
         <Summary.Field name="estimatedHours" />
         <Summary.Field name="price" />
     </Summary>;
