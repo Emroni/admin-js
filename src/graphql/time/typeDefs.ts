@@ -1,6 +1,6 @@
 const fields = `
-    date: String!
-    duration: String!
+    date: DateScalar!
+    duration: TimeScalar!
     taskId: ID!
 `;
 

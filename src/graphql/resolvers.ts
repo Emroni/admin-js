@@ -1,5 +1,6 @@
 import * as client from './client/resolvers';
 import * as project from './project/resolvers';
+export * from './scalars';
 import * as task from './task/resolvers';
 import * as time from './time/resolvers';
 

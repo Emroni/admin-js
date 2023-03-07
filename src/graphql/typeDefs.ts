@@ -4,6 +4,9 @@ import * as task from './task/typeDefs';
 import * as time from './time/typeDefs';
 
 export const typeDefs = `
+    scalar DateScalar
+    scalar TimeScalar
+
     ${client.types}
     ${project.types}
     ${task.types}
