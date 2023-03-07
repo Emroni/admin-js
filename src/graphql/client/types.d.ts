@@ -1,5 +1,7 @@
 interface Client extends Entity, ClientFields {
     projects: Project[];
+    tasks: Task[];
+    times: Time[];
 }
 
 interface  ClientFields {

@@ -4,6 +4,8 @@ type ProjectStatus = 'billed' | 'complete' | 'in_progress' | 'new' | 'on_hold';
 
 interface Project extends Entity, ProjectFields {
     client: Client;
+    tasks: Task[];
+    times: Time[];
 }
 
 interface ProjectFields {

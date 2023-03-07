@@ -1,5 +1,7 @@
 interface Task extends Entity, TaskFields {
+    client: Client;
     project: Project;
+    times: Time[];
 }
 
 interface TaskFields {

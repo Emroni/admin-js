@@ -1,19 +1,28 @@
 import { parseNumber, parseOrder } from '@/helpers';
 import { prisma } from '../';
-import * as projectResolver from '../project/resolvers';
-import * as taskResolver from '../task/resolvers';
 
 export const model = {
-    deletable: (parent: Client) => model.projects(parent).then(projects => !projects.total),
-    projects: (parent: Client) => projectResolver.queries.projects(null, {
-        filter: {
+    deletable: (parent: Client) => model.projects(parent).then(projects => !projects.length),
+    projects: (parent: Client) => prisma.project.findMany({
+        where: {
             clientId: parent.id,
         },
     }),
     tasks: (parent: Client) => model.projects(parent).then(projects => {
-        return taskResolver.queries.tasks(null, {
-            filter: {
-                projectId: projects.rows.map(row => row.id),
+        return prisma.task.findMany({
+            where: {
+                projectId: {
+                    in: projects.map(project => project.id),
+                },
+            },
+        });
+    }),
+    times: (parent: Client) => model.tasks(parent).then(tasks => {
+        return prisma.time.findMany({
+            where: {
+                taskId: {
+                    in: tasks.map(task => task.id),
+                },
             },
         });
     }),

@@ -1,5 +1,6 @@
 import { Menu, Summary } from '@/components';
 import { usePage } from '@/contexts/Page';
+import { TimesTable } from '@/partials';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { Delete, Edit } from '@mui/icons-material';
 import { useRouter } from 'next/router';
@@ -18,6 +19,10 @@ export default function TaskView() {
             name
             estimatedHours
             price
+            client {
+                id
+                name
+            }
             project {
                 id
                 name
@@ -64,12 +69,15 @@ export default function TaskView() {
         <Menu.Item color="error" disabled={!task?.deletable} icon={Delete} label="Delete" onClick={handleDelete} />
     </Menu>;
 
-    return <Summary action={action} entity={task} loading={mutation.loading}>
-        <Summary.Field name="id" label="ID" />
-        <Summary.Field name="name" />
-        <Summary.Field name="project.name" label="Client" getLink={`/projects/${task?.project.id}`} />
-        <Summary.Field name="estimatedHours" />
-        <Summary.Field name="price" />
-    </Summary>;
+    return <>
+        <Summary action={action} entity={task} loading={mutation.loading}>
+            <Summary.Field name="name" />
+            <Summary.Field name="client.name" label="Client" getLink={`/clients/${task?.client.id}`} />
+            <Summary.Field name="project.name" label="Project" getLink={`/projects/${task?.project.id}`} />
+            <Summary.Field name="estimatedHours" label="Estimated hours" />
+            <Summary.Field name="price" />
+        </Summary>
+        <TimesTable taskId={page.query.id} />
+    </>;
 
 }

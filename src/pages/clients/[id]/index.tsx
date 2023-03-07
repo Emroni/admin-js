@@ -1,6 +1,6 @@
 import { Menu, Summary } from '@/components';
 import { usePage } from '@/contexts/Page';
-import { ProjectsTable } from '@/partials';
+import { ProjectsTable, TasksTable, TimesTable } from '@/partials';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { Delete, Edit } from '@mui/icons-material';
 import { useRouter } from 'next/router';
@@ -71,6 +71,8 @@ export default function ClientView() {
             <Summary.Field name="address" />
         </Summary>
         <ProjectsTable clientId={page.query.id} />
+        <TasksTable clientId={page.query.id} />
+        <TimesTable clientId={page.query.id} />
     </>;
 
 }

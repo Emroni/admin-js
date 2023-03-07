@@ -7,10 +7,11 @@ const fields = `
 
 export const types = `
     type Project {
-        id: ID!
         client: Client!
         deletable: Boolean!
-        tasks: Tasks!
+        id: ID!
+        tasks: [Task!]!
+        times: [Time!]!
         ${fields}
     }
 

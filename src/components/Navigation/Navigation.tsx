@@ -1,4 +1,4 @@
-import { Dashboard, People, Task, Work } from '@mui/icons-material';
+import { Dashboard, People, Task, Timer, Work } from '@mui/icons-material';
 import { Box, ListItemIcon, ListItemText, MenuItem, MenuList } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -14,6 +14,7 @@ export default function Navigation() {
             { icon: <People />, path: '/clients', title: 'Clients' },
             { icon: <Work />, path: '/projects', title: 'Projects' },
             { icon: <Task />, path: '/tasks', title: 'Tasks' },
+            { icon: <Timer />, path: '/times', title: 'Times' },
         ].map(item => ({
             ...item,
             selected: item.path === '/' ? (item.path === router.pathname) : router.pathname.startsWith(item.path),
