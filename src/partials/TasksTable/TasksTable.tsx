@@ -21,6 +21,7 @@ export default function TasksTable({ projectId }: TasksTableProps) {
                 name
                 estimatedHours
                 price
+                workedHours
                 project @include(if: $withProject) {
                     id
                     name
@@ -62,7 +63,8 @@ export default function TasksTable({ projectId }: TasksTableProps) {
         {withProject && (
             <Table.Column name="project.name" label="Project" getLink={task => `/projects/${task.project?.id}`} />
         )}
-        <Table.Column name="estimatedHours" align="right" />
+        <Table.Column name="estimatedHours" label="Estimated hours" align="right" type="hours" />
+        <Table.Column name="workedHours" label="Worked hours" align="right" type="hours" />
         <Table.Column name="price" align="right" />
     </Table>;
 

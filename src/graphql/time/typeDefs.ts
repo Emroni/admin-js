@@ -8,6 +8,7 @@ export const types = `
     type Time {
         client: Client!
         deletable: Boolean!
+        hours: Float!
         id: ID!
         project: Project!
         task: Task!

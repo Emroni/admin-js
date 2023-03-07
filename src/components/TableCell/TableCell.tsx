@@ -1,4 +1,4 @@
-import { getNestedValue } from '@/helpers';
+import { getNestedValue, hoursToTime } from '@/helpers';
 import { Link, TableCell as MuiTableCell } from '@mui/material';
 import NextLink from 'next/link';
 import { useEffect, useState } from 'react';
@@ -11,15 +11,22 @@ export default function TableCell({ column, row }: TableCellProps) {
         // Get value
         let newValue = column.children || getNestedValue(row, column.name);
 
+        // Check hours
+        if (column.type === 'hours') {
+            newValue = hoursToTime(newValue);
+        }
+
         // Check array
         if (Array.isArray(newValue)) {
             newValue = newValue.length;
         }
 
         // Check options
-        const option = column.options?.find(option => option.value === newValue || option.id === newValue || option.name === newValue);
-        if (option) {
-            newValue = option.label || option.name || newValue;
+        if (column.options) {
+            const option = column.options.find(option => option.value === newValue || option.id === newValue || option.name === newValue);
+            if (option) {
+                newValue = option.label || option.name || newValue;
+            }
         }
 
         // Check link

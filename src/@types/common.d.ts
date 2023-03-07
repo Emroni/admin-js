@@ -1,3 +1,5 @@
+type ValueType = 'hours' | 'text';
+
 interface Entity extends IndexedObject {
     __typename: string;
     deletable: boolean;

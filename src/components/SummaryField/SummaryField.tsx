@@ -1,9 +1,9 @@
-import { getNestedValue } from '@/helpers';
+import { getNestedValue, hoursToTime } from '@/helpers';
 import { capitalize, Link, TableCell, TableRow } from '@mui/material';
 import NextLink from 'next/link';
 import { useEffect, useState } from 'react';
 
-export default function SummaryField({ children, entity, label, name, options, getLink }: SummaryFieldProps) {
+export default function SummaryField({ children, entity, label, name, options, type, getLink }: SummaryFieldProps) {
 
     const [value, setValue] = useState<any>(null);
 
@@ -11,10 +11,22 @@ export default function SummaryField({ children, entity, label, name, options, g
         // Get value
         let newValue = children || (entity ? getNestedValue(entity, name) : null);
 
+        // Check hours
+        if (type === 'hours') {
+            newValue = hoursToTime(newValue);
+        }
+
+        // Check array
+        if (Array.isArray(newValue)) {
+            newValue = newValue.length;
+        }
+
         // Check options
-        const option = options?.find(option => option.value === newValue || option.id === newValue || option.name === newValue);
-        if (option) {
-            newValue = option.label || option.name || newValue;
+        if (options) {
+            const option = options.find(option => option.value === newValue || option.id === newValue || option.name === newValue);
+            if (option) {
+                newValue = option.label || option.name || newValue;
+            }
         }
 
         // Check link
@@ -32,6 +44,7 @@ export default function SummaryField({ children, entity, label, name, options, g
         getLink,
         name,
         options,
+        type,
     ]);
 
     return <TableRow>

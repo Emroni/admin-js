@@ -4,5 +4,6 @@ interface SummaryFieldProps {
     label?: string;
     name: string;
     options?: EntityPropertyOption[];
+    type?: ValueType;
     getLink?: string | ((entity: Entity) => string);
 }

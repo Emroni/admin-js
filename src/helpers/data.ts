@@ -2,7 +2,6 @@ export function getNestedValue(data: IndexedObject, path: string) {
     return path.split('.').reduce((parent: IndexedObject, child: string) => parent?.[child], data || {});
 }
 
-
 export function parseFilterIds(ids: any) {
     if (Array.isArray(ids)) {
         return {

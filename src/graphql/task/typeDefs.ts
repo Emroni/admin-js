@@ -12,6 +12,7 @@ export const types = `
         id: ID!
         project: Project!
         times: [Time!]!
+        workedHours: Float!
         ${fields}
     }
 

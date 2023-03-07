@@ -16,5 +16,6 @@ interface TableColumn {
     name: string;
     options?: EntityPropertyOption[];
     order?: boolean;
+    type?: ValueType;
     getLink?: string | ((row: IndexedObject) => string);
 }

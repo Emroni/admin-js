@@ -19,6 +19,7 @@ export default function TaskView() {
             name
             estimatedHours
             price
+            workedHours
             client {
                 id
                 name
@@ -74,7 +75,8 @@ export default function TaskView() {
             <Summary.Field name="name" />
             <Summary.Field name="client.name" label="Client" getLink={`/clients/${task?.client.id}`} />
             <Summary.Field name="project.name" label="Project" getLink={`/projects/${task?.project.id}`} />
-            <Summary.Field name="estimatedHours" label="Estimated hours" />
+            <Summary.Field name="estimatedHours" label="Estimated hours" type="hours" />
+            <Summary.Field name="workedHours" label="Estimated hours" type="hours" />
             <Summary.Field name="price" />
         </Summary>
         <TimesTable taskId={page.query.id} />

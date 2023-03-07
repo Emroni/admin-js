@@ -1,9 +1,14 @@
 import { parseFilterIds, parseNumber, parseOrder } from '@/helpers';
+import dayjs from 'dayjs';
 import { prisma } from '../';
 
 export const model = {
     client: (parent: Time) => model.project(parent).client(),
     deletable: () => true, // TODO: Resolve deletable
+    hours: (parent: Time) => {
+        const duration = dayjs.utc(parent.duration);
+        return duration.hour() + duration.minute() / 60;
+    },
     project: (parent: Time) => model.task(parent).project(),
     task: (parent: Time) => prisma.task.findUnique({
         where: {
