@@ -1,7 +1,7 @@
 import { Menu, Summary } from '@/components';
 import { PROJECT_BILLING, PROJECT_STATUS } from '@/constants';
 import { usePage } from '@/contexts/Page';
-import { TasksTable } from '@/partials';
+import { TasksTable, TimesTable } from '@/partials';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { Delete, Edit } from '@mui/icons-material';
 import { useRouter } from 'next/router';
@@ -75,6 +75,7 @@ export default function ProjectView() {
             <Summary.Field name="status" options={PROJECT_STATUS} />
         </Summary>
         <TasksTable projectId={page.query.id} />
+        <TimesTable projectId={page.query.id} />
     </>;
 
 }

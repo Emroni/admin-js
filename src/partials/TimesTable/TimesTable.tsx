@@ -9,10 +9,10 @@ export default function TimesTable({ clientId, projectId, taskId }: TimesTablePr
     const [page, setPage] = useState(0);
     const [perPage, setPerPage] = useState(10);
 
-    const withClient = !clientId;
-    const withProject = !projectId;
     const withTask = !taskId;
-
+    const withProject = !projectId;
+    const withClient = !clientId;
+    
     const query = useQuery<TimesQuery>(gql`query ($filter: TimesFilter, $order: String, $page: Int, $perPage: Int, $withClient: Boolean!, $withProject: Boolean!, $withTask: Boolean!) {
         times (filter: $filter, order: $order, page: $page, perPage: $perPage) {
             order,
