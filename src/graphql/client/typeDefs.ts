@@ -9,8 +9,9 @@ export const types = `
     type Client {
         deletable: Boolean!
         id: ID!
-        projects: Projects!
-        tasks: Tasks!
+        projects: [Project!]!
+        tasks: [Task!]!
+        times: [Time!]!
         ${fields}
     }
 
@@ -25,16 +26,12 @@ export const types = `
     input ClientFields {
         ${fields}
     }
-
-    input ClientsFilter {
-        ${fields.replace(/\!/g, '')}
-    }
 `;
 
 export const queries = `
     Client: Client
     client(id: ID!): Client
-    clients(filter: ClientsFilter, order: String, page: Int, perPage: Int): Clients
+    clients(order: String, page: Int, perPage: Int): Clients
 `;
 
 export const mutations = `

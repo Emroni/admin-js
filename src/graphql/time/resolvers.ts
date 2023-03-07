@@ -1,23 +1,14 @@
 import { parseFilterIds, parseNumber, parseOrder } from '@/helpers';
 import { prisma } from '../';
-import * as clientResolver from '../client/resolvers';
-import * as projectResolver from '../project/resolvers';
-import * as taskResolver from '../task/resolvers';
 
 export const model = {
+    client: (parent: Time) => model.project(parent).client(),
     deletable: () => true, // TODO: Resolve deletable
-    client: (parent: Time) => model.project(parent).then(project => {
-        return clientResolver.queries.client(null, {
-            id: project?.clientId,
-        });
-    }),
-    project: (parent: Time) => model.task(parent).then(task => {
-        return projectResolver.queries.project(null, {
-            id: task?.projectId,
-        });
-    }),
-    task: (parent: Time) => taskResolver.queries.task(null, {
-        id: parent.taskId,
+    project: (parent: Time) => model.task(parent).project(),
+    task: (parent: Time) => prisma.task.findUnique({
+        where: {
+            id: parseNumber(parent.taskId),
+        },
     }),
 };
 
@@ -84,7 +75,7 @@ function parseFilter(filter?: TimesFilter) {
     if (where.taskId) {
         where.taskId = parseFilterIds(where?.taskId);
     }
-    
+
     return where;
 }
 

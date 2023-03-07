@@ -18,7 +18,7 @@ export default function Clients() {
                 id
                 name
                 projects {
-                    total
+                    id
                 }
             }
             total
@@ -50,7 +50,7 @@ export default function Clients() {
         onPerPageChange={setPerPage}
     >
         <Table.Column name="name" />
-        <Table.Column name="projects.total" label="Projects" align="right" />
+        <Table.Column name="projects" label="Projects" align="right" />
     </Table>;
 
 }

@@ -11,6 +11,7 @@ export const types = `
         deletable: Boolean!
         id: ID!
         project: Project!
+        times: [Time!]!
         ${fields}
     }
 

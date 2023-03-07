@@ -11,6 +11,11 @@ export default function TableCell({ column, row }: TableCellProps) {
         // Get value
         let newValue = column.children || getNestedValue(row, column.name);
 
+        // Check array
+        if (Array.isArray(newValue)) {
+            newValue = newValue.length;
+        }
+
         // Check options
         const option = column.options?.find(option => option.value === newValue || option.id === newValue || option.name === newValue);
         if (option) {
