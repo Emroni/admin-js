@@ -18,6 +18,6 @@ interface TimesQuery {
 }
 
 interface TimesFilter extends Partial<TimeFields> {
-    projectId?: number;
     clientId?: number;
+    projectId?: number;
 }

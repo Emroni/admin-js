@@ -66,10 +66,19 @@ function parseFilter(filter?: TimesFilter) {
     };
 
     if (where.clientId) {
-        where.project = {
-            clientId: parseFilterIds(where.clientId),
+        where.task = {
+            project: {
+                clientId: parseFilterIds(where.clientId),
+            },
         };
         delete where.clientId;
+    }
+
+    if (where.projectId) {
+        where.task = {
+            projectId: parseFilterIds(where.projectId),
+        };
+        delete where.projectId;
     }
 
     if (where.taskId) {
