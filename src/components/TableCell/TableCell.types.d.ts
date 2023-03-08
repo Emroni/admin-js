@@ -1,4 +1,4 @@
 interface TableCellProps {
     column: TableColumn;
-    row: IndexedObject;
+    row: Entity;
 }

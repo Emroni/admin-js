@@ -1,7 +1,7 @@
-import { getNestedValue, hoursToTime } from '@/helpers';
-import { capitalize, Link, TableCell, TableRow } from '@mui/material';
-import NextLink from 'next/link';
+import { getNestedValue } from '@/helpers';
+import { capitalize, TableCell, TableRow } from '@mui/material';
 import { useEffect, useState } from 'react';
+import Value from '../Value/Value';
 
 export default function SummaryField({ children, entity, label, name, options, type, getLink }: SummaryFieldProps) {
 
@@ -9,42 +9,12 @@ export default function SummaryField({ children, entity, label, name, options, t
 
     useEffect(() => {
         // Get value
-        let newValue = children || (entity ? getNestedValue(entity, name) : null);
-
-        // Check hours
-        if (type === 'hours') {
-            newValue = hoursToTime(newValue);
-        }
-
-        // Check array
-        if (Array.isArray(newValue)) {
-            newValue = newValue.length;
-        }
-
-        // Check options
-        if (options) {
-            const option = options.find(option => option.value === newValue || option.id === newValue || option.name === newValue);
-            if (option) {
-                newValue = option.label || option.name || newValue;
-            }
-        }
-
-        // Check link
-        if (getLink) {
-            const href = typeof getLink === 'function' ? (entity && getLink(entity) || '') : getLink;
-            newValue = <Link component={NextLink} href={href}>
-                {newValue}
-            </Link>;
-        }
-
+        const newValue = children || (entity ? getNestedValue(entity, name) : null);
         setValue(newValue);
     }, [
         children,
         entity,
-        getLink,
         name,
-        options,
-        type,
     ]);
 
     return <TableRow>
@@ -52,7 +22,7 @@ export default function SummaryField({ children, entity, label, name, options, t
             {label || capitalize(name)}
         </TableCell>
         <TableCell>
-            {value}
+            <Value entity={entity} options={options} type={type} value={value} getLink={getLink} />
         </TableCell>
     </TableRow>;
 
