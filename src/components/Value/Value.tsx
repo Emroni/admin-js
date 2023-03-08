@@ -1,12 +1,14 @@
+import { CURRENCIES } from '@/constants';
 import { hoursToTime } from '@/helpers';
-import { Link } from '@mui/material';
+import { Link, Typography } from '@mui/material';
 import NextLink from 'next/link';
 import { useEffect, useState } from 'react';
 
-export default function Value({ entity, options, type, value, getLink }: ValueProps) {
+export default function Value({ currency, entity, options, type, value, getLink }: ValueProps) {
 
+    const [currencySymbol, setCurrencySymbol] = useState('');
     const [link, setLink] = useState<string | undefined>(undefined);
-    const [content, setContent] = useState(undefined);
+    const [content, setContent] = useState<any>(undefined);
 
     useEffect(() => {
         // Get content
@@ -17,10 +19,10 @@ export default function Value({ entity, options, type, value, getLink }: ValuePr
             newContent = newContent.length;
         }
 
-        // Check hours
+        // Check type
         if (type === 'hours') {
             newContent = hoursToTime(newContent);
-        }
+        } 
 
         // Check options
         if (options) {
@@ -33,10 +35,22 @@ export default function Value({ entity, options, type, value, getLink }: ValuePr
         // Update state
         setContent(newContent);
     }, [
+        currency,
         entity,
         options,
         type,
         value,
+    ]);
+
+    useEffect(() => {
+        // Get currency symbol
+        if (currency && type === 'money') {
+            const newCurrencySymbol = CURRENCIES.find(c => c.name === currency)?.symbol || '';
+            setCurrencySymbol(newCurrencySymbol);
+        }
+    }, [
+        currency,
+        type,
     ]);
 
     useEffect(() => {
@@ -51,6 +65,18 @@ export default function Value({ entity, options, type, value, getLink }: ValuePr
     if (content === null || content === undefined) {
         return <span>&nbsp;</span>;
     }
+
+    if (currencySymbol) {
+        return <>
+            <Typography color="grey.400" component="small" fontSize="smaller" marginRight={0.5}>
+                {currencySymbol}
+            </Typography>
+            {parseInt(content)}
+            <Typography color="grey.400" component="small" fontSize="smaller">
+                {(parseFloat(content)-parseInt(content)).toFixed(2).slice(1)}
+            </Typography>
+        </>;
+    }   
 
     if (link) {
         return <Link component={NextLink} href={link}>

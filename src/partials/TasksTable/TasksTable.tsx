@@ -1,5 +1,4 @@
 import { Menu, Table } from '@/components';
-import { CURRENCIES } from '@/constants';
 import { gql, useQuery } from '@apollo/client';
 import { Add } from '@mui/icons-material';
 import { useState } from 'react';
@@ -76,9 +75,8 @@ export default function TasksTable({ clientId, projectId }: TasksTableProps) {
         {withProject && (
             <Table.Column name="project.name" label="Project" getLink={task => `/projects/${task.project?.id}`} />
         )}
-        <Table.Column name="currency" options={CURRENCIES} />
-        <Table.Column name="price" align="right" />
-        <Table.Column name="rate" align="right" />
+        <Table.Column name="price" align="right" type="money" />
+        <Table.Column name="rate" align="right" type="money" />
         <Table.Column name="estimatedHours" label="Estimated hours" align="right" type="hours" />
         <Table.Column name="workedHours" label="Worked hours" align="right" type="hours" />
     </Table>;

@@ -1,5 +1,4 @@
 import { Menu, Summary } from '@/components';
-import { CURRENCIES } from '@/constants';
 import { usePage } from '@/contexts/Page';
 import { TimesTable } from '@/partials';
 import { gql, useMutation, useQuery } from '@apollo/client';
@@ -78,9 +77,8 @@ export default function TaskView() {
             <Summary.Field name="name" />
             <Summary.Field name="client.name" label="Client" getLink={`/clients/${task?.client.id}`} />
             <Summary.Field name="project.name" label="Project" getLink={`/projects/${task?.project.id}`} />
-            <Summary.Field name="currency" options={CURRENCIES} />
-            <Summary.Field name="price" />
-            <Summary.Field name="rate" />
+            <Summary.Field name="price" currency={task?.currency} type="money" />
+            <Summary.Field name="rate" currency={task?.currency} type="money" />
             <Summary.Field name="estimatedHours" label="Estimated hours" type="hours" />
             <Summary.Field name="workedHours" label="Worked hours" type="hours" />
         </Summary>

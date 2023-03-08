@@ -17,7 +17,7 @@ export default function TableCell({ column, row }: TableCellProps) {
     ]);
 
     return <MuiTableCell align={column.align}>
-        <Value entity={row} options={column.options} type={column.type} value={value} getLink={column.getLink} />
+        <Value currency={row.currency} entity={row} options={column.options} type={column.type} value={value} getLink={column.getLink} />
     </MuiTableCell>;
 
 }

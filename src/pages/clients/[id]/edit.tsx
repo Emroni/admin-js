@@ -1,5 +1,4 @@
 import { Form } from '@/components';
-import { CURRENCIES } from '@/constants';
 import { usePage } from '@/contexts/Page';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';

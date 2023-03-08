@@ -3,7 +3,7 @@ import { capitalize, TableCell, TableRow } from '@mui/material';
 import { useEffect, useState } from 'react';
 import Value from '../Value/Value';
 
-export default function SummaryField({ children, entity, label, name, options, type, getLink }: SummaryFieldProps) {
+export default function SummaryField({ children, currency, entity, label, name, options, type, getLink }: SummaryFieldProps) {
 
     const [value, setValue] = useState<any>(null);
 
@@ -22,7 +22,7 @@ export default function SummaryField({ children, entity, label, name, options, t
             {label || capitalize(name)}
         </TableCell>
         <TableCell>
-            <Value entity={entity} options={options} type={type} value={value} getLink={getLink} />
+            <Value currency={currency} entity={entity} options={options} type={type} value={value} getLink={getLink} />
         </TableCell>
     </TableRow>;
 

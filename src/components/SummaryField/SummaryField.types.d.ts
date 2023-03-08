@@ -1,5 +1,6 @@
 interface SummaryFieldProps {
     children?: any;
+    currency?: string;
     entity?: Entity?;
     label?: string;
     name: string;
