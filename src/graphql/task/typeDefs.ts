@@ -1,8 +1,10 @@
 const fields = `
+    currency: String!
     estimatedHours: Float!
     name: String!
     price: Int!
     projectId: ID!
+    rate: Int!
 `;
 
 export const types = `

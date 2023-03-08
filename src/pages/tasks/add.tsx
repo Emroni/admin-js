@@ -1,4 +1,5 @@
 import { Form } from '@/components';
+import { CURRENCIES } from '@/constants';
 import { usePage } from '@/contexts/Page';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
@@ -22,8 +23,11 @@ export default function TaskAdd() {
             estimatedHours
             id
             name
+            currency
+            estimatedHours
             price
             projectId
+            rate
         }
     }`);
 
@@ -40,8 +44,10 @@ export default function TaskAdd() {
     return <Form initialValues={page.query} loading={!!mutation.data || mutation.loading} title="Add Task" onSubmit={handleSubmit}>
         <Form.Field name="name" required />
         <Form.Field name="projectId" label="Project" options={query.data?.projects.rows} required />
-        <Form.Field name="estimatedHours" required type="number" />
+        <Form.Field name="currency" options={CURRENCIES} required />
         <Form.Field name="price" required type="number" />
+        <Form.Field name="rate" required type="number" />
+        <Form.Field name="estimatedHours" required type="number" />
     </Form>;
 
 }

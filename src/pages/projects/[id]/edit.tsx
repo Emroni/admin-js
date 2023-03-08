@@ -1,5 +1,5 @@
 import { Form } from '@/components';
-import { PROJECT_BILLING, PROJECT_STATUS } from '@/constants';
+import { PROJECT_STATUS } from '@/constants';
 import { usePage } from '@/contexts/Page';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
@@ -19,7 +19,6 @@ export default function ProjectEdit() {
             }
         }
         project(id: $id) {
-            billing
             clientId
             id
             name
@@ -33,7 +32,6 @@ export default function ProjectEdit() {
 
     const [mutate, mutation] = useMutation(gql`mutation($id: ID!, $input: ProjectFields) {
         projectUpdate (id: $id, input: $input) {
-            billing
             clientId
             id
             name
@@ -66,7 +64,6 @@ export default function ProjectEdit() {
     return <Form initialValues={project} loading={!project || mutation.loading} title={`Edit ${project?.name}`} onSubmit={handleSubmit}>
         <Form.Field name="name" required />
         <Form.Field name="clientId" label="Client" options={query.data?.clients.rows} required />
-        <Form.Field name="billing" options={PROJECT_BILLING} required />
         <Form.Field name="status" options={PROJECT_STATUS} required />
     </Form>;
 

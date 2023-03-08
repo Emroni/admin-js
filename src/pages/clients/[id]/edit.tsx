@@ -14,7 +14,6 @@ export default function ClientEdit() {
     const query = useQuery<ClientQuery>(gql`query($id: ID!) {
         client(id: $id) {
             address
-            currency
             email
             id
             name
@@ -28,7 +27,6 @@ export default function ClientEdit() {
     const [mutate, mutation] = useMutation(gql`mutation($id: ID!, $input: ClientFields) {
         clientUpdate (id: $id, input: $input) {
             address
-            currency
             email
             id
             name
@@ -59,7 +57,6 @@ export default function ClientEdit() {
     
     return <Form initialValues={client} loading={!client || mutation.loading} title={`Edit ${client?.name}`} onSubmit={handleSubmit}>
         <Form.Field name="name" required />
-        <Form.Field name="currency" options={CURRENCIES} required />
         <Form.Field name="email" />
         <Form.Field name="address" type="textarea" />
     </Form>;

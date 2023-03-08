@@ -10,7 +10,6 @@ export default function ClientAdd() {
     const [mutate, mutation] = useMutation(gql`mutation($input: ClientFields) {
         clientCreate (input: $input) {
             address
-            currency
             email
             id
             name
@@ -29,7 +28,6 @@ export default function ClientAdd() {
 
     return <Form loading={!!mutation.data || mutation.loading} title="Add Client" onSubmit={handleSubmit}>
         <Form.Field name="name" required />
-        <Form.Field name="currency" options={CURRENCIES} required />
         <Form.Field name="email" />
         <Form.Field name="address" type="textarea" />
     </Form>;

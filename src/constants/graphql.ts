@@ -1,14 +1,3 @@
-export const PROJECT_BILLING = [
-    {
-        label: 'Fixed',
-        value: 'fixed',
-    },
-    {
-        label: 'Hourly',
-        value: 'hourly',
-    },
-];
-
 export const PROJECT_STATUS = [
     {
         label: 'Billed',

@@ -15,7 +15,6 @@ export default function ClientView() {
     const query = useQuery<ClientQuery>(gql`query($id: ID!) {
         client(id: $id) {
             address
-            currency
             deletable
             email
             id
@@ -66,7 +65,6 @@ export default function ClientView() {
         <Summary action={action} entity={client} loading={mutation.loading}>
             <Summary.Field name="id" label="ID" />
             <Summary.Field name="name" />
-            <Summary.Field name="currency" />
             <Summary.Field name="email" getLink={`mailto:${client?.email}`} />
             <Summary.Field name="address" />
         </Summary>

@@ -18,7 +18,6 @@ export default function ProjectsTable({ clientId }: ProjectsTableProps) {
             page,
             perPage,
             rows {
-                billing
                 id
                 name
                 status

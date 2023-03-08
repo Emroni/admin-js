@@ -1,5 +1,4 @@
 const fields = `
-    billing: String!
     clientId: ID!
     name: String!
     status: String!

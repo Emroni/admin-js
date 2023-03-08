@@ -1,5 +1,5 @@
 import { Menu, Summary } from '@/components';
-import { PROJECT_BILLING, PROJECT_STATUS } from '@/constants';
+import { PROJECT_STATUS } from '@/constants';
 import { usePage } from '@/contexts/Page';
 import { TasksTable, TimesTable } from '@/partials';
 import { gql, useMutation, useQuery } from '@apollo/client';
@@ -15,7 +15,6 @@ export default function ProjectView() {
 
     const query = useQuery<ProjectQuery>(gql`query($id: ID!) {
         project(id: $id) {
-            billing
             deletable
             id
             name
@@ -71,7 +70,6 @@ export default function ProjectView() {
             <Summary.Field name="id" label="ID" />
             <Summary.Field name="name" />
             <Summary.Field name="client.name" label="Client" getLink={`/clients/${project?.client.id}`} />
-            <Summary.Field name="billing" options={PROJECT_BILLING} />
             <Summary.Field name="status" options={PROJECT_STATUS} />
         </Summary>
         <TasksTable projectId={page.query.id} />
