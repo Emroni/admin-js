@@ -7,10 +7,13 @@ const fields = `
 export const types = `
     type Client {
         deletable: Boolean!
+        estimatedHours: Float!
         id: ID!
+        progress: Float!
         projects: [Project!]!
         tasks: [Task!]!
         times: [Time!]!
+        workedHours: Float!
         ${fields}
     }
 
