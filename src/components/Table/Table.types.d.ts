@@ -3,7 +3,7 @@ interface TableProps {
     children: ReactComponentElement<TableColumn>;
     data?: GraphqlList;
     title: string;
-    getRowLink?: string | ((row: IndexedObject) => string);
+    getRowLink?: string | ((row: Entity) => string);
     onOrderChange?(order: GraphqlOrder?): void;
     onPageChange?(page: number): void;
     onPerPageChange?(perPage: number): void;
@@ -17,5 +17,5 @@ interface TableColumn {
     options?: EntityPropertyOption[];
     order?: boolean;
     type?: ValueType;
-    getLink?: string | ((row: IndexedObject) => string);
+    getLink?: string | ((row: Entity) => string);
 }

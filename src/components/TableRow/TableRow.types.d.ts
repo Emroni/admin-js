@@ -1,5 +1,5 @@
 interface TableRowProps {
     columns: TableColumn[];
-    row: IndexedObject;
-    getLink?: string | ((row: IndexedObject) => string);
+    row: Entity;
+    getLink?: string | ((row: Entity) => string);
 }

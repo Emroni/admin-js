@@ -8,7 +8,7 @@ import TableRow from '../TableRow/TableRow';
 export default function Table({ action, children, data, title, getRowLink, onOrderChange, onPageChange, onPerPageChange }: TableProps) {
 
     const [columns, setColumns] = useState<TableColumn[]>([]);
-    const [loadedRows, setLoadedRows] = useState<IndexedObject[]>([]);
+    const [loadedRows, setLoadedRows] = useState<Entity[]>([]);
 
     useEffect(() => {
         // Get columns

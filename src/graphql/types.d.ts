@@ -20,7 +20,7 @@ interface GraphqlUpdateArgs<I> {
     input: I;
 }
 
-interface GraphqlList<T = IndexedObject> {
+interface GraphqlList<T = Entity> {
     order: string;
     page: number;
     perPage: number;
