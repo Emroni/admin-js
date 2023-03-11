@@ -1,7 +1,9 @@
 interface Task extends Entity, TaskFields {
     client: Client;
+    progress: number;
     project: Project;
     times: Time[];
+    workedHours: number;
 }
 
 interface TaskFields {
@@ -9,8 +11,8 @@ interface TaskFields {
     estimatedHours: number;
     name: string;
     price: number;
-    rate: number;
     projectId: number;
+    rate: number;
 }
 
 interface TaskQuery {

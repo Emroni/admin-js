@@ -19,8 +19,10 @@ export default function ProjectsTable({ clientId }: ProjectsTableProps) {
             perPage,
             rows {
                 id
+                estimatedHours
                 name
                 status
+                workedHours
                 client @include(if: $withClient) {
                     id
                     name
@@ -63,6 +65,8 @@ export default function ProjectsTable({ clientId }: ProjectsTableProps) {
         {withClient && (
             <Table.Column name="client.name" label="Client" getLink={project => `/clients/${project.client?.id}`} />
         )}
+        <Table.Column name="estimatedHours" label="Estimated hours" align="right" type="hours" />
+        <Table.Column name="workedHours" label="Worked hours" align="right" type="hours" />
     </Table>;
 
 }

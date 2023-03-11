@@ -15,6 +15,7 @@ export const model = {
             taskId: parent.id,
         },
     }),
+    progress: (parent: Task) => model.workedHours(parent).then(workedHours => parent.estimatedHours ? workedHours / parent.estimatedHours : 0),
     workedHours: (parent: Task) => model.times(parent).then(times => {
         const totalMinutes = times.reduce((total, time) => {
             const duration = dayjs.utc(time.duration);

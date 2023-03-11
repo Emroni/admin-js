@@ -1,4 +1,5 @@
 import { parseNumber, parseOrder } from '@/helpers';
+import dayjs from 'dayjs';
 import { prisma } from '../';
 
 export const model = {
@@ -8,6 +9,13 @@ export const model = {
         },
     }),
     deletable: (parent: Project) => model.tasks(parent).then(tasks => !tasks.length),
+    estimatedHours: (parent: Project) => model.tasks(parent).then(tasks => {
+        const totalMinutes = tasks.reduce((total, task) => total + task.estimatedHours * 60, 0);
+        return totalMinutes / 60;
+    }),
+    progress: (parent: Project) => model.estimatedHours(parent).then(estimatedHours => {
+        return estimatedHours ? model.workedHours(parent).then(workedHours => workedHours / estimatedHours) : 0;
+    }),
     tasks: (parent: Project) => prisma.task.findMany({
         where: {
             projectId: parent.id,
@@ -21,6 +29,13 @@ export const model = {
                 },
             },
         });
+    }),
+    workedHours: (parent: Project) => model.times(parent).then(times => {
+        const totalMinutes = times.reduce((total, time) => {
+            const duration = dayjs.utc(time.duration);
+            return total + duration.hour() * 60 + duration.minute();
+        }, 0);
+        return totalMinutes / 60;
     }),
 };
 

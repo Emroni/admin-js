@@ -8,9 +8,12 @@ export const types = `
     type Project {
         client: Client!
         deletable: Boolean!
+        estimatedHours: Float!
         id: ID!
+        progress: Float!
         tasks: [Task!]!
         times: [Time!]!
+        workedHours: Float!
         ${fields}
     }
 

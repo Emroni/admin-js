@@ -12,6 +12,7 @@ export const types = `
         client: Client!
         deletable: Boolean!
         id: ID!
+        progress: Float!
         project: Project!
         times: [Time!]!
         workedHours: Float!
