@@ -55,8 +55,8 @@ export default function Table({ action, children, data, title, getRowLink, onOrd
         <MuiTable>
             <TableHead>
                 <MuiTableRow>
-                    {columns.map((column, index) => (
-                        <TableCell align={column.align} key={index} sx={{ cursor: column.order ? 'pointer' : 'default', userSelect: 'none' }} onClick={() => handleOrderChange(column)}>
+                    {columns.map(column => (
+                        <TableCell align={column.align} key={column.name} sx={{ cursor: column.order ? 'pointer' : 'default', userSelect: 'none' }} onClick={() => handleOrderChange(column)}>
                             {column.label}
                             {column.order && (
                                 <Box display="inline-block" position="relative">
@@ -69,8 +69,8 @@ export default function Table({ action, children, data, title, getRowLink, onOrd
                 </MuiTableRow>
             </TableHead>
             <TableBody>
-                {loadedRows.map((row, r) => (
-                    <TableRow columns={columns} key={r} row={row} getLink={getRowLink} />
+                {loadedRows.map(row => (
+                    <TableRow columns={columns} key={row.id} row={row} getLink={getRowLink} />
                 ))}
             </TableBody>
             <TableFooter>

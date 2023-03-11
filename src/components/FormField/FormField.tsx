@@ -26,8 +26,8 @@ export default function FormField({ disabled, label, loading, name, options, req
         value={(field.value !== null && field.value !== undefined) ? field.value : ''}
         onChange={handleChange}
     >
-        {options?.map((option, index) => (
-            <MenuItem key={index} value={option.value || option.id || option.name}>
+        {options?.map(option => (
+            <MenuItem key={option.id || option.name || option.value} value={option.value || option.id || option.name}>
                 {option.label || option.name || option.value}
             </MenuItem>
         ))}

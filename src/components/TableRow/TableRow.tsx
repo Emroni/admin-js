@@ -34,8 +34,8 @@ export default function TableRow({ columns, row, getLink }: TableRowProps) {
     }
 
     return <MuiTableRow hover sx={styles} onClick={handleClick}>
-        {columns.map((column, c) => (
-            <TableCell column={column} row={row} key={c} />
+        {columns.map(column => (
+            <TableCell column={column} key={column.name} row={row} />
         ))}
     </MuiTableRow>;
 

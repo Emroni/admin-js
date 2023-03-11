@@ -8,8 +8,8 @@ export default function FormContent({ fields, loading }: FormContentProps) {
 
     return <>
         <Box display="flex" flexDirection="column" gap={3}>
-            {fields.map((field, index) => (
-                <FormField key={index} loading={loading} {...field} />
+            {fields.map(field => (
+                <FormField key={field.name} loading={loading} {...field} />
             ))}
         </Box>
         <Box marginTop={3} textAlign="right">

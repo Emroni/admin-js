@@ -25,8 +25,8 @@ export default function Summary({ action, children, entity, loading }: SummaryPr
     return <Card action={action} loading={!entity || loading} title={title}>
         <Table>
             <TableBody>
-                {fields.map((field, index) => (
-                    <SummaryField entity={entity} key={index} {...field} />
+                {fields.map(field => (
+                    <SummaryField entity={entity} key={field.name} {...field} />
                 ))}
             </TableBody>
         </Table>
