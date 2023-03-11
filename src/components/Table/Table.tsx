@@ -85,6 +85,7 @@ export default function Table({ action, children, data, title, getRowLink, onOrd
                             <Select value={perPage || 10} onChange={e => onPerPageChange?.(Number(e.target.value))} >
                                 <MenuItem value={5}>5</MenuItem>
                                 <MenuItem value={10}>10</MenuItem>
+                                <MenuItem value={20}>20</MenuItem>
                                 <MenuItem value={50}>50</MenuItem>
                                 <MenuItem value={100}>100</MenuItem>
                                 <MenuItem value={1000}>1000</MenuItem>

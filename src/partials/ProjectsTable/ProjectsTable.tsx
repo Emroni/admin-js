@@ -4,11 +4,11 @@ import { gql, useQuery } from '@apollo/client';
 import { Add } from '@mui/icons-material';
 import { useState } from 'react';
 
-export default function ProjectsTable({ clientId }: ProjectsTableProps) {
+export default function ProjectsTable({ clientId, defaultPerPage = 10 }: ProjectsTableProps) {
 
-    const [order, setOrder] = useState('name asc');
+    const [order, setOrder] = useState('id desc');
     const [page, setPage] = useState(0);
-    const [perPage, setPerPage] = useState(10);
+    const [perPage, setPerPage] = useState(defaultPerPage);
 
     const withClient = !clientId;
 

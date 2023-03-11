@@ -2,6 +2,6 @@ import { ProjectsTable } from '@/partials';
 
 export default function Projects() {
 
-    return <ProjectsTable />;
+    return <ProjectsTable defaultPerPage={20} />;
 
 }

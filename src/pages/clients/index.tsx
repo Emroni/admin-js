@@ -7,7 +7,7 @@ export default function Clients() {
 
     const [order, setOrder] = useState('name asc');
     const [page, setPage] = useState(0);
-    const [perPage, setPerPage] = useState(10);
+    const [perPage, setPerPage] = useState(20);
 
     const query = useQuery<ClientsQuery>(gql`query ($order: String, $page: Int, $perPage: Int) {
         clients (order: $order, page: $page, perPage: $perPage) {

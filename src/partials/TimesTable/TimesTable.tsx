@@ -3,11 +3,11 @@ import { gql, useQuery } from '@apollo/client';
 import { Add } from '@mui/icons-material';
 import { useState } from 'react';
 
-export default function TimesTable({ clientId, projectId, taskId }: TimesTableProps) {
+export default function TimesTable({ clientId, defaultPerPage = 10, projectId, taskId }: TimesTableProps) {
 
     const [order, setOrder] = useState('id desc');
     const [page, setPage] = useState(0);
-    const [perPage, setPerPage] = useState(10);
+    const [perPage, setPerPage] = useState(defaultPerPage);
 
     const withTask = !taskId;
     const withProject = !projectId;
