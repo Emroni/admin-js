@@ -21,6 +21,7 @@ export default function ProjectsTable({ clientId }: ProjectsTableProps) {
                 id
                 estimatedHours
                 name
+                progress
                 status
                 workedHours
                 client @include(if: $withClient) {
@@ -67,6 +68,7 @@ export default function ProjectsTable({ clientId }: ProjectsTableProps) {
         )}
         <Table.Column name="estimatedHours" label="Estimated hours" align="right" type="hours" />
         <Table.Column name="workedHours" label="Worked hours" align="right" type="hours" />
+        <Table.Column name="progress" align="right" type="progress" />
     </Table>;
 
 }

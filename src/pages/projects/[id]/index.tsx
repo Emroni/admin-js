@@ -19,6 +19,7 @@ export default function ProjectView() {
             estimatedHours
             id
             name
+            progress
             status
             workedHours
             client {
@@ -75,6 +76,7 @@ export default function ProjectView() {
             <Summary.Field name="status" options={PROJECT_STATUS} />
             <Summary.Field name="estimatedHours" label="Estimated hours" type="hours" />
             <Summary.Field name="workedHours" label="Worked hours" type="hours" />
+            <Summary.Field name="progress" type="progress" />
         </Summary>
         <TasksTable projectId={page.query.id} />
         <TimesTable projectId={page.query.id} />

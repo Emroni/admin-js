@@ -14,12 +14,13 @@ export default function TaskView() {
 
     const query = useQuery<TaskQuery>(gql`query($id: ID!) {
         task(id: $id) {
+            currency
             deletable
+            estimatedHours
             id
             name
-            currency
-            estimatedHours
             price
+            progress
             rate
             workedHours
             client {
@@ -81,6 +82,7 @@ export default function TaskView() {
             <Summary.Field name="rate" currency={task?.currency} type="money" />
             <Summary.Field name="estimatedHours" label="Estimated hours" type="hours" />
             <Summary.Field name="workedHours" label="Worked hours" type="hours" />
+            <Summary.Field name="progress" type="progress" />
         </Summary>
         <TimesTable taskId={page.query.id} />
     </>;

@@ -1,6 +1,6 @@
 import { CURRENCIES } from '@/constants';
 import { hoursToTime } from '@/helpers';
-import { Typography } from '@mui/material';
+import { LinearProgress, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 export default function Value({ currency, options, type, value }: ValueProps) {
@@ -47,7 +47,7 @@ export default function Value({ currency, options, type, value }: ValueProps) {
         type,
         value,
     ]);
-    
+
     if (money) {
         return <>
             <Typography color="grey.400" component="small" fontSize="smaller" marginRight={0.5}>
@@ -58,6 +58,9 @@ export default function Value({ currency, options, type, value }: ValueProps) {
                 {money}
             </Typography>
         </>;
+
+    } else if (type === 'progress') {
+        return <LinearProgress color={value && (value <= 1 ? 'success' : 'error') || 'inherit'} value={value * 100} variant="determinate" />;
     }
 
     if (content === null || content === undefined) {
