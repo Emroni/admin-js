@@ -1,14 +1,13 @@
 import { CURRENCIES } from '@/constants';
 import { hoursToTime } from '@/helpers';
-import { Link, Typography } from '@mui/material';
-import NextLink from 'next/link';
+import { Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-export default function Value({ currency, entity, options, type, value, getLink }: ValueProps) {
+export default function Value({ currency, options, type, value }: ValueProps) {
 
-    const [currencySymbol, setCurrencySymbol] = useState('');
-    const [link, setLink] = useState<string | undefined>(undefined);
     const [content, setContent] = useState<any>(undefined);
+    const [currencySymbol, setCurrencySymbol] = useState('');
+    const [money, setMoney] = useState<string | null>(null);
 
     useEffect(() => {
         // Get content
@@ -22,7 +21,15 @@ export default function Value({ currency, entity, options, type, value, getLink 
         // Check type
         if (type === 'hours') {
             newContent = hoursToTime(newContent);
-        } 
+        } else if (type === 'money') {
+            // Get currency symbol
+            const newCurrencySymbol = CURRENCIES.find(c => c.name === currency)?.symbol || '';
+            setCurrencySymbol(newCurrencySymbol);
+
+            // Get money
+            const newMoney = (parseFloat(newContent) - parseInt(newContent)).toFixed(2).slice(1);
+            setMoney(newMoney);
+        }
 
         // Check options
         if (options) {
@@ -32,56 +39,29 @@ export default function Value({ currency, entity, options, type, value, getLink 
             }
         }
 
-        // Update state
+        // Set content
         setContent(newContent);
     }, [
         currency,
-        entity,
         options,
         type,
         value,
     ]);
-
-    useEffect(() => {
-        // Get currency symbol
-        if (currency && type === 'money') {
-            const newCurrencySymbol = CURRENCIES.find(c => c.name === currency)?.symbol || '';
-            setCurrencySymbol(newCurrencySymbol);
-        }
-    }, [
-        currency,
-        type,
-    ]);
-
-    useEffect(() => {
-        // Get link
-        const newLink = typeof getLink === 'function' ? (entity && getLink(entity) || '') : getLink;
-        setLink(newLink);
-    }, [
-        entity,
-        getLink,
-    ]);
-
-    if (content === null || content === undefined) {
-        return <span>&nbsp;</span>;
-    }
-
-    if (currencySymbol) {
+    
+    if (money) {
         return <>
             <Typography color="grey.400" component="small" fontSize="smaller" marginRight={0.5}>
                 {currencySymbol}
             </Typography>
             {parseInt(content)}
             <Typography color="grey.400" component="small" fontSize="smaller">
-                {(parseFloat(content)-parseInt(content)).toFixed(2).slice(1)}
+                {money}
             </Typography>
         </>;
-    }   
+    }
 
-    if (link) {
-        return <Link component={NextLink} href={link}>
-            {content}
-        </Link>;
+    if (content === null || content === undefined) {
+        return <span>&nbsp;</span>;
     }
 
     return content;
