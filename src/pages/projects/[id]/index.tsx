@@ -70,7 +70,6 @@ export default function ProjectView() {
 
     return <>
         <Summary action={action} entity={project} loading={mutation.loading}>
-            <Summary.Field name="id" label="ID" />
             <Summary.Field name="name" />
             <Summary.Field name="client.name" label="Client" getLink={`/clients/${project?.client.id}`} />
             <Summary.Field name="status" options={PROJECT_STATUS} />

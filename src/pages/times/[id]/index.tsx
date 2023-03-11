@@ -64,7 +64,6 @@ export default function TimeView() {
     </Menu>;
 
     return <Summary action={action} entity={time} loading={mutation.loading}>
-        <Summary.Field name="id" label="ID" />
         <Summary.Field name="date" />
         <Summary.Field name="duration" />
         <Summary.Field name="task.name" label="Task" getLink={`/tasks/${time?.task.id}`} />

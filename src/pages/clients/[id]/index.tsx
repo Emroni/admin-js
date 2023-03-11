@@ -66,7 +66,6 @@ export default function ClientView() {
 
     return <>
         <Summary action={action} entity={client} loading={mutation.loading}>
-            <Summary.Field name="id" label="ID" />
             <Summary.Field name="name" />
             <Summary.Field name="email" getLink={`mailto:${client?.email}`} />
             <Summary.Field name="address" />
