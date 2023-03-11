@@ -76,11 +76,11 @@ export default function TasksTable({ clientId, defaultPerPage = 10, projectId }:
         {withProject && (
             <Table.Column name="project.name" label="Project" getLink={task => `/projects/${task.project?.id}`} />
         )}
-        <Table.Column name="price" align="right" type="money" />
-        <Table.Column name="rate" align="right" type="money" />
-        <Table.Column name="estimatedHours" label="Estimated hours" align="right" type="hours" />
-        <Table.Column name="workedHours" label="Worked hours" align="right" type="hours" />
-        <Table.Column name="progress" align="right" type="progress" />
+        <Table.Column name="price" type="money" />
+        <Table.Column name="rate" type="money" />
+        <Table.Column name="estimatedHours" label="Estimated hours" type="hours" />
+        <Table.Column name="workedHours" label="Worked hours" type="hours" />
+        <Table.Column name="progress" type="progress" />
     </Table>;
 
 }

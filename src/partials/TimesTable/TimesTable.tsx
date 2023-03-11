@@ -80,8 +80,8 @@ export default function TimesTable({ clientId, defaultPerPage = 10, projectId, t
         {withTask && (
             <Table.Column name="task.name" label="Task" getLink={task => `/tasks/${task.task?.id}`} />
         )}
-        <Table.Column name="date" />
-        <Table.Column name="duration" />
+        <Table.Column name="date" align="right" />
+        <Table.Column name="duration" align="right" />
     </Table>;
 
 }

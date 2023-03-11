@@ -15,10 +15,10 @@ export default function Table({ action, children, data, title, getRowLink, onOrd
         const newColumns: TableColumn[] = Children.map(children, child => child?.props)
             .filter((childProps: any) => childProps)
             .map((columnProps: TableColumn) => ({
-                align: 'left',
-                order: !columnProps.name.includes('.'), // TODO: Sort on relation
-                label: capitalize(columnProps.name),
                 ...columnProps,
+                align: columnProps.align || (columnProps.type === 'hours' || columnProps.type === 'money' ? 'right' : 'left'),
+                order: columnProps.order || !columnProps.name.includes('.'), // TODO: Sort on relation
+                label: columnProps.label || capitalize(columnProps.name),
             }));
         setColumns(newColumns);
     }, [
@@ -52,7 +52,7 @@ export default function Table({ action, children, data, title, getRowLink, onOrd
     const end = (start || 1) + loadedRows.length - 1;
 
     return <Card action={action} loading={!data} title={title}>
-        <MuiTable>
+        <MuiTable >
             <TableHead>
                 <MuiTableRow>
                     {columns.map(column => (
