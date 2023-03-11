@@ -5,6 +5,9 @@ import { prisma } from '../';
 export const model = {
     deletable: (parent: Client) => model.projects(parent).then(projects => !projects.length),
     estimatedHours: (parent: Client) => model.tasks(parent).then(tasks => {
+        if (tasks.some(task => !task.estimatedHours)) {
+            return 0;
+        }
         const totalMinutes = tasks.reduce((total, task) => total + task.estimatedHours * 60, 0);
         return totalMinutes / 60;
     }),

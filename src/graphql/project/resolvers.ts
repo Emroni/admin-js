@@ -10,6 +10,9 @@ export const model = {
     }),
     deletable: (parent: Project) => model.tasks(parent).then(tasks => !tasks.length),
     estimatedHours: (parent: Project) => model.tasks(parent).then(tasks => {
+        if (tasks.some(task => !task.estimatedHours)) {
+            return 0;
+        }
         const totalMinutes = tasks.reduce((total, task) => total + task.estimatedHours * 60, 0);
         return totalMinutes / 60;
     }),
