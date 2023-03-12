@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 export default function Value({ currency, options, type, value }: ValueProps) {
 
     const [content, setContent] = useState<any>(undefined);
-    const [money, setMoney] = useState<string | null>(null);
+    const [money, setMoney] = useState<string[] | null>(null);
     const [moneySymbol, setMoneySymbol] = useState('');
 
     useEffect(() => {
@@ -14,20 +14,20 @@ export default function Value({ currency, options, type, value }: ValueProps) {
         let newContent = value;
 
         // Check type
-        if (Array.isArray(newContent)) {
-            newContent = newContent.length;
+        if (Array.isArray(value)) {
+            newContent = value.length;
 
         } else if (options) {
-            const option = options.find(option => option.value === newContent || option.id === newContent || option.name === newContent);
-            newContent = option?.label || option?.name || newContent;
+            const option = options.find(option => option.value === value || option.id === value || option.name === value);
+            newContent = option?.label || option?.name || value;
 
         } else if (type === 'hours') {
-            newContent = hoursToTime(newContent);
+            newContent = hoursToTime(value);
 
         } else if (type === 'money') {
             // Get money
-            const val = parseFloat(newContent);
-            const newMoney = (isNaN(val) ? 0 : val - parseInt(newContent)).toFixed(2).slice(1);
+            const val = parseFloat(value);
+            const newMoney = (isNaN(val) ? 0 : val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).split('.');
             setMoney(newMoney);
 
             // Get money symbol
@@ -49,9 +49,9 @@ export default function Value({ currency, options, type, value }: ValueProps) {
             <Typography color="grey.400" component="small" fontSize="smaller" marginRight={0.5}>
                 {moneySymbol}
             </Typography>
-            {parseInt(content)}
+            {money[0]}
             <Typography color="grey.400" component="small" fontSize="smaller">
-                {money}
+                .{money[1]}
             </Typography>
         </>;
 
