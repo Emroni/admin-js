@@ -7,7 +7,9 @@ const fields = `
 export const types = `
     type Time {
         client: Client!
+        currency: String!
         deletable: Boolean!
+        earnings: Float!
         hours: Float!
         id: ID!
         project: Project!

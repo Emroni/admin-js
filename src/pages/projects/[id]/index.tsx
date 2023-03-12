@@ -15,7 +15,9 @@ export default function ProjectView() {
 
     const query = useQuery<ProjectQuery>(gql`query($id: ID!) {
         project(id: $id) {
+            currency
             deletable
+            earnings
             estimatedHours
             id
             name
@@ -73,6 +75,7 @@ export default function ProjectView() {
             <Summary.Field name="name" />
             <Summary.Field name="client.name" label="Client" getLink={`/clients/${project?.client.id}`} />
             <Summary.Field name="status" options={PROJECT_STATUS} />
+            <Summary.Field name="earnings" currency={project?.currency} type="money" />
             <Summary.Field name="estimatedHours" label="Estimated hours" type="hours" />
             <Summary.Field name="workedHours" label="Worked hours" type="hours" />
             <Summary.Field name="progress" type="progress" />

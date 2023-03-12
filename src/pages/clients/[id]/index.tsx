@@ -15,7 +15,9 @@ export default function ClientView() {
     const query = useQuery<ClientQuery>(gql`query($id: ID!) {
         client(id: $id) {
             address
+            currency
             deletable
+            earnings
             email
             estimatedHours
             id
@@ -69,6 +71,7 @@ export default function ClientView() {
             <Summary.Field name="name" />
             <Summary.Field name="email" getLink={`mailto:${client?.email}`} />
             <Summary.Field name="address" />
+            <Summary.Field name="earnings" currency={client?.currency} type="money" />
             <Summary.Field name="estimatedHours" label="Estimated hours" type="hours" />
             <Summary.Field name="workedHours" label="Worked hours" type="hours" />
             <Summary.Field name="progress" type="progress" />

@@ -1,4 +1,6 @@
 interface Client extends Entity, ClientFields {
+    currency: string;
+    earnings: number;
     estimatedHours: number;
     progress: number;
     projects: Project[];

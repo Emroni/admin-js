@@ -1,6 +1,7 @@
 import { parseNumber, parseOrder } from '@/helpers';
 import dayjs from 'dayjs';
 import { prisma } from '../';
+import * as taskResolver from '../task/resolvers';
 
 export const model = {
     client: (parent: Project) => prisma.client.findUnique({
@@ -8,7 +9,12 @@ export const model = {
             id: parseNumber(parent.clientId),
         },
     }),
+    currency: (parent: Project) => model.tasks(parent).then(tasks => tasks[0]?.currency),
     deletable: (parent: Project) => model.tasks(parent).then(tasks => !tasks.length),
+    earnings: (parent: Project) => model.tasks(parent).then(tasks => {
+        const tasksEarnings = tasks.map(task => taskResolver.model.earnings(task as Task));
+        return Promise.all(tasksEarnings).then(tasksEarnings => tasksEarnings.reduce((total, taskEarnings) => total + taskEarnings, 0))
+    }),
     estimatedHours: (parent: Project) => model.tasks(parent).then(tasks => {
         if (tasks.some(task => !task.estimatedHours)) {
             return 0;

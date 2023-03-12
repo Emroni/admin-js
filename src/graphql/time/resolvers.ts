@@ -5,6 +5,8 @@ import { prisma } from '../';
 export const model = {
     client: (parent: Time) => model.project(parent).client(),
     deletable: () => true, // TODO: Resolve deletable
+    currency: (parent: Time) => model.task(parent).then(task => task?.currency),
+    earnings: (parent: Time) => model.task(parent).then(task => task?.rate ? model.hours(parent) * task.rate : 0),
     hours: (parent: Time) => {
         const duration = dayjs.utc(parent.duration);
         return duration.hour() + duration.minute() / 60;

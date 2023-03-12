@@ -6,7 +6,9 @@ const fields = `
 
 export const types = `
     type Client {
+        currency: String!
         deletable: Boolean!
+        earnings: Float!
         estimatedHours: Float!
         id: ID!
         progress: Float!

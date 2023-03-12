@@ -13,10 +13,20 @@ export default function TimeView() {
 
     const query = useQuery<TimeQuery>(gql`query($id: ID!) {
         time(id: $id) {
-            deletable
-            id
+            currency
             date
+            deletable
             duration
+            earnings
+            id
+            client {
+                id
+                name
+            }
+            project {
+                id
+                name
+            }
             task {
                 id
                 name
@@ -64,9 +74,12 @@ export default function TimeView() {
     </Menu>;
 
     return <Summary action={action} entity={time} loading={mutation.loading}>
+        <Summary.Field name="client.name" label="Client" getLink={`/clients/${time?.client.id}`} />
+        <Summary.Field name="project.name" label="Project" getLink={`/projects/${time?.project.id}`} />
+        <Summary.Field name="task.name" label="Task" getLink={`/tasks/${time?.task.id}`} />
         <Summary.Field name="date" />
         <Summary.Field name="duration" />
-        <Summary.Field name="task.name" label="Task" getLink={`/tasks/${time?.task.id}`} />
+        <Summary.Field name="earnings" currency={time?.currency} type="money" />
     </Summary>;
 
 }

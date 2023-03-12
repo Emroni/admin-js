@@ -15,6 +15,8 @@ export default function Clients() {
             page,
             perPage,
             rows {
+                currency
+                earnings
                 estimatedHours
                 id
                 name
@@ -54,6 +56,7 @@ export default function Clients() {
     >
         <Table.Column name="name" />
         <Table.Column name="projects" label="Projects" align="right" />
+        <Table.Column name="earnings" type="money" />
         <Table.Column name="estimatedHours" label="Estimated hours" type="hours" />
         <Table.Column name="workedHours" label="Worked hours" type="hours" />
         <Table.Column name="progress" type="progress" />

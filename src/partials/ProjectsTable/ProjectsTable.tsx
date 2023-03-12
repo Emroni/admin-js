@@ -18,8 +18,10 @@ export default function ProjectsTable({ clientId, defaultPerPage = 10 }: Project
             page,
             perPage,
             rows {
-                id
+                currency
+                earnings
                 estimatedHours
+                id
                 name
                 progress
                 status
@@ -66,6 +68,7 @@ export default function ProjectsTable({ clientId, defaultPerPage = 10 }: Project
         {withClient && (
             <Table.Column name="client.name" label="Client" getLink={project => `/clients/${project.client?.id}`} />
         )}
+        <Table.Column name="earnings" type="money" />
         <Table.Column name="estimatedHours" label="Estimated hours" type="hours" />
         <Table.Column name="workedHours" label="Worked hours" type="hours" />
         <Table.Column name="progress" type="progress" />

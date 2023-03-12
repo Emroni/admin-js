@@ -5,6 +5,7 @@ import { prisma } from '../';
 export const model = {
     client: (parent: Task) => model.project(parent).client(),
     deletable: (parent: Task) => model.times(parent).then(times => !times.length),
+    earnings: (parent: Task) => parent.price || model.workedHours(parent).then(workedHours => workedHours * parent.rate),
     project: (parent: Task) => prisma.project.findUnique({
         where: {
             id: parseNumber(parent.projectId),

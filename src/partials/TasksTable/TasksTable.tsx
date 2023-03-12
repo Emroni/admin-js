@@ -18,9 +18,10 @@ export default function TasksTable({ clientId, defaultPerPage = 10, projectId }:
             page,
             perPage,
             rows {
-                id
                 currency
+                earnings
                 estimatedHours
+                id
                 name
                 price
                 progress
@@ -78,6 +79,7 @@ export default function TasksTable({ clientId, defaultPerPage = 10, projectId }:
         )}
         <Table.Column name="price" type="money" />
         <Table.Column name="rate" type="money" />
+        <Table.Column name="earnings" type="money" />
         <Table.Column name="estimatedHours" label="Estimated hours" type="hours" />
         <Table.Column name="workedHours" label="Worked hours" type="hours" />
         <Table.Column name="progress" type="progress" />

@@ -11,6 +11,7 @@ export const types = `
     type Task {
         client: Client!
         deletable: Boolean!
+        earnings: Float!
         id: ID!
         progress: Float!
         project: Project!
