@@ -5,6 +5,7 @@ interface Task extends Entity, TaskFields {
     project: Project;
     times: Time[];
     workedHours: number;
+    timer: Date;
 }
 
 interface TaskFields {

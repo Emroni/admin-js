@@ -5,6 +5,7 @@ const fields = `
     price: Int!
     projectId: ID!
     rate: Int!
+    timer: DateTimeScalar
 `;
 
 export const types = `
