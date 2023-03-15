@@ -15,14 +15,20 @@ export default function TableCell({ column, row }: TableCellProps) {
         setLink(newLink);
 
         // Get value
-        const newValue = column.children || getNestedValue(row, column.name);
+        const newValue = getNestedValue(row, column.name);
         setValue(newValue);
     }, [
         column,
         row,
     ]);
 
-    const content = <Value currency={row.currency} options={column.options} type={column.type} value={value} />;
+    let content: any = null;
+    if (column.children) {
+        const Component: any = column.children;
+        content = <Component column={column} row={row} value={value} />;
+    } else {
+        content = <Value currency={row.currency} options={column.options} type={column.type} value={value} />;
+    }
 
     return <MuiTableCell align={column.align}>
         {link ? (

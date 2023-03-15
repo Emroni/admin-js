@@ -1,4 +1,4 @@
-import { Menu, Table } from '@/components';
+import { Menu, Table, TaskTimer } from '@/components';
 import { gql, useQuery } from '@apollo/client';
 import { Add } from '@mui/icons-material';
 import { useState } from 'react';
@@ -26,6 +26,7 @@ export default function TasksTable({ clientId, defaultPerPage = 10, projectId }:
                 price
                 progress
                 rate
+                timer
                 workedDuration
                 client @include(if: $withClient) {
                     id
@@ -83,6 +84,11 @@ export default function TasksTable({ clientId, defaultPerPage = 10, projectId }:
         <Table.Column name="estimatedDuration" label="Estimated duration" type="duration" />
         <Table.Column name="workedDuration" label="Worked duration" type="duration" />
         <Table.Column name="progress" type="progress" />
+        <Table.Column name="timer">
+            {({ row, value }: TableColumnChildProps) => (
+                <TaskTimer taskId={row.id} value={value} />
+            )}
+        </Table.Column>
     </Table>;
 
 }

@@ -8,3 +8,7 @@ interface SummaryFieldProps {
     type?: ValueType;
     getLink?: string | ((entity: Entity) => string);
 }
+
+interface SummaryFieldChildProps {
+    value: any;
+}

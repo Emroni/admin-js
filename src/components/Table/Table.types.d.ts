@@ -11,11 +11,17 @@ interface TableProps {
 
 interface TableColumn {
     align?: AlignType;
-    children?: any;
+    children?: ReactComponentElement<TableColumnChildProps>?;
     label?: string;
     name: string;
     options?: EntityPropertyOption[];
     order?: boolean;
     type?: ValueType;
     getLink?: string | ((row: Entity) => string);
+}
+
+interface TableColumnChildProps {
+    column: TableColumn;
+    row: Entity;
+    value: any;
 }

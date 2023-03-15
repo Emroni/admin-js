@@ -20,7 +20,7 @@ export default function TableRow({ columns, row, getLink }: TableRowProps) {
     function handleClick(e: React.MouseEvent) {
         // Check target
         const target = e.target as HTMLElement;
-        if (!['a', 'button'].includes(target.nodeName.toLowerCase())) {
+        if (!target.closest('a') && !target.closest('button')) {
             e.preventDefault();
 
             // Open link
