@@ -10,11 +10,13 @@ export const types = `
         currency: String!
         deletable: Boolean!
         earnings: Float!
+        estimatedDuration: String!
         estimatedHours: Float!
         id: ID!
         progress: Float!
         tasks: [Task!]!
         times: [Time!]!
+        workedDuration: String!
         workedHours: Float!
         ${fields}
     }

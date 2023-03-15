@@ -16,7 +16,7 @@ export default function Table({ action, children, data, title, getRowLink, onOrd
             .filter((childProps: any) => childProps)
             .map((columnProps: TableColumn) => ({
                 ...columnProps,
-                align: columnProps.align || (columnProps.type === 'hours' || columnProps.type === 'money' ? 'right' : 'left'),
+                align: columnProps.align || (columnProps.type === 'duration' || columnProps.type === 'money' ? 'right' : 'left'),
                 order: columnProps.order || !columnProps.name.includes('.'), // TODO: Sort on relation
                 label: columnProps.label || capitalize(columnProps.name),
             }));

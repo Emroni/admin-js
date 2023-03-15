@@ -13,10 +13,12 @@ export const types = `
         client: Client!
         deletable: Boolean!
         earnings: Float!
+        estimatedDuration: String!
         id: ID!
         progress: Float!
         project: Project!
         times: [Time!]!
+        workedDuration: String!
         workedHours: Float!
         ${fields}
     }

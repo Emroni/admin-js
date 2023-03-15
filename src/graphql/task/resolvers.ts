@@ -1,5 +1,4 @@
-import { parseFilterIds, parseNumber, parseOrder } from '@/helpers';
-import dayjs from 'dayjs';
+import { getDurationMinutes, getHoursDuration, parseFilterIds, parseNumber, parseOrder } from '@/helpers';
 import { prisma } from '../';
 
 export const model = {
@@ -17,12 +16,10 @@ export const model = {
         },
     }),
     progress: (parent: Task) => model.workedHours(parent).then(workedHours => parent.estimatedHours ? workedHours / parent.estimatedHours : 0),
+    estimatedDuration: (parent: Task) => getHoursDuration(parent.estimatedHours),
+    workedDuration: (parent: Task) => model.workedHours(parent).then(getHoursDuration),
     workedHours: (parent: Task) => model.times(parent).then(times => {
-        const totalMinutes = times.reduce((total, time) => {
-            const duration = dayjs.utc(time.duration);
-            return total + duration.hour() * 60 + duration.minute();
-        }, 0);
-        return totalMinutes / 60;
+        return times.reduce((total, time) => total + getDurationMinutes(time.duration), 0) / 60;
     }),
 };
 

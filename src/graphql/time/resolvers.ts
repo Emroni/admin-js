@@ -1,5 +1,4 @@
-import { parseFilterIds, parseNumber, parseOrder } from '@/helpers';
-import dayjs from 'dayjs';
+import { getDurationHours, parseFilterIds, parseNumber, parseOrder } from '@/helpers';
 import { prisma } from '../';
 
 export const model = {
@@ -7,10 +6,7 @@ export const model = {
     deletable: () => true, // TODO: Resolve deletable
     currency: (parent: Time) => model.task(parent).then(task => task?.currency),
     earnings: (parent: Time) => model.task(parent).then(task => task?.rate ? model.hours(parent) * task.rate : 0),
-    hours: (parent: Time) => {
-        const duration = dayjs.utc(parent.duration);
-        return duration.hour() + duration.minute() / 60;
-    },
+    hours: (parent: Time) => getDurationHours(parent.duration as unknown as Date), // TODO: Is there a better way to do this?
     project: (parent: Time) => model.task(parent).project(),
     task: (parent: Time) => prisma.task.findUnique({
         where: {

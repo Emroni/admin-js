@@ -1,4 +1,4 @@
-type ValueType = 'hours' | 'money' | 'progress' | 'text';
+type ValueType = 'duration' | 'money' | 'progress' | 'text';
 
 interface ValueProps {
     currency?: string;

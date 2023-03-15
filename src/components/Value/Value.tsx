@@ -4,10 +4,12 @@ import { useEffect, useState } from 'react';
 
 export default function Value({ currency, options, type, value }: ValueProps) {
 
+    const [color, setColor] = useState<any>(undefined);
     const [content, setContent] = useState<any>(undefined);
 
     useEffect(() => {
-        // Prepare content
+        // Prepare color and content
+        let newColor = value ? undefined : 'grey.400';
         let newContent = value;
 
         // Check type
@@ -20,11 +22,12 @@ export default function Value({ currency, options, type, value }: ValueProps) {
             const option = options.find(option => option.value === value || option.id === value || option.name === value);
             newContent = option?.label || option?.name || value;
 
-        } else if (type === 'hours') {
-            // Get hours
-            const hours = Math.floor(value);
-            const minutes = Math.round((value - hours) * 60).toString().padStart(2, '0');
-            newContent = value ? [hours, minutes] : 0;
+        } else if (type === 'duration') {
+            // Get duration
+            newContent = value?.split(':') || ['0', '00'];
+            if (value === '0:00') {
+                newColor = 'grey.400';
+            }
 
         } else if (type === 'money') {
             // Get money
@@ -32,9 +35,15 @@ export default function Value({ currency, options, type, value }: ValueProps) {
             const symbol = CURRENCIES.find(c => c.name === currency)?.symbol || '';
             newContent = (isNaN(val) ? 0 : val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).split('.');
             newContent.unshift(symbol);
+
+        } else if (type === 'progress') {
+            // Get progress
+            newContent = 100 * value;
+            newColor = value && (value <= 1 ? 'success' : 'error') || 'inherit';
         }
 
-        // Set content
+        // Set color and content
+        setColor(newColor);
         setContent(newContent);
     }, [
         currency,
@@ -47,28 +56,30 @@ export default function Value({ currency, options, type, value }: ValueProps) {
         return <span>&nbsp;</span>;
     }
 
-    if (type === 'hours') {
-        return <Typography color={content ? '' : 'grey.400'} component="span" fontSize="inherit">
-            {content?.[0] || '0'}
-            <Typography color="grey.400" component="small" fontSize="smaller">
+    if (type === 'duration') {
+        return <Typography color={color} component="span" fontSize="inherit">
+            {content?.[0]}
+            <Typography color="grey.200" component="span" fontSize="smaller">
                 :
             </Typography>
-            {content?.[1] || '00'}
+            {content?.[1]}
         </Typography>;
 
     } else if (type === 'money') {
         return <>
-            <Typography color="grey.400" component="small" fontSize="smaller" marginRight={0.5}>
+            <Typography color="grey.400" component="span" fontSize="smaller" marginRight={0.5}>
                 {content[0]}
             </Typography>
-            {content[1]}
-            <Typography color="grey.400" component="small" fontSize="smaller">
+            <Typography color={color} component="span" fontSize="inherit">
+                {content[1]}
+            </Typography>
+            <Typography color="grey.400" component="span" fontSize="smaller">
                 .{content[2]}
             </Typography>
         </>;
 
     } else if (type === 'progress') {
-        return <LinearProgress color={value && (value <= 1 ? 'success' : 'error') || 'inherit'} value={value * 100} variant="determinate" />;
+        return <LinearProgress color={color} value={content} variant="determinate" />;
     }
 
     return content;

@@ -6,10 +6,12 @@ interface Project extends Entity, ProjectFields {
     client: Client;
     currency: string;
     earnings: number;
+    estimatedDuration: string;
     estimatedHours: number;
     progress: number;
     tasks: Task[];
     times: Time[];
+    workedDuration: string;
     workedHours: number;
 }
 
