@@ -1,5 +1,4 @@
-import { parseNumber, parseOrder } from '@/helpers';
-import dayjs from 'dayjs';
+import { getDurationMinutes, getHoursDuration, parseNumber, parseOrder } from '@/helpers';
 import { prisma } from '../';
 import * as taskResolver from '../task/resolvers';
 
@@ -15,12 +14,12 @@ export const model = {
         const tasksEarnings = tasks.map(task => taskResolver.model.earnings(task as Task));
         return Promise.all(tasksEarnings).then(tasksEarnings => tasksEarnings.reduce((total, taskEarnings) => total + taskEarnings, 0))
     }),
+    estimatedDuration: (parent: Project) => model.estimatedHours(parent).then(getHoursDuration),
     estimatedHours: (parent: Project) => model.tasks(parent).then(tasks => {
         if (tasks.some(task => !task.estimatedHours)) {
             return 0;
         }
-        const totalMinutes = tasks.reduce((total, task) => total + task.estimatedHours * 60, 0);
-        return totalMinutes / 60;
+        return tasks.reduce((total, task) => total + task.estimatedHours * 60, 0) / 60;
     }),
     progress: (parent: Project) => model.estimatedHours(parent).then(estimatedHours => {
         return estimatedHours ? model.workedHours(parent).then(workedHours => workedHours / estimatedHours) : 0;
@@ -39,12 +38,9 @@ export const model = {
             },
         });
     }),
+    workedDuration: (parent: Project) => model.workedHours(parent).then(getHoursDuration),
     workedHours: (parent: Project) => model.times(parent).then(times => {
-        const totalMinutes = times.reduce((total, time) => {
-            const duration = dayjs.utc(time.duration);
-            return total + duration.hour() * 60 + duration.minute();
-        }, 0);
-        return totalMinutes / 60;
+        return times.reduce((total, time) => total + getDurationMinutes(time.duration), 0) / 60;
     }),
 };
 
