@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:migrate": "dotenv -e .env.local prisma migrate"
+    "migrate": "dotenv -e .env.local prisma migrate"
   },
   "dependencies": {
     "@apollo/client": "^3.7.8",
