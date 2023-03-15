@@ -19,11 +19,11 @@ export default function ClientView() {
             deletable
             earnings
             email
-            estimatedHours
+            estimatedDuration
             id
             name
             progress
-            workedHours
+            workedDuration
         }
     }`, {
         variables: {
@@ -72,8 +72,8 @@ export default function ClientView() {
             <Summary.Field name="email" getLink={`mailto:${client?.email}`} />
             <Summary.Field name="address" />
             <Summary.Field name="earnings" currency={client?.currency} type="money" />
-            <Summary.Field name="estimatedHours" label="Estimated hours" type="hours" />
-            <Summary.Field name="workedHours" label="Worked hours" type="hours" />
+            <Summary.Field name="estimatedDuration" label="Estimated duration" type="duration" />
+            <Summary.Field name="workedDuration" label="Worked duration" type="duration" />
             <Summary.Field name="progress" type="progress" />
         </Summary>
         <ProjectsTable clientId={page.query.id} />

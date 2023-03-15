@@ -18,12 +18,12 @@ export default function ProjectView() {
             currency
             deletable
             earnings
-            estimatedHours
+            estimatedDuration
             id
             name
             progress
             status
-            workedHours
+            workedDuration
             client {
                 id
                 name
@@ -76,8 +76,8 @@ export default function ProjectView() {
             <Summary.Field name="client.name" label="Client" getLink={`/clients/${project?.client.id}`} />
             <Summary.Field name="status" options={PROJECT_STATUS} />
             <Summary.Field name="earnings" currency={project?.currency} type="money" />
-            <Summary.Field name="estimatedHours" label="Estimated hours" type="hours" />
-            <Summary.Field name="workedHours" label="Worked hours" type="hours" />
+            <Summary.Field name="estimatedDuration" label="Estimated duration" type="duration" />
+            <Summary.Field name="workedDuration" label="Worked duration" type="duration" />
             <Summary.Field name="progress" type="progress" />
         </Summary>
         <TasksTable projectId={page.query.id} />

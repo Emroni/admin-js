@@ -83,7 +83,7 @@ export default function TimesTable({ clientId, defaultPerPage = 10, projectId, t
             <Table.Column name="task.name" label="Task" getLink={task => `/tasks/${task.task?.id}`} />
         )}
         <Table.Column name="date" align="right" />
-        <Table.Column name="duration" align="right" />
+        <Table.Column name="duration" align="right" type="duration"/>
         <Table.Column name="earnings" type="money" />
     </Table>;
 

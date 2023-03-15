@@ -17,11 +17,11 @@ export default function Clients() {
             rows {
                 currency
                 earnings
-                estimatedHours
+                estimatedDuration
                 id
                 name
                 progress
-                workedHours
+                workedDuration
                 projects {
                     id
                 }
@@ -57,8 +57,8 @@ export default function Clients() {
         <Table.Column name="name" />
         <Table.Column name="projects" label="Projects" align="right" />
         <Table.Column name="earnings" type="money" />
-        <Table.Column name="estimatedHours" label="Estimated hours" type="hours" />
-        <Table.Column name="workedHours" label="Worked hours" type="hours" />
+        <Table.Column name="estimatedDuration" label="Estimated duration" type="duration" />
+        <Table.Column name="workedDuration" label="Worked duration" type="duration" />
         <Table.Column name="progress" type="progress" />
     </Table>;
 

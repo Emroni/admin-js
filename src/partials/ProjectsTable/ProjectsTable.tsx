@@ -20,12 +20,12 @@ export default function ProjectsTable({ clientId, defaultPerPage = 10 }: Project
             rows {
                 currency
                 earnings
-                estimatedHours
+                estimatedDuration
                 id
                 name
                 progress
                 status
-                workedHours
+                workedDuration
                 client @include(if: $withClient) {
                     id
                     name
@@ -69,8 +69,8 @@ export default function ProjectsTable({ clientId, defaultPerPage = 10 }: Project
             <Table.Column name="client.name" label="Client" getLink={project => `/clients/${project.client?.id}`} />
         )}
         <Table.Column name="earnings" type="money" />
-        <Table.Column name="estimatedHours" label="Estimated hours" type="hours" />
-        <Table.Column name="workedHours" label="Worked hours" type="hours" />
+        <Table.Column name="estimatedDuration" label="Estimated duration" type="duration" />
+        <Table.Column name="workedDuration" label="Worked duration" type="duration" />
         <Table.Column name="progress" type="progress" />
     </Table>;
 

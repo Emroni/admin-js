@@ -17,13 +17,13 @@ export default function TaskView() {
             currency
             deletable
             earnings
-            estimatedHours
+            estimatedDuration
             id
             name
             price
             progress
             rate
-            workedHours
+            workedDuration
             client {
                 id
                 name
@@ -82,8 +82,8 @@ export default function TaskView() {
             <Summary.Field name="price" currency={task?.currency} type="money" />
             <Summary.Field name="rate" currency={task?.currency} type="money" />
             <Summary.Field name="earnings" currency={task?.currency} type="money" />
-            <Summary.Field name="estimatedHours" label="Estimated hours" type="hours" />
-            <Summary.Field name="workedHours" label="Worked hours" type="hours" />
+            <Summary.Field name="estimatedDuration" label="Estimated duration" type="duration" />
+            <Summary.Field name="workedDuration" label="Worked duration" type="duration" />
             <Summary.Field name="progress" type="progress" />
         </Summary>
         <TimesTable taskId={page.query.id} />
