@@ -1,10 +1,10 @@
 const fields = `
-    currency: String!
-    estimatedHours: Float!
-    name: String!
-    price: Int!
-    projectId: ID!
-    rate: Int!
+    currency: String
+    estimatedHours: Float
+    name: String
+    price: Int
+    projectId: ID
+    rate: Int
     timer: DateTimeScalar
 `;
 
@@ -37,7 +37,7 @@ export const types = `
 
     input TasksFilter {
         clientId: ID
-        ${fields.replace(/\!/g, '')}
+        ${fields}
     }
 `;
 

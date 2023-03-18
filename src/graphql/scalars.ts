@@ -9,7 +9,7 @@ export const DateScalar = new GraphQLScalarType({
 
 export const DateTimeScalar = new GraphQLScalarType({
     name: 'DateTimeScalar',
-    parseValue: (value: any) => dayjs(value).utc().format('YYYY-MM-DD HH:mm'),
+    parseValue: (value: any) => dayjs(value).utc().toDate(),
     serialize: (value: any) => dayjs(value).utc().format('YYYY-MM-DD HH:mm'),
 });
 

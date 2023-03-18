@@ -1,3 +1,4 @@
+import { gql, useMutation } from '@apollo/client';
 import { PlayArrow, Stop } from '@mui/icons-material';
 import { IconButton, Typography } from '@mui/material';
 import { Box } from '@mui/system';
@@ -11,6 +12,13 @@ export default function TaskTimer({ taskId, value }: TaskTimerProps) {
     const [hours, setHours] = useState(0);
     const [minutes, setMinutes] = useState('00');
     const [start, setStart] = useState<dayjs.Dayjs | null>(null);
+
+    const [mutate, mutation] = useMutation(gql`mutation($id: ID!, $input: TaskFields) {
+        taskUpdate (id: $id, input: $input) {
+            id
+            timer
+        }
+    }`);
 
     useEffect(() => {
         // Get starting date
@@ -49,12 +57,15 @@ export default function TaskTimer({ taskId, value }: TaskTimerProps) {
         }
     }
 
-    function handleToggle() {
-        if (start) {
-            console.log('stop', taskId)
-        } else {
-            console.log('start', taskId)
-        }
+    async function handleToggle() {
+        await mutate({
+            variables: {
+                id: taskId,
+                input: {
+                    timer: start ? null : new Date(),
+                },
+            },
+        });
     }
 
     return <Box whiteSpace="nowrap">

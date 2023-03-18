@@ -77,17 +77,21 @@ function parseFilter(filter?: TasksFilter) {
     if (where.projectId) {
         where.projectId = parseFilterIds(where?.projectId);
     }
-    
+
     return where;
 }
 
-function parseInput(input: TaskFields) {
+function parseInput(input: Partial<TaskFields>) {
     return {
         ...input,
-        project: {
+        project: input.projectId ? {
             connect: {
                 id: parseNumber(input.projectId),
             },
+        } : undefined,
+        projectId: undefined,
+    } as any;
+}
         },
         projectId: undefined,
     };
