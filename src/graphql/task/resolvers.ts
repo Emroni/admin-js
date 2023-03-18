@@ -1,4 +1,5 @@
 import { getDurationMinutes, getHoursDuration, parseFilterIds, parseNumber, parseOrder } from '@/helpers';
+import { Task } from '@prisma/client';
 import { prisma } from '../';
 
 export const model = {
@@ -59,7 +60,7 @@ export const mutations = {
         where: {
             id: parseNumber(args.id),
         },
-    }),
+    }).then(task => checkTimers(task)),
 };
 
 function parseFilter(filter?: TasksFilter) {
@@ -92,7 +93,34 @@ function parseInput(input: Partial<TaskFields>) {
         projectId: undefined,
     } as any;
 }
-        },
-        projectId: undefined,
-    };
+
+async function checkTimers(task: Task) {
+    // Check if timer is set
+    if (task.timer) {
+        // Get previous task with timer
+        const prevTask = await prisma.task.findFirst({
+            where: {
+                NOT: [
+                    {
+                        id: task.id,
+                    },
+                    {
+                        timer: null,
+                    },
+                ],
+            },
+        });
+        if (prevTask) {
+            // Unset timer
+            await prisma.task.update({
+                data: {
+                    timer: null,
+                },
+                where: {
+                    id: prevTask.id,
+                },
+            });
+        }
+    }
+    return task;
 }

@@ -66,6 +66,7 @@ export default function TaskTimer({ taskId, value }: TaskTimerProps) {
                 },
             },
         });
+        mutation.client.reFetchObservableQueries();
     }
 
     return <Box whiteSpace="nowrap">
