@@ -1,3 +1,4 @@
+import { usePage } from '@/contexts/Page';
 import { gql, useMutation } from '@apollo/client';
 import { PlayArrow, Stop } from '@mui/icons-material';
 import { IconButton, Typography } from '@mui/material';
@@ -6,12 +7,13 @@ import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useInterval } from 'usehooks-ts';
 
-export default function TaskTimer({ taskId, value }: TaskTimerProps) {
+export default function TaskTimer({ prefixTitle, taskId, value }: TaskTimerProps) {
 
     const [interval, setInterval] = useState<number | null>(null);
     const [hours, setHours] = useState(0);
     const [minutes, setMinutes] = useState('00');
     const [start, setStart] = useState<dayjs.Dayjs | null>(null);
+    const page = usePage();
 
     const [mutate, mutation] = useMutation(gql`mutation($id: ID!) {
         taskTimerUpdate (id: $id) {
@@ -53,6 +55,11 @@ export default function TaskTimer({ taskId, value }: TaskTimerProps) {
             // Get minutes
             const newMinutes = Math.floor(difference - 60 * newHours).toString().padStart(2, '0');
             setMinutes(newMinutes);
+
+            // Update page title
+            if (prefixTitle) {
+                page.setTitlePrefix(`${newHours}:${newMinutes}`);
+            }
         }
     }
 

@@ -12,6 +12,7 @@ export function PageProvider({ children }: PageProps) {
 
     const [category, setCategory] = useState('');
     const [name, setName] = useState('');
+    const [titlePrefix, setTitlePrefix] = useState('');
     const [query, setQuery] = useState<IndexedObject>({});
     const [title, setTitle] = useState('Admin');
     const router = useRouter();
@@ -50,12 +51,13 @@ export function PageProvider({ children }: PageProps) {
         pathname: router.pathname,
         query,
         setName: (name?: string | null) => setName(name || ''),
+        setTitlePrefix: (titlePrefix?: string | null) => setTitlePrefix(titlePrefix || ''),
     };
 
     return <PageContext.Provider value={state}>
         <Head>
             <title>
-                {title}
+                {titlePrefix}{titlePrefix ? ' | ' : ''}{title}
             </title>
         </Head>
         <Box display="flex" height="100vh" overflow="hidden">
