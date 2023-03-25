@@ -1,6 +1,7 @@
 import { TaskTimer } from '@/components';
 import { gql, useQuery } from '@apollo/client';
 import { Breadcrumbs, Link } from '@mui/material';
+import NextLink from 'next/link';
 import Card from '../Card/Card';
 
 export default function DashboardTimer() {
@@ -30,13 +31,13 @@ export default function DashboardTimer() {
 
     return <Card title="Timer">
         <Breadcrumbs>
-            <Link href={`/clients/${taskTimer.client.id}`}>
+            <Link component={NextLink} href={`/clients/${taskTimer.client.id}`}>
                 {taskTimer.client.name}
             </Link>
-            <Link href={`/projects/${taskTimer.project.id}`}>
+            <Link component={NextLink} href={`/projects/${taskTimer.project.id}`}>
                 {taskTimer.project.name}
             </Link>
-            <Link href={`/tasks/${taskTimer.id}`}>
+            <Link component={NextLink} href={`/tasks/${taskTimer.id}`}>
                 {taskTimer.name}
             </Link>
         </Breadcrumbs>
