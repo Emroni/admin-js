@@ -11,7 +11,6 @@ export default function DashboardTimer() {
             id
             name
             timer
-            
             client {
                 id
                 name
