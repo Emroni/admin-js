@@ -13,10 +13,9 @@ export default function TaskTimer({ taskId, value }: TaskTimerProps) {
     const [minutes, setMinutes] = useState('00');
     const [start, setStart] = useState<dayjs.Dayjs | null>(null);
 
-    const [mutate, mutation] = useMutation(gql`mutation($id: ID!, $input: TaskFields) {
-        taskUpdate (id: $id, input: $input) {
+    const [mutate, mutation] = useMutation(gql`mutation($id: ID!) {
+        taskTimerUpdate (id: $id) {
             id
-            timer
         }
     }`);
 
@@ -61,9 +60,6 @@ export default function TaskTimer({ taskId, value }: TaskTimerProps) {
         await mutate({
             variables: {
                 id: taskId,
-                input: {
-                    timer: start ? null : new Date(),
-                },
             },
         });
         mutation.client.reFetchObservableQueries();

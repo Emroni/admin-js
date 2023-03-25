@@ -1,5 +1,6 @@
 import { getDurationMinutes, getHoursDuration, parseFilterIds, parseNumber, parseOrder } from '@/helpers';
 import { Task } from '@prisma/client';
+import dayjs from 'dayjs';
 import { prisma } from '../';
 
 export const model = {
@@ -44,6 +45,15 @@ export const queries = {
             where: parseFilter(args.filter),
         }),
     }),
+    taskTimer: () => prisma.task.findFirst({
+        where: {
+            NOT: [
+                {
+                    timer: null,
+                },
+            ],
+        },
+    }),
 };
 
 export const mutations = {
@@ -60,7 +70,93 @@ export const mutations = {
         where: {
             id: parseNumber(args.id),
         },
-    }).then(task => checkTimers(task)),
+    }),
+    taskTimerUpdate: async (_parent: any, args: TaskTimerUpdate) => {
+        const taskId = parseNumber(args.id);
+
+        // Get previous task with timer
+        const prevTask = await prisma.task.findFirst({
+            where: {
+                NOT: [
+                    {
+                        timer: null,
+                    },
+                ],
+            },
+        });
+
+        // Check previous task
+        if (prevTask) {
+            const date = dayjs.utc(dayjs.utc().format('YYYY-MM-DD')).toDate();
+
+            // Get existing time
+            const time = await prisma.time.findFirst({
+                where: {
+                    date,
+                    taskId,
+                },
+            });
+
+            // Get duration
+            const timeDuration = time ? dayjs.utc(time.duration) : null;
+            const timeMinutes = timeDuration ? (60 * timeDuration.hour() + timeDuration.minute()) : 0;
+            const taskMinutes = Math.abs(dayjs.utc(prevTask.timer).diff(undefined, 'minute'));
+            const duration = dayjs.utc('1970-01-01').add(timeMinutes + taskMinutes, 'minute').toDate();
+
+            // Create or update time
+            if (time) {
+                await prisma.time.update({
+                    data: {
+                        duration,
+                    },
+                    where: {
+                        id: time.id,
+                    },
+                });
+            } else {
+                await prisma.time.create({
+                    data: {
+                        date,
+                        duration,
+                        task: {
+                            connect: {
+                                id: taskId,
+                            },
+                        },
+                    },
+                });
+            }
+
+            // Unset previous task timer
+            await prisma.task.update({
+                data: {
+                    timer: null,
+                },
+                where: {
+                    id: prevTask.id,
+                },
+            });
+        }
+
+        // Set task timer
+        if (!prevTask || prevTask.id !== taskId) {
+            return await prisma.task.update({
+                data: {
+                    timer: new Date(),
+                },
+                where: {
+                    id: taskId,
+                },
+            });
+        }
+
+        // Get task
+        return prisma.task.findUnique({
+            where: {
+                id: taskId,
+            },
+        });
+    },
 };
 
 function parseFilter(filter?: TasksFilter) {
@@ -92,35 +188,4 @@ function parseInput(input: Partial<TaskFields>) {
         } : undefined,
         projectId: undefined,
     } as any;
-}
-
-async function checkTimers(task: Task) {
-    // Check if timer is set
-    if (task.timer) {
-        // Get previous task with timer
-        const prevTask = await prisma.task.findFirst({
-            where: {
-                NOT: [
-                    {
-                        id: task.id,
-                    },
-                    {
-                        timer: null,
-                    },
-                ],
-            },
-        });
-        if (prevTask) {
-            // Unset timer
-            await prisma.task.update({
-                data: {
-                    timer: null,
-                },
-                where: {
-                    id: prevTask.id,
-                },
-            });
-        }
-    }
-    return task;
 }

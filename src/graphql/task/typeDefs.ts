@@ -45,10 +45,12 @@ export const queries = `
     Task: Task
     task(id: ID!): Task
     tasks(filter: TasksFilter, order: String, page: Int, perPage: Int): Tasks
+    taskTimer: Task
 `;
 
 export const mutations = `
     taskCreate(input: TaskFields): Task
     taskDelete(id: ID!): Task
     taskUpdate(id: ID!, input: TaskFields): Task
+    taskTimerUpdate(id: ID!): Task
 `;
