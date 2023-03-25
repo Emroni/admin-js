@@ -5,6 +5,7 @@ import * as time from './time/typeDefs';
 
 export const typeDefs = `
     scalar DateScalar
+    scalar DateTimeScalar
     scalar TimeScalar
 
     ${client.types}

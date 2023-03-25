@@ -2,6 +2,7 @@ import { Dashboard, People, Task, Timer, Work } from '@mui/icons-material';
 import { Box, ListItemIcon, ListItemText, MenuItem, MenuList } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import NavigationTimer from '../NavigationTimer/NavigationTimer';
 
 export default function Navigation() {
 
@@ -24,8 +25,8 @@ export default function Navigation() {
         router.pathname,
     ]);
 
-    return <Box bgcolor="grey.900" height="100vh" overflow="auto">
-        <MenuList>
+    return <Box bgcolor="grey.900" display="flex" flexDirection="column" height="100vh" justifyContent="space-between" paddingY={1}>
+        <MenuList disablePadding>
             {items.map((item, index) => (
                 <MenuItem key={index} selected={item.selected} onClick={() => router.push(item.path)}>
                     <ListItemIcon>
@@ -35,6 +36,7 @@ export default function Navigation() {
                 </MenuItem>
             ))}
         </MenuList>
+        <NavigationTimer />
     </Box>;
 
 }

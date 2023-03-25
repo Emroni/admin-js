@@ -1,4 +1,4 @@
-import { Menu, Summary } from '@/components';
+import { Menu, Summary, TaskTimer } from '@/components';
 import { usePage } from '@/contexts/Page';
 import { TimesTable } from '@/partials';
 import { gql, useMutation, useQuery } from '@apollo/client';
@@ -23,6 +23,7 @@ export default function TaskView() {
             price
             progress
             rate
+            timer
             workedDuration
             client {
                 id
@@ -85,6 +86,11 @@ export default function TaskView() {
             <Summary.Field name="estimatedDuration" label="Estimated duration" type="duration" />
             <Summary.Field name="workedDuration" label="Worked duration" type="duration" />
             <Summary.Field name="progress" type="progress" />
+            <Summary.Field name="timer">
+                {({ value }: SummaryFieldChildProps) => (
+                    <TaskTimer taskId={task?.id} value={value} />
+                )}
+            </Summary.Field>
         </Summary>
         <TimesTable taskId={page.query.id} />
     </>;

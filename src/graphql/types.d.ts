@@ -17,7 +17,7 @@ interface GraphqlGetArgs {
 
 interface GraphqlUpdateArgs<I> {
     id: number;
-    input: I;
+    input: Partial<I>;
 }
 
 interface GraphqlList<T = Entity> {

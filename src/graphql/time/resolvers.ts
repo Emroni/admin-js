@@ -1,4 +1,5 @@
 import { getDurationHours, parseFilterIds, parseNumber, parseOrder } from '@/helpers';
+import { GraphQLError } from 'graphql';
 import { prisma } from '../';
 
 export const model = {
@@ -38,9 +39,29 @@ export const queries = {
 };
 
 export const mutations = {
-    timeCreate: (_parent: any, args: GraphqlCreateArgs<TimeFields>) => prisma.time.create({
-        data: parseInput(args.input),
-    }),
+    timeCreate: async (_parent: any, args: GraphqlCreateArgs<TimeFields>) => {
+        // Get existing time
+        const time = await prisma.time.findFirst({
+            where: {
+                date: args.input.date,
+                taskId: parseNumber(args.input.taskId),
+            },
+        });
+
+        // Throw error if exists
+        if (time) {
+            throw new GraphQLError('Time already exists', {
+                extensions: {
+                    code: 'ALREADY_EXISTS',
+                },
+            });
+        }
+
+        // Create new
+        return prisma.time.create({
+            data: parseInput(args.input),
+        });
+    },
     timeDelete: (_parent: any, args: GraphqlDeleteArgs) => prisma.time.delete({
         where: {
             id: parseNumber(args.id),
@@ -82,14 +103,14 @@ function parseFilter(filter?: TimesFilter) {
     return where;
 }
 
-function parseInput(input: TimeFields) {
+function parseInput(input: Partial<TimeFields>) {
     return {
         ...input,
-        task: {
+        task: input.taskId ? {
             connect: {
                 id: parseNumber(input.taskId),
             },
-        },
+        } : undefined,
         taskId: undefined,
-    };
+    } as any;
 }

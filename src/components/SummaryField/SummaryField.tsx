@@ -15,16 +15,22 @@ export default function SummaryField({ children, currency, entity, label, name, 
         setLink(newLink);
 
         // Get value
-        const newValue = children || (entity ? getNestedValue(entity, name) : null);
+        const newValue = entity ? getNestedValue(entity, name) : null;
         setValue(newValue);
     }, [
-        children,
         entity,
         name,
         getLink,
     ]);
 
-    const content = <Value currency={currency} options={options} type={type} value={value} />;
+
+    let content: any = null;
+    if (children) {
+        const Component = children;
+        content = <Component value={value} />;
+    } else {
+        content = <Value currency={currency} options={options} type={type} value={value} />;
+    }
 
     return <TableRow>
         <TableCell>

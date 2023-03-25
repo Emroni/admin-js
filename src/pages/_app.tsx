@@ -1,9 +1,13 @@
 import { PageProvider } from '@/contexts/Page';
 import { ApolloClient, ApolloProvider, createHttpLink, from, InMemoryCache } from '@apollo/client';
 import { CssBaseline, ThemeProvider } from '@mui/material';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 import type { AppProps } from 'next/app';
 import { useEffect, useState } from 'react';
 import theme from '../theme';
+
+dayjs.extend(utc);
 
 export default function App({ Component, pageProps }: AppProps) {
 

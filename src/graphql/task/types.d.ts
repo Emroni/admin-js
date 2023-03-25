@@ -7,6 +7,7 @@ interface Task extends Entity, TaskFields {
     times: Time[];
     workedDuration: string;
     workedHours: number;
+    timer: Date;
 }
 
 interface TaskFields {
@@ -22,8 +23,16 @@ interface TaskQuery {
     task: Task?;
 }
 
+interface TaskTimerQuery {
+    taskTimer: Task?;
+}
+
 interface TasksQuery {
     tasks: GraphqlList<Task>;
+}
+
+interface TaskTimerUpdate {
+    id: number;
 }
 
 interface TasksFilter extends Partial<TaskFields> {
