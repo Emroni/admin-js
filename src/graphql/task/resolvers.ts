@@ -104,27 +104,29 @@ export const mutations = {
             const duration = dayjs.utc('1970-01-01').add(timeMinutes + taskMinutes, 'minute').toDate();
 
             // Create or update time
-            if (time) {
-                await prisma.time.update({
-                    data: {
-                        duration,
-                    },
-                    where: {
-                        id: time.id,
-                    },
-                });
-            } else {
-                await prisma.time.create({
-                    data: {
-                        date,
-                        duration,
-                        task: {
-                            connect: {
-                                id: taskId,
+            if (taskMinutes) {
+                if (time) {
+                    await prisma.time.update({
+                        data: {
+                            duration,
+                        },
+                        where: {
+                            id: time.id,
+                        },
+                    });
+                } else {
+                    await prisma.time.create({
+                        data: {
+                            date,
+                            duration,
+                            task: {
+                                connect: {
+                                    id: taskId,
+                                },
                             },
                         },
-                    },
-                });
+                    });
+                }
             }
 
             // Unset previous task timer
