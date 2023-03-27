@@ -1,4 +1,4 @@
-import { parseNumber, parseOrder } from '@/helpers';
+import { getDurationMinutes, getHoursDuration, parseNumber, parseOrder } from '@/helpers';
 import { prisma } from '../';
 
 export const model = {
@@ -6,6 +6,34 @@ export const model = {
         where: {
             id: parseNumber(parent.clientId),
         },
+    }),
+    deletable: (parent: Invoice) => model.times(parent).then(times => !times.length),
+    projects: (parent: Invoice) => model.tasks(parent).then(tasks => {
+        return prisma.project.findMany({
+            where: {
+                id: {
+                    in: tasks.map(task => task.projectId),
+                },
+            },
+        });
+    }),
+    tasks: (parent: Invoice) => model.times(parent).then(times => {
+        return prisma.task.findMany({
+            where: {
+                id: {
+                    in: times.map(time => time.taskId),
+                },
+            },
+        });
+    }),
+    times: (parent: Invoice) => prisma.time.findMany({
+        where: {
+            invoiceId: parent.id,
+        },
+    }),
+    workedDuration: (parent: Invoice) => model.workedHours(parent).then(getHoursDuration),
+    workedHours: (parent: Invoice) => model.times(parent).then(times => {
+        return times.reduce((total, time) => total + getDurationMinutes(time.duration), 0) / 60;
     }),
 };
 

@@ -12,6 +12,7 @@ export const types = `
         earnings: Float!
         hours: Float!
         id: ID!
+        invoice: Invoice!
         project: Project!
         task: Task!
         ${fields}

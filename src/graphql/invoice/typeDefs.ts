@@ -12,7 +12,13 @@ const fields = `
 export const types = `
     type Invoice {
         client: Client!
+        deletable: Boolean!
         id: ID!
+        projects: [Project!]!
+        tasks: [Task!]!
+        times: [Time!]!
+        workedDuration: String!
+        workedHours: Float!
         ${fields}
     }
 

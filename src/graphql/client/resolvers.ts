@@ -18,6 +18,7 @@ export const model = {
         return tasks.reduce((total, task) => total + task.estimatedHours * 60, 0) / 60;
     }),
     invoices: (parent: Client) => prisma.invoice.findMany({
+        orderBy: parseOrder('id desc'),
         where: {
             clientId: parent.id,
         },

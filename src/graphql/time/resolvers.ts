@@ -8,6 +8,11 @@ export const model = {
     currency: (parent: Time) => model.task(parent).then(task => task?.currency),
     earnings: (parent: Time) => model.task(parent).then(task => task?.rate ? model.hours(parent) * task.rate : 0),
     hours: (parent: Time) => getDurationHours(parent.duration as unknown as Date), // TODO: Is there a better way to do this?
+    invoice: (parent: Invoice) => prisma.invoice.findUnique({
+        where: {
+            id: parseNumber(parent.invoiceId),
+        },
+    }),
     project: (parent: Time) => model.task(parent).project(),
     task: (parent: Time) => prisma.task.findUnique({
         where: {

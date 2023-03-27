@@ -21,6 +21,16 @@ export const model = {
         }
         return tasks.reduce((total, task) => total + task.estimatedHours * 60, 0) / 60;
     }),
+    invoices: (parent: Project) => model.times(parent).then(times => {
+        return prisma.invoice.findMany({
+            orderBy: parseOrder('id desc'),
+            where: {
+                id: {
+                    in: times.map(time => time.invoiceId).filter(invoiceId => !!invoiceId) as number[],
+                },
+            },
+        });
+    }),
     progress: (parent: Project) => model.estimatedHours(parent).then(estimatedHours => {
         return estimatedHours ? model.workedHours(parent).then(workedHours => workedHours / estimatedHours) : 0;
     }),
