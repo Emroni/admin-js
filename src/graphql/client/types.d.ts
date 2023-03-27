@@ -3,6 +3,7 @@ interface Client extends Entity, ClientFields {
     earnings: number;
     estimatedDuration: string;
     estimatedHours: number;
+    invoices: Invoice[];
     progress: number;
     projects: Project[];
     tasks: Task[];

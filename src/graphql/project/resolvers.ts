@@ -90,14 +90,14 @@ function parseFilter(filter?: ProjectsFilter) {
     };
 }
 
-function parseInput(input: ProjectFields) {
+function parseInput(input: Partial<ProjectFields>) {
     return {
         ...input,
-        client: {
+        client: input.clientId ? {
             connect: {
                 id: parseNumber(input.clientId),
             },
-        },
+        } : undefined,
         clientId: undefined,
-    };
+    } as any;
 }

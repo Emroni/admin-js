@@ -12,7 +12,21 @@ model Client {
     address         String?     @db.Text
     email           String?
     name            String      @unique
+    invoices        Invoice[]
     projects        Project[]
+}
+
+model Invoice {
+    id              Int         @id @default(autoincrement())
+    number          String?
+    currency        String
+    amount          Float
+    type            String
+    description     String?
+    sentDate        DateTime?   @db.Date
+    paidDate        DateTime?   @db.Date
+    client          Client      @relation(fields: [clientId], references: [id])
+    clientId        Int
 }
 
 model Project {
