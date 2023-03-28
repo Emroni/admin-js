@@ -3,16 +3,14 @@ import { gql, useQuery } from '@apollo/client';
 import { Add } from '@mui/icons-material';
 import { Link, Typography } from '@mui/material';
 import NextLink from 'next/link';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
 export default function DashboardInvoices() {
 
-    const [order, setOrder] = useState('id desc');
-    const [page, setPage] = useState(0);
-    const [perPage, setPerPage] = useState(10);
+    const [data, setData] = useState<GraphqlList | undefined>(undefined);
 
-    const query = useQuery<InvoicesQuery>(gql`query ($filter: InvoicesFilter, $order: String, $page: Int, $perPage: Int) {
-        invoices (filter: $filter, order: $order, page: $page, perPage: $perPage) {
+    const query = useQuery<InvoicesQuery & TimesQuery>(gql`query {
+        invoices (filter: { paidDate: null }, order: "id asc", page: 0, perPage: 1000) {
             order,
             page,
             perPage,
@@ -35,21 +33,72 @@ export default function DashboardInvoices() {
             }
             total
         }
-    }`, {
-        variables: {
-            filter: {
-                paidDate: null,
-            },
-            order,
-            page,
-            perPage,
-        },
-    });
-    
-    function handleOrderChange(order: string | null) {
-        const newOrder = order || 'name asc';
-        setOrder(newOrder);
-    }
+        times (filter: { invoiceId: null }, order: "id asc", page: 0, perPage: 1000) {
+            rows {
+                currency
+                date
+                duration
+                earnings
+                id
+                client {
+                    id
+                    name
+                }
+                project {
+                    id
+                    name
+                }
+            }
+        }
+    }`);
+
+    useEffect(() => {
+        if (query.data) {
+            const { invoices, times } = query.data;
+
+            // Prepare data with invoices
+            const newData = {
+                order: 'id asc',
+                page: 0,
+                perPage: 1000,
+                rows: invoices.rows.slice(),
+                total: invoices.total,
+            };
+
+            // Parse times into billables
+            const billables: IndexedObject = {};
+            times.rows.forEach((time, index) => {
+                // Add client
+                let billable = billables[time.client.id];
+                if (!billable) {
+                    billable = billables[time.client.id] = {
+                        amount: 0,
+                        currency: time.currency,
+                        client: time.client,
+                        id: invoices.total + index,
+                        projects: {},
+                    };
+                }
+
+                // Parse data
+                billable.projects[time.project.id] = time.project;
+                billable.amount += time.earnings;
+            });
+
+            // Merge billables into data
+            Object.values(billables).forEach(billable => {
+                newData.rows.push({
+                    ...billable,
+                    projects: Object.values(billable.projects).sort((a: any, b: any) => a.name < b.name ? -1 : 1),
+                });
+                newData.total++;
+            });
+
+            setData(newData);
+        }
+    }, [
+        query.data,
+    ]);
 
     const action = <Menu>
         <Menu.Item icon={Add} label="Add" link="/invoices/add" />
@@ -57,12 +106,9 @@ export default function DashboardInvoices() {
 
     return <Table
         action={action}
-        data={query.data?.invoices}
+        data={data}
         title="Invoices"
-        getRowLink={invoice => `/invoices/${invoice.id}`}
-        onOrderChange={handleOrderChange}
-        onPageChange={setPage}
-        onPerPageChange={setPerPage}
+        getRowLink={invoice => invoice.sentDate ? `/invoices/${invoice.id}` : `/invoices/add?clientId=${invoice.client.id}`}
     >
         <Table.Column name="number" />
         <Table.Column name="client.name" label="Client" getLink={invoice => `/clients/${invoice.client?.id}`} />
