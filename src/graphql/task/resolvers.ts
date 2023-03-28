@@ -183,6 +183,15 @@ function parseFilter(filter?: TasksFilter) {
         delete where.clientId;
     }
 
+    if (where.invoiceId) {
+        where.times = {
+            some: {
+                invoiceId: parseNumber(where.invoiceId),
+            },
+        };
+        delete where.invoiceId;
+    }
+
     if (where.projectId) {
         where.projectId = parseFilterIds(where?.projectId);
     }

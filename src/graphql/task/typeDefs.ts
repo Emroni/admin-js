@@ -38,6 +38,7 @@ export const types = `
 
     input TasksFilter {
         clientId: ID
+        invoiceId: ID
         ${fields}
     }
 `;

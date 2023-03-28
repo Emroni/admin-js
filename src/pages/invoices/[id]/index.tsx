@@ -1,6 +1,6 @@
 import { Menu, Summary } from '@/components';
 import { usePage } from '@/contexts/Page';
-import { ProjectsTable, TimesTable } from '@/partials';
+import { ProjectsTable, TasksTable, TimesTable } from '@/partials';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { Delete, Edit } from '@mui/icons-material';
 import { useRouter } from 'next/router';
@@ -78,6 +78,7 @@ export default function InvoiceView() {
             <Summary.Field name="paidDate" label="Paid" />
         </Summary>
         <ProjectsTable invoiceId={page.query.id} />
+        <TasksTable invoiceId={page.query.id} />
         <TimesTable invoiceId={page.query.id} />
     </>;
 

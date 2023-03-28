@@ -37,4 +37,5 @@ interface TaskTimerUpdate {
 
 interface TasksFilter extends Partial<TaskFields> {
     clientId?: number;
+    invoiceId?: number;
 }

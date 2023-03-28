@@ -3,7 +3,7 @@ import { gql, useQuery } from '@apollo/client';
 import { Add } from '@mui/icons-material';
 import { useState } from 'react';
 
-export default function TasksTable({ clientId, defaultPerPage = 10, projectId }: TasksTableProps) {
+export default function TasksTable({ clientId, defaultPerPage = 10, invoiceId, projectId }: TasksTableProps) {
 
     const [order, setOrder] = useState('id desc');
     const [page, setPage] = useState(0);
@@ -43,6 +43,7 @@ export default function TasksTable({ clientId, defaultPerPage = 10, projectId }:
         variables: {
             filter: {
                 clientId,
+                invoiceId,
                 projectId,
             },
             order,
