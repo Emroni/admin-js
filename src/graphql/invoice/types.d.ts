@@ -1,16 +1,17 @@
 interface Invoice extends Entity, InvoiceFields {
     client: Client;
+    name: string;
 }
 
 interface InvoiceFields {
-    clientId: number;
-    number: string?;
-    currency: string;
     amount: Float!
-    type: string;
+    clientId: number;
+    currency: string;
     description: string?;
-    sentDate: Date?;
+    number: string?;
     paidDate: Date?;
+    sentDate: Date?;
+    type: string;
 }
 
 interface InvoiceQuery {

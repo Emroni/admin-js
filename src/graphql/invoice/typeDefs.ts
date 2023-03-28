@@ -14,6 +14,7 @@ export const types = `
         client: Client!
         deletable: Boolean!
         id: ID!
+        name: String!
         projects: [Project!]!
         tasks: [Task!]!
         times: [Time!]!

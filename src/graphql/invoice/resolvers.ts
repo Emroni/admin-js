@@ -8,6 +8,7 @@ export const model = {
         },
     }),
     deletable: (parent: Invoice) => model.times(parent).then(times => !times.length),
+    name: (parent: Invoice) => parent.number || `#${parent.id}`,
     projects: (parent: Invoice) => model.tasks(parent).then(tasks => {
         return prisma.project.findMany({
             where: {

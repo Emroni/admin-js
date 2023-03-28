@@ -22,6 +22,7 @@ export default function InvoiceEdit() {
             clientId
             id
             number
+            name
             currency
             amount
             type
@@ -71,7 +72,7 @@ export default function InvoiceEdit() {
         router.push(`/invoices/${result.data.invoiceUpdate.id}`);
     }
 
-    return <Form initialValues={invoice} loading={!invoice || mutation.loading} title={`Edit ${invoice?.number}`} onSubmit={handleSubmit}>
+    return <Form initialValues={invoice} loading={!invoice || mutation.loading} title={`Edit ${invoice?.name}`} onSubmit={handleSubmit}>
         <Form.Field name="number" />
         <Form.Field name="clientId" label="Client" options={query.data?.clients.rows} required />
         <Form.Field name="type" required />

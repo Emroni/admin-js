@@ -16,6 +16,7 @@ export default function InvoiceView() {
         invoice(id: $id) {
             id
             number
+            name
             currency
             amount
             type
@@ -45,7 +46,7 @@ export default function InvoiceView() {
         setInvoice(newInvoice);
 
         // Set page name
-        page.setName(newInvoice?.number);
+        page.setName(newInvoice?.name);
     }, [
         query.data,
         page,
