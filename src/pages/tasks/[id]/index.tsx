@@ -1,6 +1,6 @@
 import { Menu, Summary, TaskTimer } from '@/components';
 import { usePage } from '@/contexts/Page';
-import { TimesTable } from '@/partials';
+import { InvoicesTable, TimesTable } from '@/partials';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { Delete, Edit } from '@mui/icons-material';
 import { useRouter } from 'next/router';
@@ -92,6 +92,7 @@ export default function TaskView() {
                 )}
             </Summary.Field>
         </Summary>
+        <InvoicesTable taskId={page.query.id} />
         <TimesTable taskId={page.query.id} />
     </>;
 

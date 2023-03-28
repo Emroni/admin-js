@@ -1,5 +1,3 @@
-type InvoicesFilter = Partial<InvoiceFields>;
-
 interface Invoice extends Entity, InvoiceFields {
     client: Client;
 }
@@ -21,4 +19,9 @@ interface InvoiceQuery {
 
 interface InvoicesQuery {
     invoices: GraphqlList<Invoice>;
+}
+
+interface InvoicesFilter extends Partial<InvoiceFields> {
+    projectId?: number;
+    taskId?: number;
 }

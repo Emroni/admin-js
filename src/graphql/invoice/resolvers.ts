@@ -1,4 +1,4 @@
-import { getDurationMinutes, getHoursDuration, parseNumber, parseOrder } from '@/helpers';
+import { getDurationMinutes, getHoursDuration, parseFilterIds, parseNumber, parseOrder } from '@/helpers';
 import { prisma } from '../';
 
 export const model = {
@@ -76,11 +76,37 @@ export const mutations = {
     }),
 };
 
+
 function parseFilter(filter?: InvoicesFilter) {
-    return {
+    const where: any = {
         ...filter,
-        clientId: parseNumber(filter?.clientId),
     };
+
+    if (where.projectId) {
+        where.times = {
+            some: {
+                task: {
+                    projectId: parseNumber(where.projectId),
+                }
+            },
+        };
+        delete where.projectId;
+    }
+
+    if (where.taskId) {
+        where.times = {
+            some: {
+                taskId: parseNumber(where.taskId),
+            },
+        };
+        delete where.taskId;
+    }
+
+    if (where.clientId) {
+        where.clientId = parseFilterIds(where?.clientId);
+    }
+
+    return where;
 }
 
 function parseInput(input: Partial<InvoiceFields>) {
