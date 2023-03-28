@@ -1,13 +1,30 @@
+import { gql, useQuery } from '@apollo/client';
 import { Dashboard, People, Receipt, Task, Timer, Work } from '@mui/icons-material';
 import { Box, ListItemIcon, ListItemText, MenuItem, MenuList } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import NavigationTimer from '../NavigationTimer/NavigationTimer';
+import TaskTimer from '../TaskTimer/TaskTimer';
 
 export default function Navigation() {
 
     const [items, setItems] = useState<NavigationItem[]>([]);
     const router = useRouter();
+
+    const taskTimerQuery = useQuery<TaskTimerQuery>(gql`query {
+        taskTimer {
+            id
+            name
+            timer
+            client {
+                id
+                name
+            }
+            project {
+                id
+                name
+            }
+        }
+    }`);
 
     useEffect(() => {
         const newItems = [
@@ -37,7 +54,11 @@ export default function Navigation() {
                 </MenuItem>
             ))}
         </MenuList>
-        <NavigationTimer />
+        {taskTimerQuery.data?.taskTimer && (
+            <Box paddingX={1} title={`${taskTimerQuery.data.taskTimer.client.name} › ${taskTimerQuery.data.taskTimer.project.name} › ${taskTimerQuery.data.taskTimer.name}`}>
+                <TaskTimer prefixTitle taskId={taskTimerQuery.data.taskTimer.id} value={taskTimerQuery.data.taskTimer.timer} />
+            </Box>
+        )}
     </Box>;
 
 }

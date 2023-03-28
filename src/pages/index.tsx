@@ -1,4 +1,4 @@
-import { DashboardTimer } from '@/components';
+import { DashboardTimer } from '@/partials';
 
 export default function Dashboard() {
 
