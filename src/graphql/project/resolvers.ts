@@ -94,10 +94,28 @@ export const mutations = {
 };
 
 function parseFilter(filter?: ProjectsFilter) {
-    return {
+    const where: any = {
         ...filter,
-        clientId: parseNumber(filter?.clientId),
     };
+
+    if (where.invoiceId) {
+        where.tasks = {
+            some: {
+                times: {
+                    some: {
+                        invoiceId: parseNumber(where.invoiceId),
+                    },
+                },
+            },
+        };
+        delete where.invoiceId;
+    }
+
+    if (where.clientId) {
+        where.clientId = parseNumber(where?.clientId);
+    }
+
+    return where;
 }
 
 function parseInput(input: Partial<ProjectFields>) {
