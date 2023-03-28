@@ -77,7 +77,7 @@ export default function InvoiceView() {
             <Summary.Field name="sentDate" label="Sent" />
             <Summary.Field name="paidDate" label="Paid" />
         </Summary>
-        <TimesTable invoiceId />
+        <TimesTable invoiceId={page.query.id} />
     </>;
 
 }

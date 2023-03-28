@@ -94,6 +94,10 @@ function parseFilter(filter?: TimesFilter) {
         delete where.clientId;
     }
 
+    if (where.invoiceId) {
+        where.invoiceId = parseFilterIds(where?.invoiceId);
+    }
+
     if (where.projectId) {
         where.task = {
             projectId: parseFilterIds(where.projectId),
