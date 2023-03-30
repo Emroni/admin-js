@@ -16,6 +16,11 @@ export function getHoursDuration(hours: number) {
     return `${h}:${m}`;
 }
 
+export function getUnique<T>(items: T[]) {
+    const set = new Set(items);
+    return Array.from(set);
+}
+
 export function parseFilterIds(ids: any) {
     if (Array.isArray(ids)) {
         return {

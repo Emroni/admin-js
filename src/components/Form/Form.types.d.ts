@@ -3,5 +3,6 @@ interface FormProps {
     initialValues?: IndexedObject?;
     loading?: boolean;
     title: string;
+    onChange?(data: IndexedObject): void;
     onSubmit(data: IndexedObject): void;
 }
