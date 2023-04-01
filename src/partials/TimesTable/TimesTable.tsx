@@ -90,7 +90,7 @@ export default function TimesTable({ clientId, defaultPerPage = 10, invoiceId, p
             <Table.Column name="task.name" label="Task" getLink={task => `/tasks/${task.task?.id}`} />
         )}
         {withInvoice && (
-            <Table.Column name="invoice.number" label="Invoice" getLink={invoice => `/invoices/${invoice.invoice?.id}`} />
+            <Table.Column name="invoice.name" label="Invoice" getLink={invoice => `/invoices/${invoice.invoice?.id}`} />
         )}
         <Table.Column name="date" align="right" />
         <Table.Column name="duration" align="right" type="duration"/>
