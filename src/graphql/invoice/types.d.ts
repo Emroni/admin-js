@@ -11,6 +11,7 @@ interface InvoiceFields {
     number: string?;
     paidDate: Date?;
     sentDate: Date?;
+    times: number[];
     type: string;
 }
 

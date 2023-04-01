@@ -119,5 +119,10 @@ function parseInput(input: Partial<InvoiceFields>) {
             },
         } : undefined,
         clientId: undefined,
+        times: input.times ? {
+            connect: input.times.map(id => ({
+                id: Number(id),
+            })),
+        } : undefined,
     } as any;
 }

@@ -32,6 +32,7 @@ export const types = `
     }
 
     input InvoiceFields {
+        times: [ID!]!
         ${fields}
     }
 
