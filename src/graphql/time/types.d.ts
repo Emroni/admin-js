@@ -11,6 +11,7 @@ interface TimeFields {
     date: string;
     duration: string;
     taskId: number;
+    invoiceId: number?;
 }
 
 interface TimeQuery {

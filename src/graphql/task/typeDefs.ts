@@ -15,6 +15,7 @@ export const types = `
         earnings: Float!
         estimatedDuration: String!
         id: ID!
+        invoices: [Invoice!]!
         progress: Float!
         project: Project!
         times: [Time!]!
@@ -37,6 +38,7 @@ export const types = `
 
     input TasksFilter {
         clientId: ID
+        invoiceId: ID
         ${fields}
     }
 `;

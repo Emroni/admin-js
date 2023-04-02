@@ -21,6 +21,16 @@ export const model = {
         }
         return tasks.reduce((total, task) => total + task.estimatedHours * 60, 0) / 60;
     }),
+    invoices: (parent: Project) => model.times(parent).then(times => {
+        return prisma.invoice.findMany({
+            orderBy: parseOrder('id desc'),
+            where: {
+                id: {
+                    in: times.map(time => time.invoiceId).filter(invoiceId => !!invoiceId) as number[],
+                },
+            },
+        });
+    }),
     progress: (parent: Project) => model.estimatedHours(parent).then(estimatedHours => {
         return estimatedHours ? model.workedHours(parent).then(workedHours => workedHours / estimatedHours) : 0;
     }),
@@ -84,20 +94,38 @@ export const mutations = {
 };
 
 function parseFilter(filter?: ProjectsFilter) {
-    return {
+    const where: any = {
         ...filter,
-        clientId: parseNumber(filter?.clientId),
     };
+
+    if (where.invoiceId) {
+        where.tasks = {
+            some: {
+                times: {
+                    some: {
+                        invoiceId: parseNumber(where.invoiceId),
+                    },
+                },
+            },
+        };
+        delete where.invoiceId;
+    }
+
+    if (where.clientId) {
+        where.clientId = parseNumber(where?.clientId);
+    }
+
+    return where;
 }
 
-function parseInput(input: ProjectFields) {
+function parseInput(input: Partial<ProjectFields>) {
     return {
         ...input,
-        client: {
+        client: input.clientId ? {
             connect: {
                 id: parseNumber(input.clientId),
             },
-        },
+        } : undefined,
         clientId: undefined,
-    };
+    } as any;
 }

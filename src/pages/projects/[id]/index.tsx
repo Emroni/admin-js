@@ -1,7 +1,7 @@
 import { Menu, Summary } from '@/components';
 import { PROJECT_STATUS } from '@/constants';
 import { usePage } from '@/contexts/Page';
-import { TasksTable, TimesTable } from '@/partials';
+import { InvoicesTable, TasksTable, TimesTable } from '@/partials';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { Delete, Edit } from '@mui/icons-material';
 import { useRouter } from 'next/router';
@@ -64,7 +64,7 @@ export default function ProjectView() {
             router.push(`/clients/${project?.client.id}`);
         }
     }
-
+    
     const action = <Menu>
         <Menu.Item icon={Edit} label="Edit" link={`/projects/${project?.id}/edit`} />
         <Menu.Item color="error" disabled={!project?.deletable} icon={Delete} label="Delete" onClick={handleDelete} />
@@ -80,6 +80,7 @@ export default function ProjectView() {
             <Summary.Field name="workedDuration" label="Worked duration" type="duration" />
             <Summary.Field name="progress" type="progress" />
         </Summary>
+        <InvoicesTable projectId={page.query.id} />
         <TasksTable projectId={page.query.id} />
         <TimesTable projectId={page.query.id} />
     </>;

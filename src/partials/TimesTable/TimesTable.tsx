@@ -3,7 +3,7 @@ import { gql, useQuery } from '@apollo/client';
 import { Add } from '@mui/icons-material';
 import { useState } from 'react';
 
-export default function TimesTable({ clientId, defaultPerPage = 10, projectId, taskId }: TimesTableProps) {
+export default function TimesTable({ clientId, defaultPerPage = 10, invoiceId, projectId, taskId }: TimesTableProps) {
 
     const [order, setOrder] = useState('id desc');
     const [page, setPage] = useState(0);
@@ -12,8 +12,9 @@ export default function TimesTable({ clientId, defaultPerPage = 10, projectId, t
     const withTask = !taskId;
     const withProject = !projectId;
     const withClient = !clientId;
+    const withInvoice = !invoiceId;
     
-    const query = useQuery<TimesQuery>(gql`query ($filter: TimesFilter, $order: String, $page: Int, $perPage: Int, $withClient: Boolean!, $withProject: Boolean!, $withTask: Boolean!) {
+    const query = useQuery<TimesQuery>(gql`query ($filter: TimesFilter, $order: String, $page: Int, $perPage: Int, $withClient: Boolean!, $withInvoice: Boolean!, $withProject: Boolean!, $withTask: Boolean!) {
         times (filter: $filter, order: $order, page: $page, perPage: $perPage) {
             order,
             page,
@@ -25,6 +26,10 @@ export default function TimesTable({ clientId, defaultPerPage = 10, projectId, t
                 earnings
                 currency
                 client @include(if: $withClient) {
+                    id
+                    name
+                }
+                invoice @include(if: $withInvoice) {
                     id
                     name
                 }
@@ -43,6 +48,7 @@ export default function TimesTable({ clientId, defaultPerPage = 10, projectId, t
         variables: {
             filter: {
                 clientId,
+                invoiceId,
                 projectId,
                 taskId,
             },
@@ -50,6 +56,7 @@ export default function TimesTable({ clientId, defaultPerPage = 10, projectId, t
             page,
             perPage,
             withClient,
+            withInvoice,
             withProject,
             withTask,
         },
@@ -81,6 +88,9 @@ export default function TimesTable({ clientId, defaultPerPage = 10, projectId, t
         )}
         {withTask && (
             <Table.Column name="task.name" label="Task" getLink={task => `/tasks/${task.task?.id}`} />
+        )}
+        {withInvoice && (
+            <Table.Column name="invoice.name" label="Invoice" getLink={invoice => `/invoices/${invoice.invoice?.id}`} />
         )}
         <Table.Column name="date" align="right" />
         <Table.Column name="duration" align="right" type="duration"/>

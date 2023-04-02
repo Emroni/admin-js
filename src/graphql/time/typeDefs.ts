@@ -1,6 +1,7 @@
 const fields = `
     date: DateScalar!
     duration: TimeScalar!
+    invoiceId: ID!
     taskId: ID!
 `;
 
@@ -12,6 +13,7 @@ export const types = `
         earnings: Float!
         hours: Float!
         id: ID!
+        invoice: Invoice
         project: Project!
         task: Task!
         ${fields}

@@ -1,5 +1,4 @@
 type ProjectBilling = 'hourly' | 'fixed';
-type ProjectsFilter = Partial<ProjectFields>;
 type ProjectStatus = 'billed' | 'complete' | 'in_progress' | 'new' | 'on_hold';
 
 interface Project extends Entity, ProjectFields {
@@ -28,4 +27,8 @@ interface ProjectQuery {
 
 interface ProjectsQuery {
     projects: GraphqlList<Project>;
+}
+
+interface ProjectsFilter extends Partial<ProjectFields> {
+    invoiceId?: number;
 }

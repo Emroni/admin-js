@@ -1,9 +1,10 @@
 import { capitalize, MenuItem, TextField } from '@mui/material';
-import { useField } from 'formik';
+import { useField, useFormikContext } from 'formik';
 
-export default function FormField({ disabled, label, loading, name, options, required, type = 'text' }: FormFieldProps) {
+export default function FormField({ children, disabled, label, loading, name, options, required, type = 'text', onChange }: FormFieldProps) {
 
     const [field, _meta, helpers] = useField(name);
+    const form = useFormikContext();
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         let value: any = e.target.value;
@@ -11,6 +12,14 @@ export default function FormField({ disabled, label, loading, name, options, req
             value = parseFloat(value);
         }
         helpers.setValue(value);
+        onChange?.(value, form);
+    }
+
+    const value = (field.value !== null && field.value !== undefined && (!options || options.length)) ? field.value : '';
+
+    if (children) {
+        const Component: any = children;
+        return <Component form={form} name={name} value={value} setValue={helpers.setValue} />;
     }
 
     return <TextField
@@ -23,11 +32,11 @@ export default function FormField({ disabled, label, loading, name, options, req
         required={required}
         select={!!options}
         type={type}
-        value={(field.value !== null && field.value !== undefined) ? field.value : ''}
+        value={value}
         onChange={handleChange}
     >
-        {options?.map(option => (
-            <MenuItem key={option.id || option.name || option.value} value={option.value || option.id || option.name}>
+        {options?.map((option, index) => (
+            <MenuItem key={option.id || option.name || option.value || index} value={option.value || option.id || option.name}>
                 {option.label || option.name || option.value}
             </MenuItem>
         ))}

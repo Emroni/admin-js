@@ -12,6 +12,7 @@ export const types = `
         estimatedDuration: String!
         estimatedHours: Float!
         id: ID!
+        invoices: [Invoice!]!
         progress: Float!
         projects: [Project!]!
         tasks: [Task!]!

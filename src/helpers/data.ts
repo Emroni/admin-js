@@ -16,6 +16,21 @@ export function getHoursDuration(hours: number) {
     return `${h}:${m}`;
 }
 
+export function getSorted<T>(items: T[], key: string) {
+    return items.sort((a: any, b: any) => a[key] < b[key] ? -1 : 1);
+}
+
+export function getUnique<T>(items: T[], key?: string) {
+    if (key) {
+        const map: IndexedObject = {};
+        items.forEach(item => map[(item as any)[key]] = item);
+        return Object.values(map);
+    } else {
+        const set = new Set(items);
+        return Array.from(set);
+    }
+}
+
 export function parseFilterIds(ids: any) {
     if (Array.isArray(ids)) {
         return {

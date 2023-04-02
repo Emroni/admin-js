@@ -7,6 +7,16 @@ export const model = {
     client: (parent: Task) => model.project(parent).client(),
     deletable: (parent: Task) => model.times(parent).then(times => !times.length),
     earnings: (parent: Task) => parent.price || model.workedHours(parent).then(workedHours => workedHours * parent.rate),
+    invoices: (parent: Task) => model.times(parent).then(times => {
+        return prisma.invoice.findMany({
+            orderBy: parseOrder('id desc'),
+            where: {
+                id: {
+                    in: times.map(time => time.invoiceId).filter(invoiceId => !!invoiceId) as number[],
+                },
+            },
+        });
+    }),
     project: (parent: Task) => prisma.project.findUnique({
         where: {
             id: parseNumber(parent.projectId),
@@ -171,6 +181,15 @@ function parseFilter(filter?: TasksFilter) {
             clientId: parseFilterIds(where.clientId),
         };
         delete where.clientId;
+    }
+
+    if (where.invoiceId) {
+        where.times = {
+            some: {
+                invoiceId: parseNumber(where.invoiceId),
+            },
+        };
+        delete where.invoiceId;
     }
 
     if (where.projectId) {

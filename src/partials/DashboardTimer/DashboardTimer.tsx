@@ -1,8 +1,7 @@
-import { TaskTimer } from '@/components';
+import { Card, TaskTimer } from '@/components';
 import { gql, useQuery } from '@apollo/client';
 import { Breadcrumbs, Link } from '@mui/material';
 import NextLink from 'next/link';
-import Card from '../Card/Card';
 
 export default function DashboardTimer() {
 
