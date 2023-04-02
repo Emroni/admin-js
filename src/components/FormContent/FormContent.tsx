@@ -4,7 +4,7 @@ import FormField from '../FormField/FormField';
 
 export default function FormContent({ dirtyCheck = true, fields, loading }: FormContentProps) {
 
-    const formik = useFormikContext();
+    const form = useFormikContext();
 
     return <>
         <Box display="flex" flexDirection="column" gap={3}>

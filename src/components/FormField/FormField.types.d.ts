@@ -9,9 +9,11 @@ interface FormFieldProps {
     options?: EntityPropertyOption[];
     required?: boolean;
     type?: FormFieldType;
+    onChange?(value: any, form: FormikContextType<IndexedObject>): void;
 }
 
 interface FormFieldChildProps {
+    form: FormikContextType<IndexedObject>;
     name: string;
     value: any;
     setValue(value: any, shouldValidate?: boolean): void;
