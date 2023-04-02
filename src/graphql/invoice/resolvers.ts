@@ -1,4 +1,5 @@
 import { getDurationMinutes, getHoursDuration, parseFilterIds, parseNumber, parseOrder } from '@/helpers';
+import dayjs from 'dayjs';
 import { prisma } from '../';
 
 export const model = {
@@ -8,6 +9,8 @@ export const model = {
         },
     }),
     deletable: (parent: Invoice) => model.times(parent).then(times => !times.length),
+    dueDate: (parent: Invoice) => dayjs.utc(parent.sentDate).add(2, 'week'),
+    dueDays: (parent: Invoice) => model.dueDate(parent).diff(undefined, 'day'),
     name: (parent: Invoice) => parent.number || `#${parent.id}`,
     projects: (parent: Invoice) => model.tasks(parent).then(tasks => {
         return prisma.project.findMany({

@@ -13,6 +13,8 @@ export const types = `
     type Invoice {
         client: Client!
         deletable: Boolean!
+        dueDate: DateScalar!
+        dueDays: Float!
         id: ID!
         name: String!
         projects: [Project!]!

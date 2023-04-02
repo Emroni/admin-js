@@ -15,13 +15,14 @@ export default function DashboardInvoices() {
             page,
             perPage,
             rows {
+                amount
+                currency
+                description
+                dueDays
                 id
                 number
-                currency
-                amount
-                type
-                description
                 sentDate
+                type
                 client {
                     id
                     name
@@ -127,7 +128,8 @@ export default function DashboardInvoices() {
             ))}
         </Table.Column>
         <Table.Column name="amount" type="money" />
-        <Table.Column name="sentDate" label="Sent" />
+        <Table.Column name="sentDate" label="Sent" align="right" />
+        <Table.Column name="dueDays" label="Due" align="right" />
     </Table>;
 
 }
