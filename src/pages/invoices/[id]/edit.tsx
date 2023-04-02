@@ -1,7 +1,8 @@
-import { Form } from '@/components';
+import { Form, Value } from '@/components';
 import { CURRENCIES } from '@/constants';
 import { usePage } from '@/contexts/Page';
 import { gql, useMutation, useQuery } from '@apollo/client';
+import { Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
@@ -29,6 +30,23 @@ export default function InvoiceEdit() {
             description
             sentDate
             paidDate
+            times {
+                currency
+                date
+                duration
+                earnings
+                id
+                client {
+                    id
+                    name
+                }
+                project {
+                    name
+                }
+                task {
+                    name
+                }
+            }
         }
     }`, {
         variables: {
@@ -80,6 +98,48 @@ export default function InvoiceEdit() {
         <Form.Field name="amount" type="number" required />
         <Form.Field name="sentDate" label="Sent" type="date" />
         <Form.Field name="paidDate" label="Paid" type="date" />
+        <Form.Field name="times">
+            {({ form, value }: FormFieldChildProps) => (
+                <Paper variant="outlined">
+                    <Table size="small">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>
+                                    Task
+                                </TableCell>
+                                <TableCell align="right">
+                                    Date
+                                </TableCell>
+                                <TableCell align="right">
+                                    Duration
+                                </TableCell>
+                                <TableCell align="right">
+                                    Earnings
+                                </TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {invoice?.times.map((time: any) => (
+                                <TableRow key={time.id}>
+                                    <TableCell>
+                                        {time.project.name} › {time.task.name}
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        <Value value={time.date} />
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        <Value type="duration" value={time.duration} />
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        <Value currency={time.currency} type="money" value={time.earnings} />
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </Paper>
+            )}
+        </Form.Field>
     </Form>;
 
 }
