@@ -1,9 +1,9 @@
-import { Form as FormikForm, Formik } from 'formik';
+import { Formik, Form as FormikForm } from 'formik';
 import { Children, useEffect, useState } from 'react';
 import Card from '../Card/Card';
 import FormContent from '../FormContent/FormContent';
 
-export default function Form({ children, initialValues, loading, title, onChange, onSubmit }: FormProps) {
+export default function Form({ children, dirtyCheck = true, initialValues, loading, title, onChange, onSubmit }: FormProps) {
 
     const [fields, setFields] = useState<FormFieldProps[]>([]);
 
@@ -32,7 +32,7 @@ export default function Form({ children, initialValues, loading, title, onChange
     return <Card loading={loading} title={title}>
         <Formik enableReinitialize initialValues={initialValues || {}} validateOnChange validate={handleValidate} onSubmit={handleSubmit}>
             <FormikForm>
-                <FormContent fields={fields} loading={loading} />
+                <FormContent dirtyCheck={dirtyCheck} fields={fields} loading={loading} />
             </FormikForm>
         </Formik>
     </Card>;
