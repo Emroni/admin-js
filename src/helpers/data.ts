@@ -33,31 +33,30 @@ export function getUnique<T>(items: T[], key?: string) {
 
 export function parseDateInterval(value?: string) {
     // Parse value
-    const match = value?.match(/(\d+)Y(\d+)M(\d+)D/);
-    const days = parseInt(match?.[3] || '0');
-    const months = parseInt(match?.[2] || '0');
-    const years = parseInt(match?.[1] || '0');
+    const match = value?.match(/(\d+)([DMWY])/);
+    const amount = parseInt(match?.[1] || '0');
+    const unit = match?.[2];
 
     // Get label
     let label = '';
-    if (years >= 1 && months === 0 && days === 0) {
-        label = years === 1 ? 'Yearly' : `${years} years`;
-    } else if (years === 0 && months >= 1 && days === 0) {
-        label = months === 1 ? 'Monthly' : `${months} months`;
-    } else if (years === 0 && months === 0 && days >= 1 && days % 7 === 0) {
-        label = days === 7 ? 'Weekly' : `${days / 7} weeks`;
-    } else if (years === 0 && months === 0 && days >= 1) {
-        label = days === 1 ? 'Daily' : `${months} days`;
-    } else {
-        label = (years ? `${years}Y` : '') + (months ? `${months}M` : '') + (days ? `${days}D` : '');
+    if (unit === 'Y') {
+        label = amount === 1 ? 'Yearly' : `${amount} years`;
+    } else if (unit === 'M') {
+        label = amount === 1 ? 'Monthly' : `${amount} months`;
+    } else if (unit === 'W') {
+        label = amount === 1 ? 'Weekly' : `${amount} weeks`;
+    } else if (unit === 'D') {
+        label = amount === 1 ? 'Daily' : `${amount} days`;
     }
 
     // Return date interval
     return {
-        days,
+        days: unit === 'D' ? amount : 0,
         label,
-        months,
-        years,
+        months: unit === 'M' ? amount : 0,
+        value,
+        weeks: unit === 'W' ? amount : 0,
+        years: unit === 'Y' ? amount : 0,
     } as DateInterval;
 }
 

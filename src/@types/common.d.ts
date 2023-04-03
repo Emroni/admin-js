@@ -2,6 +2,8 @@ interface DateInterval {
     days: number;
     label: string;
     months: number;
+    value: string;
+    weeks: number;
     years: number;
 }
 
