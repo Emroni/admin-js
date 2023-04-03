@@ -1,5 +1,5 @@
 const fields = `
-    clientId: ID!
+    clientId: Int!
     name: String!
     status: String!
 `;
@@ -12,7 +12,7 @@ export const types = `
         earnings: Float!
         estimatedDuration: String!
         estimatedHours: Float!
-        id: ID!
+        id: Int!
         invoices: [Invoice!]!
         progress: Float!
         tasks: [Task!]!
@@ -35,19 +35,19 @@ export const types = `
     }
 
     input ProjectsFilter {
-        invoiceId: ID
+        invoiceId: Int
         ${fields.replace(/\!/g, '')}
     }
 `;
 
 export const queries = `
     Project: Project
-    project(id: ID!): Project
+    project(id: Int!): Project
     projects(filter: ProjectsFilter, order: String, page: Int, perPage: Int): Projects
 `;
 
 export const mutations = `
     projectCreate(input: ProjectFields): Project
-    projectDelete(id: ID!): Project
-    projectUpdate(id: ID!, input: ProjectFields): Project
+    projectDelete(id: Int!): Project
+    projectUpdate(id: Int!, input: ProjectFields): Project
 `;

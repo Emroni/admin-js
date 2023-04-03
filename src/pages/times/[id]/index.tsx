@@ -11,7 +11,7 @@ export default function TimeView() {
     const page = usePage();
     const router = useRouter();
 
-    const query = useQuery<TimeQuery>(gql`query($id: ID!) {
+    const query = useQuery<TimeQuery>(gql`query($id: Int!) {
         time(id: $id) {
             currency
             date
@@ -42,7 +42,7 @@ export default function TimeView() {
         },
     });
 
-    const [mutate, mutation] = useMutation(gql`mutation($id: ID!) {
+    const [mutate, mutation] = useMutation(gql`mutation($id: Int!) {
         timeDelete (id: $id) {
             id
         }

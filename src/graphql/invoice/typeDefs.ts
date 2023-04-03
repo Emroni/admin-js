@@ -1,5 +1,5 @@
 const fields = `
-    clientId: ID!
+    clientId: Int!
     number: String
     currency: String!
     amount: Float!
@@ -15,7 +15,7 @@ export const types = `
         deletable: Boolean!
         dueDate: DateScalar!
         dueDays: Float!
-        id: ID!
+        id: Int!
         name: String!
         projects: [Project!]!
         tasks: [Task!]!
@@ -34,25 +34,25 @@ export const types = `
     }
 
     input InvoiceFields {
-        times: [ID!]!
+        times: [Int!]!
         ${fields}
     }
 
     input InvoicesFilter {
-        projectId: ID
-        taskId: ID
+        projectId: Int
+        taskId: Int
         ${fields.replace(/\!/g, '')}
     }
 `;
 
 export const queries = `
     Invoice: Invoice
-    invoice(id: ID!): Invoice
+    invoice(id: Int!): Invoice
     invoices(filter: InvoicesFilter, order: String, page: Int, perPage: Int): Invoices
 `;
 
 export const mutations = `
     invoiceCreate(input: InvoiceFields): Invoice
-    invoiceDelete(id: ID!): Invoice
-    invoiceUpdate(id: ID!, input: InvoiceFields): Invoice
+    invoiceDelete(id: Int!): Invoice
+    invoiceUpdate(id: Int!, input: InvoiceFields): Invoice
 `;

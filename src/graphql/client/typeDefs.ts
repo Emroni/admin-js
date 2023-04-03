@@ -11,7 +11,7 @@ export const types = `
         earnings: Float!
         estimatedDuration: String!
         estimatedHours: Float!
-        id: ID!
+        id: Int!
         invoices: [Invoice!]!
         progress: Float!
         projects: [Project!]!
@@ -37,12 +37,12 @@ export const types = `
 
 export const queries = `
     Client: Client
-    client(id: ID!): Client
+    client(id: Int!): Client
     clients(order: String, page: Int, perPage: Int): Clients
 `;
 
 export const mutations = `
     clientCreate(input: ClientFields): Client
-    clientDelete(id: ID!): Client
-    clientUpdate(id: ID!, input: ClientFields): Client
+    clientDelete(id: Int!): Client
+    clientUpdate(id: Int!, input: ClientFields): Client
 `;

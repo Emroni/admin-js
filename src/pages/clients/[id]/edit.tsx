@@ -10,7 +10,7 @@ export default function ClientEdit() {
     const page = usePage();
     const router = useRouter();
 
-    const query = useQuery<ClientQuery>(gql`query($id: ID!) {
+    const query = useQuery<ClientQuery>(gql`query($id: Int!) {
         client(id: $id) {
             address
             email
@@ -23,7 +23,7 @@ export default function ClientEdit() {
         },
     });
 
-    const [mutate, mutation] = useMutation(gql`mutation($id: ID!, $input: ClientFields) {
+    const [mutate, mutation] = useMutation(gql`mutation($id: Int!, $input: ClientFields) {
         clientUpdate (id: $id, input: $input) {
             address
             email

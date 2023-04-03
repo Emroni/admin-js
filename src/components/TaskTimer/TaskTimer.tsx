@@ -15,7 +15,7 @@ export default function TaskTimer({ prefixTitle, taskId, value }: TaskTimerProps
     const [start, setStart] = useState<dayjs.Dayjs | null>(null);
     const page = usePage();
 
-    const [mutate, mutation] = useMutation(gql`mutation($id: ID!) {
+    const [mutate, mutation] = useMutation(gql`mutation($id: Int!) {
         taskTimerUpdate (id: $id) {
             id
         }

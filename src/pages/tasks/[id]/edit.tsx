@@ -11,7 +11,7 @@ export default function TaskEdit() {
     const page = usePage();
     const router = useRouter();
 
-    const query = useQuery<ProjectsQuery & TaskQuery>(gql`query($id: ID!) {
+    const query = useQuery<ProjectsQuery & TaskQuery>(gql`query($id: Int!) {
         projects {
             rows {
                 id
@@ -34,7 +34,7 @@ export default function TaskEdit() {
         },
     });
 
-    const [mutate, mutation] = useMutation(gql`mutation($id: ID!, $input: TaskFields) {
+    const [mutate, mutation] = useMutation(gql`mutation($id: Int!, $input: TaskFields) {
         taskUpdate (id: $id, input: $input) {
             estimatedHours
             id

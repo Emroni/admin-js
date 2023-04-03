@@ -13,7 +13,7 @@ export default function ProjectView() {
     const page = usePage();
     const router = useRouter();
 
-    const query = useQuery<ProjectQuery>(gql`query($id: ID!) {
+    const query = useQuery<ProjectQuery>(gql`query($id: Int!) {
         project(id: $id) {
             currency
             deletable
@@ -35,7 +35,7 @@ export default function ProjectView() {
         },
     });
 
-    const [mutate, mutation] = useMutation(gql`mutation($id: ID!) {
+    const [mutate, mutation] = useMutation(gql`mutation($id: Int!) {
         projectDelete (id: $id) {
             id
         }

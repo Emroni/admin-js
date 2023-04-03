@@ -1,11 +1,11 @@
-import { getDurationMinutes, getHoursDuration, parseNumber, parseOrder } from '@/helpers';
+import { getDurationMinutes, getHoursDuration,  parseOrder } from '@/helpers';
 import { prisma } from '../';
 import * as taskResolver from '../task/resolvers';
 
 export const model = {
     client: (parent: Project) => prisma.client.findUnique({
         where: {
-            id: parseNumber(parent.clientId),
+            id: parent.clientId,
         },
     }),
     currency: (parent: Project) => model.tasks(parent).then(tasks => tasks[0]?.currency),
@@ -57,7 +57,7 @@ export const model = {
 export const queries = {
     project: (_parent: any, args: GraphqlGetArgs) => prisma.project.findUnique({
         where: {
-            id: parseNumber(args.id),
+            id: args.id,
         },
     }),
     projects: async (_parent: any, args: GraphqlGetArgs) => ({
@@ -82,13 +82,13 @@ export const mutations = {
     }),
     projectDelete: (_parent: any, args: GraphqlDeleteArgs) => prisma.project.delete({
         where: {
-            id: parseNumber(args.id),
+            id: args.id,
         },
     }),
     projectUpdate: (_parent: any, args: GraphqlUpdateArgs<ProjectFields>) => prisma.project.update({
         data: parseInput(args.input),
         where: {
-            id: parseNumber(args.id),
+            id: args.id,
         },
     }),
 };
@@ -103,16 +103,12 @@ function parseFilter(filter?: ProjectsFilter) {
             some: {
                 times: {
                     some: {
-                        invoiceId: parseNumber(where.invoiceId),
+                        invoiceId: where.invoiceId,
                     },
                 },
             },
         };
         delete where.invoiceId;
-    }
-
-    if (where.clientId) {
-        where.clientId = parseNumber(where?.clientId);
     }
 
     return where;
@@ -123,7 +119,7 @@ function parseInput(input: Partial<ProjectFields>) {
         ...input,
         client: input.clientId ? {
             connect: {
-                id: parseNumber(input.clientId),
+                id: input.clientId,
             },
         } : undefined,
         clientId: undefined,

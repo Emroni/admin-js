@@ -12,7 +12,7 @@ export default function ClientView() {
     const page = usePage();
     const router = useRouter();
 
-    const query = useQuery<ClientQuery>(gql`query($id: ID!) {
+    const query = useQuery<ClientQuery>(gql`query($id: Int!) {
         client(id: $id) {
             address
             currency
@@ -31,7 +31,7 @@ export default function ClientView() {
         },
     });
 
-    const [mutate, mutation] = useMutation(gql`mutation($id: ID!) {
+    const [mutate, mutation] = useMutation(gql`mutation($id: Int!) {
         clientDelete (id: $id) {
             id
         }

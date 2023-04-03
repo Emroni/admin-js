@@ -1,22 +1,22 @@
-import { getDurationHours, parseFilterIds, parseNumber, parseOrder } from '@/helpers';
+import { getDurationHours, parseFilterIds, parseOrder } from '@/helpers';
 import { GraphQLError } from 'graphql';
 import { prisma } from '../';
 
 export const model = {
     client: (parent: Time) => model.project(parent).client(),
-    deletable: () => true, // TODO: Resolve deletable
+    deletable: () => true,
     currency: (parent: Time) => model.task(parent).then(task => task?.currency),
     earnings: (parent: Time) => model.task(parent).then(task => task?.rate ? model.hours(parent) * task.rate : 0),
     hours: (parent: Time) => getDurationHours(parent.duration as unknown as Date), // TODO: Is there a better way to do this?
-    invoice: (parent: Invoice) => prisma.invoice.findUnique({
+    invoice: (parent: Invoice) => parent.invoiceId ? prisma.invoice.findUnique({
         where: {
-            id: parseNumber(parent.invoiceId),
+            id: parent.invoiceId,
         },
-    }),
+    }) : null,
     project: (parent: Time) => model.task(parent).project(),
     task: (parent: Time) => prisma.task.findUnique({
         where: {
-            id: parseNumber(parent.taskId),
+            id: parent.taskId,
         },
     }),
 };
@@ -24,7 +24,7 @@ export const model = {
 export const queries = {
     time: (_parent: any, args: GraphqlGetArgs) => prisma.time.findUnique({
         where: {
-            id: parseNumber(args.id),
+            id: args.id,
         },
     }),
     times: async (_parent: any, args: GraphqlGetArgs) => ({
@@ -49,7 +49,7 @@ export const mutations = {
         const time = await prisma.time.findFirst({
             where: {
                 date: args.input.date,
-                taskId: parseNumber(args.input.taskId),
+                taskId: args.input.taskId,
             },
         });
 
@@ -69,13 +69,13 @@ export const mutations = {
     },
     timeDelete: (_parent: any, args: GraphqlDeleteArgs) => prisma.time.delete({
         where: {
-            id: parseNumber(args.id),
+            id: args.id,
         },
     }),
     timeUpdate: (_parent: any, args: GraphqlUpdateArgs<TimeFields>) => prisma.time.update({
         data: parseInput(args.input),
         where: {
-            id: parseNumber(args.id),
+            id: args.id,
         },
     }),
 };
@@ -117,7 +117,7 @@ function parseInput(input: Partial<TimeFields>) {
         ...input,
         task: input.taskId ? {
             connect: {
-                id: parseNumber(input.taskId),
+                id: input.taskId,
             },
         } : undefined,
         taskId: undefined,

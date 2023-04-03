@@ -12,7 +12,7 @@ export default function InvoiceEdit() {
     const page = usePage();
     const router = useRouter();
 
-    const query = useQuery<ClientsQuery & InvoiceQuery>(gql`query($id: ID!) {
+    const query = useQuery<ClientsQuery & InvoiceQuery>(gql`query($id: Int!) {
         clients {
             rows {
                 id
@@ -54,7 +54,7 @@ export default function InvoiceEdit() {
         },
     });
 
-    const [mutate, mutation] = useMutation(gql`mutation($id: ID!, $input: InvoiceFields) {
+    const [mutate, mutation] = useMutation(gql`mutation($id: Int!, $input: InvoiceFields) {
         invoiceUpdate (id: $id, input: $input) {
             clientId
             id

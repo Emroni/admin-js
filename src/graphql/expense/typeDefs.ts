@@ -11,7 +11,7 @@ const fields = `
 export const types = `
     type Expense {
         deletable: Boolean!
-        id: ID!
+        id: Int!
         nextDate: DateScalar!
         ${fields}
     }
@@ -31,12 +31,12 @@ export const types = `
 
 export const queries = `
     Expense: Expense
-    expense(id: ID!): Expense
+    expense(id: Int!): Expense
     expenses(order: String, page: Int, perPage: Int): Expenses
 `;
 
 export const mutations = `
     expenseCreate(input: ExpenseFields): Expense
-    expenseDelete(id: ID!): Expense
-    expenseUpdate(id: ID!, input: ExpenseFields): Expense
+    expenseDelete(id: Int!): Expense
+    expenseUpdate(id: Int!, input: ExpenseFields): Expense
 `;

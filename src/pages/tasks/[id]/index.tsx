@@ -12,7 +12,7 @@ export default function TaskView() {
     const page = usePage();
     const router = useRouter();
 
-    const query = useQuery<TaskQuery>(gql`query($id: ID!) {
+    const query = useQuery<TaskQuery>(gql`query($id: Int!) {
         task(id: $id) {
             currency
             deletable
@@ -40,7 +40,7 @@ export default function TaskView() {
         },
     });
 
-    const [mutate, mutation] = useMutation(gql`mutation($id: ID!) {
+    const [mutate, mutation] = useMutation(gql`mutation($id: Int!) {
         taskDelete (id: $id) {
             id
         }

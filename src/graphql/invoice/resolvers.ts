@@ -1,11 +1,11 @@
-import { getDurationMinutes, getHoursDuration, parseFilterIds, parseNumber, parseOrder } from '@/helpers';
+import { getDurationMinutes, getHoursDuration, parseFilterIds, parseOrder } from '@/helpers';
 import dayjs from 'dayjs';
 import { prisma } from '../';
 
 export const model = {
     client: (parent: Invoice) => prisma.client.findUnique({
         where: {
-            id: parseNumber(parent.clientId),
+            id: parent.clientId,
         },
     }),
     deletable: (parent: Invoice) => model.times(parent).then(times => !times.length),
@@ -44,7 +44,7 @@ export const model = {
 export const queries = {
     invoice: (_parent: any, args: GraphqlGetArgs) => prisma.invoice.findUnique({
         where: {
-            id: parseNumber(args.id),
+            id: args.id,
         },
     }),
     invoices: async (_parent: any, args: GraphqlGetArgs) => ({
@@ -69,13 +69,13 @@ export const mutations = {
     }),
     invoiceDelete: (_parent: any, args: GraphqlDeleteArgs) => prisma.invoice.delete({
         where: {
-            id: parseNumber(args.id),
+            id: args.id,
         },
     }),
     invoiceUpdate: (_parent: any, args: GraphqlUpdateArgs<InvoiceFields>) => prisma.invoice.update({
         data: parseInput(args.input),
         where: {
-            id: parseNumber(args.id),
+            id: args.id,
         },
     }),
 };
@@ -90,7 +90,7 @@ function parseFilter(filter?: InvoicesFilter) {
         where.times = {
             some: {
                 task: {
-                    projectId: parseNumber(where.projectId),
+                    projectId: where.projectId,
                 }
             },
         };
@@ -100,7 +100,7 @@ function parseFilter(filter?: InvoicesFilter) {
     if (where.taskId) {
         where.times = {
             some: {
-                taskId: parseNumber(where.taskId),
+                taskId: where.taskId,
             },
         };
         delete where.taskId;
@@ -118,7 +118,7 @@ function parseInput(input: Partial<InvoiceFields>) {
         ...input,
         client: input.clientId ? {
             connect: {
-                id: parseNumber(input.clientId),
+                id: input.clientId,
             },
         } : undefined,
         clientId: undefined,

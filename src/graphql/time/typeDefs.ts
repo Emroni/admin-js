@@ -1,8 +1,8 @@
 const fields = `
     date: DateScalar!
     duration: TimeScalar!
-    invoiceId: ID!
-    taskId: ID!
+    invoiceId: Int!
+    taskId: Int!
 `;
 
 export const types = `
@@ -12,7 +12,7 @@ export const types = `
         deletable: Boolean!
         earnings: Float!
         hours: Float!
-        id: ID!
+        id: Int!
         invoice: Invoice
         project: Project!
         task: Task!
@@ -32,20 +32,20 @@ export const types = `
     }
 
     input TimesFilter {
-        clientId: ID
-        projectId: ID
+        clientId: Int
+        projectId: Int
         ${fields.replace(/\!/g, '')}
     }
 `;
 
 export const queries = `
     Time: Time
-    time(id: ID!): Time
+    time(id: Int!): Time
     times(filter: TimesFilter, order: String, page: Int, perPage: Int): Times
 `;
 
 export const mutations = `
     timeCreate(input: TimeFields): Time
-    timeDelete(id: ID!): Time
-    timeUpdate(id: ID!, input: TimeFields): Time
+    timeDelete(id: Int!): Time
+    timeUpdate(id: Int!, input: TimeFields): Time
 `;

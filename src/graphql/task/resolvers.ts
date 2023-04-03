@@ -1,4 +1,4 @@
-import { getDurationMinutes, getHoursDuration, parseFilterIds, parseNumber, parseOrder } from '@/helpers';
+import { getDurationMinutes, getHoursDuration, parseFilterIds,  parseOrder } from '@/helpers';
 import { Task } from '@prisma/client';
 import dayjs from 'dayjs';
 import { prisma } from '../';
@@ -19,7 +19,7 @@ export const model = {
     }),
     project: (parent: Task) => prisma.project.findUnique({
         where: {
-            id: parseNumber(parent.projectId),
+            id: parent.projectId,
         },
     }),
     times: (parent: Task) => prisma.time.findMany({
@@ -38,7 +38,7 @@ export const model = {
 export const queries = {
     task: (_parent: any, args: GraphqlGetArgs) => prisma.task.findUnique({
         where: {
-            id: parseNumber(args.id),
+            id: args.id,
         },
     }),
     tasks: async (_parent: any, args: GraphqlGetArgs) => ({
@@ -72,17 +72,17 @@ export const mutations = {
     }),
     taskDelete: (_parent: any, args: GraphqlDeleteArgs) => prisma.task.delete({
         where: {
-            id: parseNumber(args.id),
+            id: args.id,
         },
     }),
     taskUpdate: (_parent: any, args: GraphqlUpdateArgs<TaskFields>) => prisma.task.update({
         data: parseInput(args.input),
         where: {
-            id: parseNumber(args.id),
+            id: args.id,
         },
     }),
     taskTimerUpdate: async (_parent: any, args: TaskTimerUpdate) => {
-        const taskId = parseNumber(args.id);
+        const taskId = args.id;
 
         // Get previous task with timer
         const prevTask = await prisma.task.findFirst({
@@ -186,14 +186,10 @@ function parseFilter(filter?: TasksFilter) {
     if (where.invoiceId) {
         where.times = {
             some: {
-                invoiceId: parseNumber(where.invoiceId),
+                invoiceId: where.invoiceId,
             },
         };
         delete where.invoiceId;
-    }
-
-    if (where.projectId) {
-        where.projectId = parseFilterIds(where?.projectId);
     }
 
     return where;
@@ -204,7 +200,7 @@ function parseInput(input: Partial<TaskFields>) {
         ...input,
         project: input.projectId ? {
             connect: {
-                id: parseNumber(input.projectId),
+                id: input.projectId,
             },
         } : undefined,
         projectId: undefined,

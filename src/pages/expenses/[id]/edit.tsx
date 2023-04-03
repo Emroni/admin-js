@@ -11,7 +11,7 @@ export default function ExpenseEdit() {
     const page = usePage();
     const router = useRouter();
 
-    const query = useQuery<ExpenseQuery>(gql`query($id: ID!) {
+    const query = useQuery<ExpenseQuery>(gql`query($id: Int!) {
         expense(id: $id) {
             active
             amount
@@ -28,7 +28,7 @@ export default function ExpenseEdit() {
         },
     });
 
-    const [mutate, mutation] = useMutation(gql`mutation($id: ID!, $input: ExpenseFields) {
+    const [mutate, mutation] = useMutation(gql`mutation($id: Int!, $input: ExpenseFields) {
         expenseUpdate (id: $id, input: $input) {
             active
             amount

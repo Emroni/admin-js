@@ -12,7 +12,7 @@ export default function InvoiceView() {
     const page = usePage();
     const router = useRouter();
 
-    const query = useQuery<InvoiceQuery>(gql`query($id: ID!) {
+    const query = useQuery<InvoiceQuery>(gql`query($id: Int!) {
         invoice(id: $id) {
             id
             number
@@ -34,7 +34,7 @@ export default function InvoiceView() {
         },
     });
 
-    const [mutate, mutation] = useMutation(gql`mutation($id: ID!) {
+    const [mutate, mutation] = useMutation(gql`mutation($id: Int!) {
         invoiceDelete (id: $id) {
             id
         }

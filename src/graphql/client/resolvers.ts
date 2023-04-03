@@ -1,4 +1,4 @@
-import { getDurationMinutes, getHoursDuration, parseNumber, parseOrder } from '@/helpers';
+import { getDurationMinutes, getHoursDuration, parseOrder } from '@/helpers';
 import { prisma } from '../';
 import * as taskResolver from '../task/resolvers';
 
@@ -58,7 +58,7 @@ export const model = {
 export const queries = {
     client: (_parent: any, args: GraphqlGetArgs) => prisma.client.findUnique({
         where: {
-            id: parseNumber(args.id),
+            id: args.id,
         },
     }),
     clients: async (_parent: any, args: GraphqlGetArgs) => ({
@@ -83,12 +83,12 @@ export const mutations = {
     }),
     clientDelete: (_parent: any, args: GraphqlDeleteArgs) => prisma.client.delete({
         where: {
-            id: parseNumber(args.id),
+            id: args.id,
         },
     }),
     clientUpdate: (_parent: any, args: GraphqlUpdateArgs<ClientFields>) => prisma.client.update({
         where: {
-            id: parseNumber(args.id),
+            id: args.id,
         },
         data: args.input,
     }),

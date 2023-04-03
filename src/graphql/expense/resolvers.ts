@@ -1,4 +1,4 @@
-import { parseDateInterval, parseNumber, parseOrder } from '@/helpers';
+import { parseDateInterval, parseOrder } from '@/helpers';
 import dayjs from 'dayjs';
 import { prisma } from '../';
 
@@ -22,7 +22,7 @@ export const model = {
 export const queries = {
     expense: (_parent: any, args: GraphqlGetArgs) => prisma.expense.findUnique({
         where: {
-            id: parseNumber(args.id),
+            id: args.id,
         },
     }),
     expenses: async (_parent: any, args: GraphqlGetArgs) => ({
@@ -47,12 +47,12 @@ export const mutations = {
     }),
     expenseDelete: (_parent: any, args: GraphqlDeleteArgs) => prisma.expense.delete({
         where: {
-            id: parseNumber(args.id),
+            id: args.id,
         },
     }),
     expenseUpdate: (_parent: any, args: GraphqlUpdateArgs<ExpenseFields>) => prisma.expense.update({
         where: {
-            id: parseNumber(args.id),
+            id: args.id,
         },
         data: args.input,
     }),

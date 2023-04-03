@@ -11,7 +11,7 @@ export default function ProjectEdit() {
     const page = usePage();
     const router = useRouter();
 
-    const query = useQuery<ClientsQuery & ProjectQuery>(gql`query($id: ID!) {
+    const query = useQuery<ClientsQuery & ProjectQuery>(gql`query($id: Int!) {
         clients {
             rows {
                 id
@@ -30,7 +30,7 @@ export default function ProjectEdit() {
         },
     });
 
-    const [mutate, mutation] = useMutation(gql`mutation($id: ID!, $input: ProjectFields) {
+    const [mutate, mutation] = useMutation(gql`mutation($id: Int!, $input: ProjectFields) {
         projectUpdate (id: $id, input: $input) {
             clientId
             id

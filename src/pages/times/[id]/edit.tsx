@@ -10,7 +10,7 @@ export default function TimeEdit() {
     const page = usePage();
     const router = useRouter();
 
-    const query = useQuery<TasksQuery & TimeQuery>(gql`query($id: ID!) {
+    const query = useQuery<TasksQuery & TimeQuery>(gql`query($id: Int!) {
         tasks {
             rows {
                 id
@@ -29,7 +29,7 @@ export default function TimeEdit() {
         },
     });
 
-    const [mutate, mutation] = useMutation(gql`mutation($id: ID!, $input: TimeFields) {
+    const [mutate, mutation] = useMutation(gql`mutation($id: Int!, $input: TimeFields) {
         timeUpdate (id: $id, input: $input) {
             id
             date

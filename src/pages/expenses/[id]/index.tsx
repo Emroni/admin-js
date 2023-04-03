@@ -11,7 +11,7 @@ export default function ExpenseView() {
     const page = usePage();
     const router = useRouter();
 
-    const query = useQuery<ExpenseQuery>(gql`query($id: ID!) {
+    const query = useQuery<ExpenseQuery>(gql`query($id: Int!) {
         expense(id: $id) {
             active
             amount
@@ -30,7 +30,7 @@ export default function ExpenseView() {
         },
     });
 
-    const [mutate, mutation] = useMutation(gql`mutation($id: ID!) {
+    const [mutate, mutation] = useMutation(gql`mutation($id: Int!) {
         expenseDelete (id: $id) {
             id
         }

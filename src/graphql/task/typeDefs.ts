@@ -3,7 +3,7 @@ const fields = `
     estimatedHours: Float
     name: String
     price: Int
-    projectId: ID
+    projectId: Int
     rate: Int
     timer: DateTimeScalar
 `;
@@ -14,7 +14,7 @@ export const types = `
         deletable: Boolean!
         earnings: Float!
         estimatedDuration: String!
-        id: ID!
+        id: Int!
         invoices: [Invoice!]!
         progress: Float!
         project: Project!
@@ -37,22 +37,22 @@ export const types = `
     }
 
     input TasksFilter {
-        clientId: ID
-        invoiceId: ID
+        clientId: Int
+        invoiceId: Int
         ${fields}
     }
 `;
 
 export const queries = `
     Task: Task
-    task(id: ID!): Task
+    task(id: Int!): Task
     tasks(filter: TasksFilter, order: String, page: Int, perPage: Int): Tasks
     taskTimer: Task
 `;
 
 export const mutations = `
     taskCreate(input: TaskFields): Task
-    taskDelete(id: ID!): Task
-    taskUpdate(id: ID!, input: TaskFields): Task
-    taskTimerUpdate(id: ID!): Task
+    taskDelete(id: Int!): Task
+    taskUpdate(id: Int!, input: TaskFields): Task
+    taskTimerUpdate(id: Int!): Task
 `;
