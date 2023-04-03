@@ -48,6 +48,7 @@ export default function DashboardInvoices() {
                 project {
                     id
                     name
+                    status
                 }
             }
         }
@@ -69,21 +70,23 @@ export default function DashboardInvoices() {
             // Parse times into billables
             const billables: IndexedObject = {};
             times.rows.forEach((time, index) => {
-                // Add client
-                let billable = billables[time.client.id];
-                if (!billable) {
-                    billable = billables[time.client.id] = {
-                        amount: 0,
-                        currency: time.currency,
-                        client: time.client,
-                        id: invoices.total + index,
-                        projects: {},
-                    };
-                }
+                if (time.project.status === 'in_progress') {
+                    // Add client
+                    let billable = billables[time.client.id];
+                    if (!billable) {
+                        billable = billables[time.client.id] = {
+                            amount: 0,
+                            currency: time.currency,
+                            client: time.client,
+                            id: invoices.total + index,
+                            projects: {},
+                        };
+                    }
 
-                // Parse data
-                billable.projects[time.project.id] = time.project;
-                billable.amount += time.earnings;
+                    // Parse data
+                    billable.projects[time.project.id] = time.project;
+                    billable.amount += time.earnings;
+                }
             });
 
             // Merge billables into data
