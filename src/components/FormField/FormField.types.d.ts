@@ -1,4 +1,4 @@
-type FormFieldType = 'date' | 'number' | 'text' | 'textarea' | 'time';
+type FormFieldType = 'date' | 'number' | 'switch' | 'text' | 'textarea' | 'time';
 
 interface FormFieldProps {
     children?: ReactComponentElement<FormFieldChildProps>?;

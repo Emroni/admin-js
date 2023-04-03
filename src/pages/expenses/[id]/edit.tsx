@@ -62,15 +62,15 @@ export default function ExpenseEdit() {
         });
         router.push(`/expenses/${result.data.expenseUpdate.id}`);
     }
-    
+
     return <Form initialValues={expense} loading={!expense || mutation.loading} title={`Edit ${expense?.name}`} onSubmit={handleSubmit}>
-        <Form.Field name="active" required />
+        <Form.Field name="active" type="switch" />
         <Form.Field name="name" required />
-        <Form.Field name="type" required/>
-        <Form.Field name="date" required/>
-        <Form.Field name="currency" options={CURRENCIES} required/>
-        <Form.Field name="repeats" required/>
-        <Form.Field name="amount"  required type="number" />
+        <Form.Field name="type" required />
+        <Form.Field name="date" required />
+        <Form.Field name="currency" options={CURRENCIES} required />
+        <Form.Field name="repeats" required />
+        <Form.Field name="amount" required type="number" />
     </Form>;
 
 }
