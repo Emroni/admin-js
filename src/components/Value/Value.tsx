@@ -32,13 +32,6 @@ export default function Value({ currency, options, type, value }: ValueProps) {
             // Get date interval
             newContent = parseDateInterval(value).label;
 
-        } else if (type === 'duration') {
-            // Get duration
-            newContent = value?.split(':') || ['0', '00'];
-            if (value === '0:00') {
-                newColor = 'grey.400';
-            }
-
         } else if (type === 'money') {
             // Get money
             const val = parseFloat(value);
@@ -68,15 +61,6 @@ export default function Value({ currency, options, type, value }: ValueProps) {
 
     if (type === 'boolean') {
         return <Chip color={color} label={content} size="small" variant="outlined" />;
-
-    } else if (type === 'duration') {
-        return <Typography color={color} component="span" fontSize="inherit">
-            {content?.[0]}
-            <Typography color="grey.200" component="span" fontSize="smaller">
-                :
-            </Typography>
-            {content?.[1]}
-        </Typography>;
 
     } else if (type === 'money') {
         return <>

@@ -83,7 +83,7 @@ export default function TimeView() {
         <Summary.Field name="task.name" label="Task" getLink={`/tasks/${time?.task.id}`} />
         <Summary.Field name="invoice.name" label="Invoice" getLink={`/invoices/${time?.invoice?.id}`} />
         <Summary.Field name="date" />
-        <Summary.Field name="duration" type="duration" />
+        <Summary.Field name="duration" />
         <Summary.Field name="earnings" currency={time?.currency} type="money" />
     </Summary>;
 

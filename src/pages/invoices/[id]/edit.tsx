@@ -128,7 +128,7 @@ export default function InvoiceEdit() {
                                         <Value value={time.date} />
                                     </TableCell>
                                     <TableCell align="right">
-                                        <Value type="duration" value={time.duration} />
+                                        <Value value={time.duration} />
                                     </TableCell>
                                     <TableCell align="right">
                                         <Value currency={time.currency} type="money" value={time.earnings} />
