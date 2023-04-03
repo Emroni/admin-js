@@ -116,7 +116,7 @@ export default function DashboardInvoices() {
     >
         <Table.Column name="number" />
         <Table.Column name="client.name" label="Client" getLink={invoice => `/clients/${invoice.client?.id}`} />
-        <Table.Column name="projects" label="Projects">
+        <Table.Column name="projects">
             {({ value }: TableColumnChildProps) => value?.map((project: Project, index: number) => (
                 <Fragment key={index}>
                     <Link component={NextLink} href={`/projects/${project.id}`}>
@@ -131,8 +131,8 @@ export default function DashboardInvoices() {
             ))}
         </Table.Column>
         <Table.Column name="amount" type="money" />
-        <Table.Column name="sentDate" label="Sent" align="right" />
-        <Table.Column name="dueDays" label="Due" align="right" />
+        <Table.Column name="sentDate" align="right" />
+        <Table.Column name="dueDays" align="right" />
     </Table>;
 
 }

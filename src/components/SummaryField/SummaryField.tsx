@@ -1,5 +1,5 @@
-import { getNestedValue } from '@/helpers';
-import { capitalize, Link, TableCell, TableRow } from '@mui/material';
+import { getLabel, getNestedValue } from '@/helpers';
+import { Link, TableCell, TableRow } from '@mui/material';
 import NextLink from 'next/link';
 import { useEffect, useState } from 'react';
 import Value from '../Value/Value';
@@ -34,7 +34,7 @@ export default function SummaryField({ children, currency, entity, label, name, 
 
     return <TableRow>
         <TableCell>
-            {label || capitalize(name)}
+            {label || getLabel(name)}
         </TableCell>
         <TableCell>
             {link ? (

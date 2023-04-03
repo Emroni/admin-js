@@ -16,6 +16,14 @@ export function getHoursDuration(hours: number) {
     return `${h}:${m}`;
 }
 
+export function getLabel(value?: string) {
+    if (!value) {
+        return '';
+    }
+
+    return value.substring(0, 1).toUpperCase() + value.substring(1).replace(/([A-Z])/g, ' $1').toLowerCase();
+}
+
 export function getSorted<T>(items: T[], key: string) {
     return items.sort((a: any, b: any) => a[key] < b[key] ? -1 : 1);
 }

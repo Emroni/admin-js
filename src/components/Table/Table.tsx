@@ -1,6 +1,6 @@
-import { clamp } from '@/helpers';
+import { clamp, getLabel } from '@/helpers';
 import { ArrowDropDown, ArrowDropUp, ChevronLeft, ChevronRight } from '@mui/icons-material';
-import { Box, capitalize, IconButton, MenuItem, Select, Table as MuiTable, TableBody, TableCell, TableFooter, TableHead, TableRow as MuiTableRow } from '@mui/material';
+import { Box, IconButton, MenuItem, Table as MuiTable, TableRow as MuiTableRow, Select, TableBody, TableCell, TableFooter, TableHead } from '@mui/material';
 import { Children, useEffect, useState } from 'react';
 import Card from '../Card/Card';
 import TableRow from '../TableRow/TableRow';
@@ -18,7 +18,7 @@ export default function Table({ action, children, data, title, getRowLink, onOrd
                 ...columnProps,
                 align: columnProps.align || (columnProps.type === 'money' ? 'right' : 'left'),
                 order: columnProps.order || !columnProps.name.includes('.'), // TODO: Sort on relation
-                label: columnProps.label || capitalize(columnProps.name),
+                label: columnProps.label || getLabel(columnProps.name),
             }));
         setColumns(newColumns);
     }, [

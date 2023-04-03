@@ -55,10 +55,10 @@ export default function Clients() {
         onPerPageChange={setPerPage}
     >
         <Table.Column name="name" />
-        <Table.Column name="projects" label="Projects" align="right" />
+        <Table.Column name="projects" align="right" />
         <Table.Column name="earnings" type="money" />
-        <Table.Column name="estimatedDuration" label="Estimated duration" />
-        <Table.Column name="workedDuration" label="Worked duration" />
+        <Table.Column name="estimatedDuration" />
+        <Table.Column name="workedDuration" />
         <Table.Column name="progress" type="progress" />
     </Table>;
 

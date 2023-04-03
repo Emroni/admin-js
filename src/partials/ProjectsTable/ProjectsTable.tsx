@@ -70,8 +70,8 @@ export default function ProjectsTable({ clientId, defaultPerPage = 10, invoiceId
             <Table.Column name="client.name" label="Client" getLink={project => `/clients/${project.client?.id}`} />
         )}
         <Table.Column name="earnings" type="money" />
-        <Table.Column name="estimatedDuration" label="Estimated duration" />
-        <Table.Column name="workedDuration" label="Worked duration" />
+        <Table.Column name="estimatedDuration" />
+        <Table.Column name="workedDuration" />
         <Table.Column name="progress" type="progress" />
     </Table>;
 

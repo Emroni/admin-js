@@ -76,8 +76,8 @@ export default function ProjectView() {
             <Summary.Field name="client.name" label="Client" getLink={`/clients/${project?.client.id}`} />
             <Summary.Field name="status" options={PROJECT_STATUS} />
             <Summary.Field name="earnings" currency={project?.currency} type="money" />
-            <Summary.Field name="estimatedDuration" label="Estimated duration" />
-            <Summary.Field name="workedDuration" label="Worked duration" />
+            <Summary.Field name="estimatedDuration" />
+            <Summary.Field name="workedDuration" />
             <Summary.Field name="progress" type="progress" />
         </Summary>
         <InvoicesTable projectId={page.query.id} />

@@ -96,8 +96,8 @@ export default function InvoiceEdit() {
         <Form.Field name="type" required />
         <Form.Field name="currency" options={CURRENCIES} required />
         <Form.Field name="amount" type="number" required />
-        <Form.Field name="sentDate" label="Sent" type="date" />
-        <Form.Field name="paidDate" label="Paid" type="date" />
+        <Form.Field name="sentDate" type="date" />
+        <Form.Field name="paidDate" type="date" />
         <Form.Field name="times">
             {({ form, value }: FormFieldChildProps) => (
                 <Paper variant="outlined">

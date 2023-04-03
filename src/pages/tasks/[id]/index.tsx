@@ -83,8 +83,8 @@ export default function TaskView() {
             <Summary.Field name="price" currency={task?.currency} type="money" />
             <Summary.Field name="rate" currency={task?.currency} type="money" />
             <Summary.Field name="earnings" currency={task?.currency} type="money" />
-            <Summary.Field name="estimatedDuration" label="Estimated duration" />
-            <Summary.Field name="workedDuration" label="Worked duration" />
+            <Summary.Field name="estimatedDuration" />
+            <Summary.Field name="workedDuration" />
             <Summary.Field name="progress" type="progress" />
             <Summary.Field name="timer">
                 {({ value }: SummaryFieldChildProps) => (

@@ -77,7 +77,7 @@ export default function InvoicesTable({ clientId, defaultPerPage = 10, projectId
             <Table.Column name="client.name" label="Client" getLink={invoice => `/clients/${invoice.client?.id}`} />
         )}
         {withProjects && (
-            <Table.Column name="projects" label="Projects">
+            <Table.Column name="projects">
                 {({ value }: TableColumnChildProps) => value?.map((project: Project, index: number) => (
                     <Fragment key={index}>
                         <Link component={NextLink} href={`/projects/${project.id}`}>
@@ -93,8 +93,8 @@ export default function InvoicesTable({ clientId, defaultPerPage = 10, projectId
             </Table.Column>
         )}
         <Table.Column name="amount" type="money" />
-        <Table.Column name="sentDate" label="Sent" />
-        <Table.Column name="paidDate" label="Paid" />
+        <Table.Column name="sentDate" />
+        <Table.Column name="paidDate" />
     </Table>;
 
 }

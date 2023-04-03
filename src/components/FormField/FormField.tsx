@@ -1,4 +1,5 @@
-import { capitalize, FormControlLabel, MenuItem, Switch, TextField } from '@mui/material';
+import { getLabel } from '@/helpers';
+import { FormControlLabel, MenuItem, Switch, TextField } from '@mui/material';
 import { useField, useFormikContext } from 'formik';
 
 export default function FormField({ children, disabled, label, loading, name, options, required, type = 'text', onChange }: FormFieldProps) {
@@ -15,7 +16,7 @@ export default function FormField({ children, disabled, label, loading, name, op
         onChange?.(value, form);
     }
 
-    const parsedLabel = label || capitalize(name);
+    const parsedLabel = label || getLabel(name);
     const value = (field.value !== null && field.value !== undefined && (!options || options.length)) ? field.value : '';
 
     if (children) {

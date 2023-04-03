@@ -72,7 +72,7 @@ export default function TaskEdit() {
         <Form.Field name="currency" options={CURRENCIES} required />
         <Form.Field name="price" required type="number" />
         <Form.Field name="rate" required type="number" />
-        <Form.Field name="estimatedHours" label="Estimated hours" required type="number" />
+        <Form.Field name="estimatedHours" required type="number" />
     </Form>;
 
 }

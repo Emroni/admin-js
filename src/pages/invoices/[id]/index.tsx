@@ -74,8 +74,8 @@ export default function InvoiceView() {
             <Summary.Field name="number" />
             <Summary.Field name="client.name" label="Client" getLink={`/clients/${invoice?.client.id}`} />
             <Summary.Field name="amount" currency={invoice?.currency} type="money" />
-            <Summary.Field name="sentDate" label="Sent" />
-            <Summary.Field name="paidDate" label="Paid" />
+            <Summary.Field name="sentDate" />
+            <Summary.Field name="paidDate" />
         </Summary>
         <ProjectsTable invoiceId={page.query.id} />
         <TasksTable invoiceId={page.query.id} />

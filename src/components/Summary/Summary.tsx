@@ -1,4 +1,5 @@
-import { capitalize, Table, TableBody } from '@mui/material';
+import { getLabel } from '@/helpers';
+import { Table, TableBody } from '@mui/material';
 import { Children, useEffect, useState } from 'react';
 import Card from '../Card/Card';
 import SummaryField from '../SummaryField/SummaryField';
@@ -15,7 +16,7 @@ export default function Summary({ action, children, entity, loading }: SummaryPr
         setFields(newFields);
 
         // Get title
-        const newTitle = capitalize(entity?.name || '');
+        const newTitle = getLabel(entity?.name);
         setTitle(newTitle);
     }, [
         children,

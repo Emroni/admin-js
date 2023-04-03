@@ -72,8 +72,8 @@ export default function ClientView() {
             <Summary.Field name="email" getLink={`mailto:${client?.email}`} />
             <Summary.Field name="address" />
             <Summary.Field name="earnings" currency={client?.currency} type="money" />
-            <Summary.Field name="estimatedDuration" label="Estimated duration" />
-            <Summary.Field name="workedDuration" label="Worked duration" />
+            <Summary.Field name="estimatedDuration" />
+            <Summary.Field name="workedDuration" />
             <Summary.Field name="progress" type="progress" />
         </Summary>
         <InvoicesTable clientId={page.query.id} />
