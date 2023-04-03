@@ -1,8 +1,22 @@
-import { parseNumber, parseOrder } from '@/helpers';
+import { parseDateInterval, parseNumber, parseOrder } from '@/helpers';
+import dayjs from 'dayjs';
 import { prisma } from '../';
 
 export const model = {
     deletable: () => true,
+    nextDate: (parent: Expense) => {
+        const today = dayjs.utc();
+        const dateInterval = parseDateInterval(parent.repeats);
+        let date = dayjs.utc(parent.date);
+        if (dateInterval.years || dateInterval.months || dateInterval.days) {
+            while (date < today) {
+                date = date.add(dateInterval.days, 'day');
+                date = date.add(dateInterval.months, 'month');
+                date = date.add(dateInterval.years, 'year');
+            }
+        }
+        return date;
+    },
 };
 
 export const queries = {

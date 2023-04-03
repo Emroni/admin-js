@@ -1,4 +1,5 @@
 interface Expense extends Entity, ExpenseFields {
+    nextDate: Date;
 }
 
 interface ExpenseFields {

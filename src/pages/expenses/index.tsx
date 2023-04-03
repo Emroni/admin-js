@@ -18,9 +18,9 @@ export default function Expenses() {
                 active
                 amount
                 currency
-                date
                 id
                 name
+                nextDate
                 repeats
                 type
             }
@@ -55,7 +55,7 @@ export default function Expenses() {
         <Table.Column name="active" type="boolean" />
         <Table.Column name="name" />
         <Table.Column name="type" />
-        <Table.Column name="date" />
+        <Table.Column name="nextDate" label="Next date" />
         <Table.Column name="repeats" type="dateInterval" />
         <Table.Column name="amount" type="money" />
     </Table>;

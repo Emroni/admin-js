@@ -1,17 +1,18 @@
 const fields = `
-    active: Boolean
-    amount: Float
-    currency: String
-    date: DateScalar
-    name: String
-    repeats: String
-    type: String
+    active: Boolean!
+    amount: Float!
+    currency: String!
+    date: DateScalar!
+    name: String!
+    repeats: String!
+    type: String!
 `;
 
 export const types = `
     type Expense {
         deletable: Boolean!
         id: ID!
+        nextDate: DateScalar!
         ${fields}
     }
 
