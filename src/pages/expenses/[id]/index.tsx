@@ -65,7 +65,7 @@ export default function ExpenseView() {
 
     return <>
         <Summary action={action} entity={expense} loading={mutation.loading}>
-            <Summary.Field name="active" />
+            <Summary.Field name="active" type="boolean" />
             <Summary.Field name="name" />
             <Summary.Field name="type" />
             <Summary.Field name="date" />

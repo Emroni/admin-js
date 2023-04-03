@@ -1,4 +1,4 @@
-type ValueType = 'duration' | 'money' | 'progress' | 'text';
+type ValueType = 'boolean' | 'duration' | 'money' | 'progress' | 'text';
 
 interface ValueProps {
     currency?: string;

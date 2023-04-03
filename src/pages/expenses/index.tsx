@@ -52,7 +52,7 @@ export default function Expenses() {
         onPageChange={setPage}
         onPerPageChange={setPerPage}
     >
-        <Table.Column name="active" />
+        <Table.Column name="active" type="boolean" />
         <Table.Column name="name" />
         <Table.Column name="type" />
         <Table.Column name="date" />
