@@ -17,6 +17,7 @@ export default function ExpenseView() {
             amount
             currency
             date
+            deletable
             id
             name
             repeats
