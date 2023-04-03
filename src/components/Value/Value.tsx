@@ -1,4 +1,5 @@
 import { CURRENCIES } from '@/constants';
+import { parseDateInterval } from '@/helpers';
 import { Chip, LinearProgress, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 
@@ -26,6 +27,10 @@ export default function Value({ currency, options, type, value }: ValueProps) {
             // Get boolean
             newContent = value ? 'Yes' : 'No';
             newColor = value ? 'success' : 'error';
+
+        } else if (type === 'dateInterval') {
+            // Get date interval
+            newContent = parseDateInterval(value).label;
 
         } else if (type === 'duration') {
             // Get duration

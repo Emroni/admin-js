@@ -1,3 +1,10 @@
+interface DateInterval {
+    days: number;
+    label: string;
+    months: number;
+    years: number;
+}
+
 interface Entity extends IndexedObject {
     __typename: string;
     deletable: boolean;
