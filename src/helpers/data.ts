@@ -31,6 +31,35 @@ export function getUnique<T>(items: T[], key?: string) {
     }
 }
 
+export function parseDateInterval(value?: string) {
+    // Parse value
+    const match = value?.match(/(\d+)([DMWY])/);
+    const amount = parseInt(match?.[1] || '0');
+    const unit = match?.[2];
+
+    // Get label
+    let label = '';
+    if (unit === 'Y') {
+        label = amount === 1 ? 'Yearly' : `${amount} years`;
+    } else if (unit === 'M') {
+        label = amount === 1 ? 'Monthly' : `${amount} months`;
+    } else if (unit === 'W') {
+        label = amount === 1 ? 'Weekly' : `${amount} weeks`;
+    } else if (unit === 'D') {
+        label = amount === 1 ? 'Daily' : `${amount} days`;
+    }
+
+    // Return date interval
+    return {
+        days: unit === 'D' ? amount : 0,
+        label,
+        months: unit === 'M' ? amount : 0,
+        value,
+        weeks: unit === 'W' ? amount : 0,
+        years: unit === 'Y' ? amount : 0,
+    } as DateInterval;
+}
+
 export function parseFilterIds(ids: any) {
     if (Array.isArray(ids)) {
         return {

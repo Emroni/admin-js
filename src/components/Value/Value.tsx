@@ -1,5 +1,6 @@
 import { CURRENCIES } from '@/constants';
-import { LinearProgress, Typography } from '@mui/material';
+import { parseDateInterval } from '@/helpers';
+import { Chip, LinearProgress, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 export default function Value({ currency, options, type, value }: ValueProps) {
@@ -21,6 +22,15 @@ export default function Value({ currency, options, type, value }: ValueProps) {
             // Get option value
             const option = options.find(option => option.value === value || option.id === value || option.name === value);
             newContent = option?.label || option?.name || value;
+
+        } else if (type === 'boolean') {
+            // Get boolean
+            newContent = value ? 'Yes' : 'No';
+            newColor = value ? 'success' : 'error';
+
+        } else if (type === 'dateInterval') {
+            // Get date interval
+            newContent = parseDateInterval(value).label;
 
         } else if (type === 'duration') {
             // Get duration
@@ -56,7 +66,10 @@ export default function Value({ currency, options, type, value }: ValueProps) {
         return <span>&nbsp;</span>;
     }
 
-    if (type === 'duration') {
+    if (type === 'boolean') {
+        return <Chip color={color} label={content} size="small" variant="outlined" />;
+
+    } else if (type === 'duration') {
         return <Typography color={color} component="span" fontSize="inherit">
             {content?.[0]}
             <Typography color="grey.200" component="span" fontSize="smaller">
