@@ -16,6 +16,17 @@ model Client {
     projects        Project[]
 }
 
+model Expense {
+    id              Int         @id @default(autoincrement())
+    active          Boolean
+    amount          Float
+    currency        String
+    date            DateTime    @db.Date
+    name            String      @unique
+    repeats         String
+    type            String
+}
+
 model Invoice {
     id              Int         @id @default(autoincrement())
     number          String?

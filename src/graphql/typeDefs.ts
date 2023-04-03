@@ -1,4 +1,5 @@
 import * as client from './client/typeDefs';
+import * as expense from './expense/typeDefs';
 import * as invoice from './invoice/typeDefs';
 import * as project from './project/typeDefs';
 import * as task from './task/typeDefs';
@@ -10,6 +11,7 @@ export const typeDefs = `
     scalar TimeScalar
 
     ${client.types}
+    ${expense.types}
     ${invoice.types}
     ${project.types}
     ${task.types}
@@ -17,6 +19,7 @@ export const typeDefs = `
 
     type Query {
         ${client.queries}
+        ${expense.queries}
         ${invoice.queries}
         ${project.queries}
         ${task.queries}
@@ -25,6 +28,7 @@ export const typeDefs = `
 
     type Mutation {
         ${client.mutations}
+        ${expense.mutations}
         ${invoice.mutations}
         ${project.mutations}
         ${task.mutations}
