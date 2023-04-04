@@ -12,5 +12,6 @@ interface ApiLoginRequest {
 }
 
 interface ApiLoginResponse {
-    token: string?;
+    error?: string;
+    token?: string?;
 }
