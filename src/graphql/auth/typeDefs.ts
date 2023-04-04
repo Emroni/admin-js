@@ -1,12 +1,14 @@
 export const types = `
-    type Auth {
+    type AuthHash {
+        hash: String!
+    }
+
+    type AuthLogin {
         token: String
     }
 `;
 
 export const queries = `
-    Auth: Auth
-    login(username: String!, password: String!): Auth
+    hash(input: String!): AuthHash!
+    login(username: String!, password: String!): AuthLogin!
 `;
-
-export const mutations = ``;

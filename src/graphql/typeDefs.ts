@@ -30,7 +30,6 @@ export const typeDefs = `
     }
 
     type Mutation {
-        ${auth.mutations}
         ${client.mutations}
         ${expense.mutations}
         ${invoice.mutations}

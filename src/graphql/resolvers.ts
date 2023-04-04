@@ -7,7 +7,6 @@ import * as project from './project/resolvers';
 import * as task from './task/resolvers';
 import * as time from './time/resolvers';
 
-export const Auth = auth.model;
 export const Client = client.model;
 export const Expense = expense.model;
 export const Invoice = invoice.model;
@@ -26,7 +25,6 @@ export const Query = {
 };
 
 export const Mutation = {
-    ...auth.mutations,
     ...client.mutations,
     ...expense.mutations,
     ...invoice.mutations,

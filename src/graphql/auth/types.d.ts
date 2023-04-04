@@ -1,8 +1,16 @@
-interface Auth {
+interface AuthHash {
+    hash: string;
+}
+
+interface AuthHashArgs {
+    input: string;
+}
+
+interface AuthLogin {
     token: string?;
 }
 
-interface AuthArgs {
+interface AuthLoginArgs {
     password: string;
     username: string;
 }
