@@ -1,7 +1,6 @@
 export const types = `
     type Auth {
-        password: String!
-        username: String!
+        token: String
     }
 `;
 

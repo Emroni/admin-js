@@ -1,9 +1,8 @@
 interface Auth {
-    password: string;
-    username: string;
+    token: string?;
 }
 
-interface AuthLoginArgs {
+interface AuthArgs {
     password: string;
     username: string;
 }
