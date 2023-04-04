@@ -9,7 +9,7 @@ export const queries = {
         const username = args.username === process.env.AUTH_USERNAME;
         const password = await bcrypt.compare(args.password, process.env.AUTH_PASSWORD || '');
         return {
-            token: (password && username) ? jwt.sign(args,  process.env.AUTH_SECRET || '') : null,
+            token: (password && username) ? jwt.sign(args, process.env.AUTH_SECRET || '') : null,
         };
     },
 };
