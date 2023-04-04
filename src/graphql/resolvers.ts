@@ -1,5 +1,4 @@
 export * from './scalars';
-import * as auth from './auth/resolvers';
 import * as client from './client/resolvers';
 import * as expense from './expense/resolvers';
 import * as invoice from './invoice/resolvers';
@@ -15,7 +14,6 @@ export const Task = task.model;
 export const Time = time.model;
 
 export const Query = {
-    ...auth.queries,
     ...client.queries,
     ...expense.queries,
     ...invoice.queries,

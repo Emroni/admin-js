@@ -1,4 +1,3 @@
-import * as auth from './auth/typeDefs';
 import * as client from './client/typeDefs';
 import * as expense from './expense/typeDefs';
 import * as invoice from './invoice/typeDefs';
@@ -11,7 +10,6 @@ export const typeDefs = `
     scalar DateTimeScalar
     scalar TimeScalar
 
-    ${auth.types}
     ${client.types}
     ${expense.types}
     ${invoice.types}
@@ -20,7 +18,6 @@ export const typeDefs = `
     ${time.types}
 
     type Query {
-        ${auth.queries}
         ${client.queries}
         ${expense.queries}
         ${invoice.queries}
