@@ -1,4 +1,4 @@
-import { Menu, Summary } from '@/components';
+import { Billable, Menu, Summary } from '@/components';
 import { usePage } from '@/contexts/Page';
 import { InvoicesTable, ProjectsTable, TasksTable, TimesTable } from '@/partials';
 import { gql, useMutation, useQuery } from '@apollo/client';
@@ -76,6 +76,7 @@ export default function ClientView() {
             <Summary.Field name="workedDuration" />
             <Summary.Field name="progress" type="progress" />
         </Summary>
+        <Billable clientId={page.query.id} />
         <InvoicesTable clientId={page.query.id} />
         <ProjectsTable clientId={page.query.id} />
         <TasksTable clientId={page.query.id} />

@@ -2,17 +2,23 @@ export function getNestedValue(data: IndexedObject, path: string) {
     return path.split('.').reduce((parent: IndexedObject, child: string) => parent?.[child], data || {});
 }
 
-export function getDurationMinutes(duration: Date) {
-    return duration.getUTCHours() * 60 + duration.getUTCMinutes();
-}
-
 export function getDurationHours(duration: Date) {
     return duration.getUTCHours() + duration.getUTCMinutes() / 60;
+}
+
+export function getDurationMinutes(duration: Date) {
+    return duration.getUTCHours() * 60 + duration.getUTCMinutes();
 }
 
 export function getHoursDuration(hours: number) {
     const h = Math.floor(hours);
     const m = Math.round(60 * (hours - h)).toString().padStart(2, '0');
+    return `${h}:${m}`;
+}
+
+export function getMinutesDuration(minutes: number) {
+    const h = Math.floor(minutes / 60);
+    const m = (minutes % 60).toString().padStart(2, '0');
     return `${h}:${m}`;
 }
 
