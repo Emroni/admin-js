@@ -10,11 +10,7 @@ export default function Value({ options, type, value }: ValueProps) {
         let newContent = value;
 
         // Check type
-        if (Array.isArray(value)) {
-            // Get array length
-            newContent = value.length;
-
-        } else if (options) {
+        if (options) {
             // Get option value
             const option = options.find(option => option.value === value || option.id === value || option.name === value);
             newContent = option?.label || option?.name || value;
