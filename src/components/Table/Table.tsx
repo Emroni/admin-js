@@ -17,7 +17,7 @@ export default function Table({ action, children, data, title, getRowLink, onOrd
             .map((columnProps: TableColumn) => ({
                 ...columnProps,
                 align: columnProps.align || (columnProps.type === 'money' ? 'right' : 'left'),
-                order: columnProps.order || !columnProps.name.includes('.'), // TODO: Sort on relation
+                order: columnProps.order !== undefined ? columnProps.order : !columnProps.name.includes('.'), // TODO: Sort on relation
                 label: columnProps.label || getLabel(columnProps.name),
             }));
         setColumns(newColumns);

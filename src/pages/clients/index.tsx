@@ -56,10 +56,10 @@ export default function Clients() {
     >
         <Table.Column name="name" />
         <Table.Column name="projects.length" label="Projects" align="right" />
-        <Table.Column name="earnings" align="right" type="money" />
-        <Table.Column name="estimatedDuration" align="right" />
-        <Table.Column name="workedDuration" align="right" />
-        <Table.Column name="progress" type="progress" />
+        <Table.Column name="earnings" align="right" order={false} type="money" />
+        <Table.Column name="estimatedDuration" order={false} align="right" />
+        <Table.Column name="workedDuration" order={false} align="right" />
+        <Table.Column name="progress" order={false} type="progress" />
     </Table>;
 
 }

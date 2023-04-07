@@ -81,11 +81,11 @@ export default function TasksTable({ clientId, defaultPerPage = 10, invoiceId, p
         )}
         <Table.Column name="price" type="money" />
         <Table.Column name="rate" type="money" />
-        <Table.Column name="earnings" type="money" />
-        <Table.Column name="estimatedDuration" align="right" />
-        <Table.Column name="workedDuration" align="right" />
-        <Table.Column name="progress" type="progress" />
-        <Table.Column name="timer">
+        <Table.Column name="earnings" order={false} type="money" />
+        <Table.Column name="estimatedDuration" order={false} align="right" />
+        <Table.Column name="workedDuration" order={false} align="right" />
+        <Table.Column name="progress" order={false} type="progress" />
+        <Table.Column name="timer" order={false}>
             {({ row, value }: TableColumnChildProps) => (
                 <TaskTimer taskId={row.id} value={value} />
             )}

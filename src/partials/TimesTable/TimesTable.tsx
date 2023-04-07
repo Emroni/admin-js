@@ -94,7 +94,7 @@ export default function TimesTable({ clientId, defaultPerPage = 10, invoiceId, p
         )}
         <Table.Column name="date" align="right" />
         <Table.Column name="duration" align="right"/>
-        <Table.Column name="earnings" type="money" />
+        <Table.Column name="earnings" order={false} type="money" />
     </Table>;
 
 }
