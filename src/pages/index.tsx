@@ -5,7 +5,8 @@ export default function Dashboard() {
     return <>
         <DashboardTimer />
         <DashboardInvoices />
-        <TimesChart />
+        <TimesChart type="hours" />
+        <TimesChart type="earnings" />
     </>;
 
 }

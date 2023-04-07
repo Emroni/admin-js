@@ -15,7 +15,7 @@ const options = {
     responsive: true,
 };
 
-export default function TimesChart() {
+export default function TimesChart({ type }: TimesChartProps) {
 
     const [data, setData] = useState<ChartData<'bar'> | null>(null);
     const [from, setFrom] = useState(new Date());
@@ -54,22 +54,22 @@ export default function TimesChart() {
             // Prepare map
             const dates = getDatesRange(from, to);
             const mapEntries = dates.map(date => ([date, {
-                hours: 0,
+                value: 0,
                 label: dayjs.utc(date).format('ddd DD/MM'),
             }]));
             const map: IndexedObject = Object.fromEntries(mapEntries);
 
             // Map time hours to dates
             query.data.timesBetween.forEach(time => {
-                map[time.date].hours += time.hours;
+                map[time.date].value += time[type];
             });
 
             // Get chart data
             const list = Object.values(map);
             const newChartData = {
                 datasets: [{
-                    data: list.map(item => item.hours),
-                    backgroundColor: '#90caf9',
+                    data: list.map(item => item.value),
+                    backgroundColor: type === 'earnings' ? '#66bb6a' : '#90caf9',
                 }],
                 labels: list.map(item => item.label),
             };
@@ -79,9 +79,10 @@ export default function TimesChart() {
         from,
         query.data,
         to,
+        type,
     ]);
 
-    return <Card loading={query.loading} title="Times">
+    return <Card loading={query.loading} title={`Times ${type}`}>
         {data && (
             <Bar options={options} data={data} />
         )}
