@@ -22,6 +22,15 @@ interface TimesQuery {
     times: GraphqlList<Time>;
 }
 
+interface TimesBetweenArgs {
+    from: string;
+    to: string;
+}
+
+interface TimesBetweenQuery {
+    timesBetween: Time[];
+}
+
 interface TimesFilter extends Partial<TimeFields> {
     clientId?: number;
     projectId?: number;
