@@ -28,9 +28,7 @@ export default function Value({ options, type, value }: ValueProps) {
         value,
     ]);
 
-    if (content === null || content === undefined) {
-        return <span>&nbsp;</span>;
-    }
+    
 
     return content;
 

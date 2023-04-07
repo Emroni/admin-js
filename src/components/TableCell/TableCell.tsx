@@ -6,7 +6,6 @@ import BooleanChip from '../BooleanChip/BooleanChip';
 import Money from '../Money/Money';
 import Progress from '../Progress/Progress';
 import ProjectStatusChip from '../ProjectStatusChip/ProjectStatusChip';
-import Value from '../Value/Value';
 
 export default function TableCell({ column, row }: TableCellProps) {
 
@@ -26,7 +25,7 @@ export default function TableCell({ column, row }: TableCellProps) {
         row,
     ]);
 
-    let content: any = null;
+    let content = value;
     if (column.children) {
         const Component: any = column.children;
         content = <Component column={column} row={row} value={value} />;
@@ -38,8 +37,8 @@ export default function TableCell({ column, row }: TableCellProps) {
         content = <Progress value={value} />;
     } else if (column.type === 'projectStatus') {
         content = <ProjectStatusChip value={value} />;
-    } else {
-        content = <Value options={column.options} type={column.type} value={value} />;
+    } else if (content === null || content === undefined) {
+        content = <span>&nbsp;</span>;
     }
 
     return <MuiTableCell align={column.align}>

@@ -6,7 +6,6 @@ import BooleanChip from '../BooleanChip/BooleanChip';
 import Money from '../Money/Money';
 import Progress from '../Progress/Progress';
 import ProjectStatusChip from '../ProjectStatusChip/ProjectStatusChip';
-import Value from '../Value/Value';
 
 export default function SummaryField({ children, currencyName, entity, label, name, options, type, getLink }: SummaryFieldProps) {
 
@@ -28,7 +27,7 @@ export default function SummaryField({ children, currencyName, entity, label, na
     ]);
 
 
-    let content: any = null;
+    let content = value;
     if (children) {
         const Component = children;
         content = <Component value={value} />;
@@ -40,8 +39,8 @@ export default function SummaryField({ children, currencyName, entity, label, na
         content = <Progress value={value} />;
     } else if (type === 'projectStatus') {
         content = <ProjectStatusChip value={value} />;
-    } else {
-        content = <Value options={options} type={type} value={value} />;
+    } else if (content === null || content === undefined) {
+        content = <span>&nbsp;</span>;
     }
 
     return <TableRow>
