@@ -2,6 +2,7 @@ import { getNestedValue } from '@/helpers';
 import { Link, TableCell as MuiTableCell } from '@mui/material';
 import NextLink from 'next/link';
 import { useEffect, useState } from 'react';
+import BooleanChip from '../BooleanChip/BooleanChip';
 import ProjectStatusChip from '../ProjectStatusChip/ProjectStatusChip';
 import Value from '../Value/Value';
 
@@ -27,6 +28,8 @@ export default function TableCell({ column, row }: TableCellProps) {
     if (column.children) {
         const Component: any = column.children;
         content = <Component column={column} row={row} value={value} />;
+    } else if (column.type === 'boolean') {
+        content = <BooleanChip value={value} />;
     } else if (column.type === 'projectStatus') {
         content = <ProjectStatusChip value={value} />;
     } else {

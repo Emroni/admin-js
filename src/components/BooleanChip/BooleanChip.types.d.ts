@@ -1,0 +1,3 @@
+interface BooleanChipProps {
+    value?: boolean;
+}
