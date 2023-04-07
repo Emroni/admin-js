@@ -1,8 +1,7 @@
-type ValueType = 'boolean' | 'dateInterval' | 'money' | 'progress' | 'projectStatus' | 'text';
+type ValueType = 'boolean' | 'money' | 'progress' | 'projectStatus' | 'text';
 
 interface DateInterval {
     days: number;
-    label: string;
     months: number;
     value: string;
     weeks: number;

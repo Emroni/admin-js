@@ -72,7 +72,7 @@ export default function ExpenseView() {
             <Summary.Field name="type" />
             <Summary.Field name="date" />
             <Summary.Field name="nextDate" />
-            <Summary.Field name="repeats" type="dateInterval" />
+            <Summary.Field name="repeats" />
             <Summary.Field name="amount" currencyName={expense?.currency} type="money" />
         </Summary>
     </>;

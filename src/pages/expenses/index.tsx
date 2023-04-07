@@ -56,7 +56,7 @@ export default function Expenses() {
         <Table.Column name="name" />
         <Table.Column name="type" />
         <Table.Column name="nextDate" />
-        <Table.Column name="repeats" type="dateInterval" />
+        <Table.Column name="repeats" />
         <Table.Column name="amount" type="money" />
     </Table>;
 
