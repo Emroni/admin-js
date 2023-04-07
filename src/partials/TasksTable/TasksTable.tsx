@@ -82,8 +82,8 @@ export default function TasksTable({ clientId, defaultPerPage = 10, invoiceId, p
         <Table.Column name="price" type="money" />
         <Table.Column name="rate" type="money" />
         <Table.Column name="earnings" type="money" />
-        <Table.Column name="estimatedDuration" />
-        <Table.Column name="workedDuration" />
+        <Table.Column name="estimatedDuration" align="right" />
+        <Table.Column name="workedDuration" align="right" />
         <Table.Column name="progress" type="progress" />
         <Table.Column name="timer">
             {({ row, value }: TableColumnChildProps) => (

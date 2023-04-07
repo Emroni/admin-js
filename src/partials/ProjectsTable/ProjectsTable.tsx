@@ -68,9 +68,9 @@ export default function ProjectsTable({ clientId, defaultPerPage = 10, invoiceId
         {withClient && (
             <Table.Column name="client.name" label="Client" getLink={project => `/clients/${project.client?.id}`} />
         )}
-        <Table.Column name="earnings" type="money" />
-        <Table.Column name="estimatedDuration" />
-        <Table.Column name="workedDuration" />
+        <Table.Column name="earnings" align="right" type="money" />
+        <Table.Column name="estimatedDuration" align="right" />
+        <Table.Column name="workedDuration" align="right" />
         <Table.Column name="progress" type="progress" />
     </Table>;
 

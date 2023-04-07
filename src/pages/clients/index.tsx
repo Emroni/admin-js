@@ -56,9 +56,9 @@ export default function Clients() {
     >
         <Table.Column name="name" />
         <Table.Column name="projects.length" label="Projects" align="right" />
-        <Table.Column name="earnings" type="money" />
-        <Table.Column name="estimatedDuration" />
-        <Table.Column name="workedDuration" />
+        <Table.Column name="earnings" align="right" type="money" />
+        <Table.Column name="estimatedDuration" align="right" />
+        <Table.Column name="workedDuration" align="right" />
         <Table.Column name="progress" type="progress" />
     </Table>;
 
