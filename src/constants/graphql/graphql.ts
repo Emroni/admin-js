@@ -1,4 +1,4 @@
-export const PROJECT_STATUS = [
+export const PROJECT_STATUS: ProjectStatus[] = [
     {
         color: 'info',
         label: 'Billed',
