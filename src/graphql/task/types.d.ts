@@ -11,7 +11,7 @@ interface Task extends Entity, TaskFields {
 }
 
 interface TaskFields {
-    currency: string;
+    currency: CurrencyName;
     estimatedHours: number;
     name: string;
     price: number;

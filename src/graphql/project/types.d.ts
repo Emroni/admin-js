@@ -3,7 +3,7 @@ type ProjectStatusChip = 'billed' | 'complete' | 'in_progress' | 'new' | 'on_hol
 
 interface Project extends Entity, ProjectFields {
     client: Client;
-    currency: string;
+    currency: CurrencyName;
     earnings: number;
     estimatedDuration: string;
     estimatedHours: number;

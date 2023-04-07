@@ -1,9 +1,8 @@
-import { CURRENCIES } from '@/constants';
 import { parseDateInterval } from '@/helpers';
-import { LinearProgress, Typography } from '@mui/material';
+import { LinearProgress } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-export default function Value({ currency, options, type, value }: ValueProps) {
+export default function Value({ options, type, value }: ValueProps) {
 
     const [color, setColor] = useState<any>(undefined);
     const [content, setContent] = useState<any>(undefined);
@@ -27,13 +26,6 @@ export default function Value({ currency, options, type, value }: ValueProps) {
             // Get date interval
             newContent = parseDateInterval(value).label;
 
-        } else if (type === 'money') {
-            // Get money
-            const val = parseFloat(value);
-            const symbol = CURRENCIES.find(c => c.name === currency)?.symbol || '';
-            newContent = (isNaN(val) ? 0 : val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).split('.');
-            newContent.unshift(symbol);
-
         } else if (type === 'progress') {
             // Get progress
             newContent = 100 * value;
@@ -44,7 +36,6 @@ export default function Value({ currency, options, type, value }: ValueProps) {
         setColor(newColor);
         setContent(newContent);
     }, [
-        currency,
         options,
         type,
         value,
@@ -54,20 +45,7 @@ export default function Value({ currency, options, type, value }: ValueProps) {
         return <span>&nbsp;</span>;
     }
 
-    if (type === 'money') {
-        return <>
-            <Typography color="grey.400" component="span" fontSize="smaller" marginRight={0.5}>
-                {content[0]}
-            </Typography>
-            <Typography color={color} component="span" fontSize="inherit">
-                {content[1]}
-            </Typography>
-            <Typography color="grey.400" component="span" fontSize="smaller">
-                .{content[2]}
-            </Typography>
-        </>;
-
-    } else if (type === 'progress') {
+    if (type === 'progress') {
         return <LinearProgress color={color} value={content} variant="determinate" />;
     }
 

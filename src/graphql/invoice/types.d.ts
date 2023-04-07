@@ -6,7 +6,7 @@ interface Invoice extends Entity, InvoiceFields {
 interface InvoiceFields {
     amount: Float!
     clientId: number;
-    currency: string;
+    currency: CurrencyName;
     description: string?;
     number: string?;
     paidDate: Date?;

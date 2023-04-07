@@ -80,9 +80,9 @@ export default function TaskView() {
             <Summary.Field name="name" />
             <Summary.Field name="client.name" label="Client" getLink={`/clients/${task?.client.id}`} />
             <Summary.Field name="project.name" label="Project" getLink={`/projects/${task?.project.id}`} />
-            <Summary.Field name="price" currency={task?.currency} type="money" />
-            <Summary.Field name="rate" currency={task?.currency} type="money" />
-            <Summary.Field name="earnings" currency={task?.currency} type="money" />
+            <Summary.Field name="price" currencyName={task?.currency} type="money" />
+            <Summary.Field name="rate" currencyName={task?.currency} type="money" />
+            <Summary.Field name="earnings" currencyName={task?.currency} type="money" />
             <Summary.Field name="estimatedDuration" />
             <Summary.Field name="workedDuration" />
             <Summary.Field name="progress" type="progress" />

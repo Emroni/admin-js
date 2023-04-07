@@ -73,7 +73,7 @@ export default function InvoiceView() {
         <Summary action={action} entity={invoice} loading={mutation.loading}>
             <Summary.Field name="number" />
             <Summary.Field name="client.name" label="Client" getLink={`/clients/${invoice?.client.id}`} />
-            <Summary.Field name="amount" currency={invoice?.currency} type="money" />
+            <Summary.Field name="amount" currencyName={invoice?.currency} type="money" />
             <Summary.Field name="sentDate" />
             <Summary.Field name="paidDate" />
         </Summary>

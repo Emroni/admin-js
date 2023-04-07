@@ -74,7 +74,7 @@ export default function ProjectView() {
             <Summary.Field name="status" type="projectStatus" />
             <Summary.Field name="name" />
             <Summary.Field name="client.name" label="Client" getLink={`/clients/${project?.client.id}`} />
-            <Summary.Field name="earnings" currency={project?.currency} type="money" />
+            <Summary.Field name="earnings" currencyName={project?.currency} type="money" />
             <Summary.Field name="estimatedDuration" />
             <Summary.Field name="workedDuration" />
             <Summary.Field name="progress" type="progress" />

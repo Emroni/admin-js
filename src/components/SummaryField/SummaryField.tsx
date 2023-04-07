@@ -3,10 +3,11 @@ import { Link, TableCell, TableRow } from '@mui/material';
 import NextLink from 'next/link';
 import { useEffect, useState } from 'react';
 import BooleanChip from '../BooleanChip/BooleanChip';
+import Money from '../Money/Money';
 import ProjectStatusChip from '../ProjectStatusChip/ProjectStatusChip';
 import Value from '../Value/Value';
 
-export default function SummaryField({ children, currency, entity, label, name, options, type, getLink }: SummaryFieldProps) {
+export default function SummaryField({ children, currencyName, entity, label, name, options, type, getLink }: SummaryFieldProps) {
 
     const [link, setLink] = useState<string | undefined>(undefined);
     const [value, setValue] = useState<any>(null);
@@ -32,10 +33,12 @@ export default function SummaryField({ children, currency, entity, label, name, 
         content = <Component value={value} />;
     } else if (type === 'boolean') {
         content = <BooleanChip value={value} />;
+    } else if (type === 'money') {
+        content = <Money currencyName={currencyName} value={value} />;
     } else if (type === 'projectStatus') {
         content = <ProjectStatusChip value={value} />;
     } else {
-        content = <Value currency={currency} options={options} type={type} value={value} />;
+        content = <Value options={options} type={type} value={value} />;
     }
 
     return <TableRow>

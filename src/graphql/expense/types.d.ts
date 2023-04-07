@@ -5,7 +5,7 @@ interface Expense extends Entity, ExpenseFields {
 interface ExpenseFields {
     active: boolean;
     amount: number;
-    currency: string;
+    currency: CurrencyName;
     date: Date;
     name: string;
     repeats: string;

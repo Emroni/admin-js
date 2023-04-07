@@ -71,7 +71,7 @@ export default function ClientView() {
             <Summary.Field name="name" />
             <Summary.Field name="email" getLink={`mailto:${client?.email}`} />
             <Summary.Field name="address" />
-            <Summary.Field name="earnings" currency={client?.currency} type="money" />
+            <Summary.Field name="earnings" currencyName={client?.currency} type="money" />
             <Summary.Field name="estimatedDuration" />
             <Summary.Field name="workedDuration" />
             <Summary.Field name="progress" type="progress" />

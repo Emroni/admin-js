@@ -1,5 +1,5 @@
 interface Client extends Entity, ClientFields {
-    currency: string;
+    currency: CurrencyName;
     earnings: number;
     estimatedDuration: string;
     estimatedHours: number;
@@ -14,7 +14,7 @@ interface Client extends Entity, ClientFields {
 
 interface ClientFields {
     address: string?;
-    currency: string;
+    currency: CurrencyName;
     email: string?;
     name: string;
 }

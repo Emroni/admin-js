@@ -3,6 +3,7 @@ import { Link, TableCell as MuiTableCell } from '@mui/material';
 import NextLink from 'next/link';
 import { useEffect, useState } from 'react';
 import BooleanChip from '../BooleanChip/BooleanChip';
+import Money from '../Money/Money';
 import ProjectStatusChip from '../ProjectStatusChip/ProjectStatusChip';
 import Value from '../Value/Value';
 
@@ -30,10 +31,12 @@ export default function TableCell({ column, row }: TableCellProps) {
         content = <Component column={column} row={row} value={value} />;
     } else if (column.type === 'boolean') {
         content = <BooleanChip value={value} />;
+    } else if (column.type === 'money') {
+        content = <Money currencyName={row.currency} value={value} />;
     } else if (column.type === 'projectStatus') {
         content = <ProjectStatusChip value={value} />;
     } else {
-        content = <Value currency={row.currency} options={column.options} type={column.type} value={value} />;
+        content = <Value options={column.options} type={column.type} value={value} />;
     }
 
     return <MuiTableCell align={column.align}>
