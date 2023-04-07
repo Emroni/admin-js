@@ -1,0 +1,3 @@
+interface ProgressProps {
+    value?: number;
+}

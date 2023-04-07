@@ -5,6 +5,7 @@ export { default as Login } from './Login/Login';
 export { default as Menu } from './Menu/Menu';
 export { default as Money } from './Money/Money';
 export { default as Navigation } from './Navigation/Navigation';
+export { default as Progress } from './Progress/Progress';
 export { default as ProjectStatusChip } from './ProjectStatusChip/ProjectStatusChip';
 export { default as Summary } from './Summary/Summary';
 export { default as Table } from './Table/Table';

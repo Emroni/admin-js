@@ -4,6 +4,7 @@ import NextLink from 'next/link';
 import { useEffect, useState } from 'react';
 import BooleanChip from '../BooleanChip/BooleanChip';
 import Money from '../Money/Money';
+import Progress from '../Progress/Progress';
 import ProjectStatusChip from '../ProjectStatusChip/ProjectStatusChip';
 import Value from '../Value/Value';
 
@@ -35,6 +36,8 @@ export default function SummaryField({ children, currencyName, entity, label, na
         content = <BooleanChip value={value} />;
     } else if (type === 'money') {
         content = <Money currencyName={currencyName} value={value} />;
+    } else if (type === 'progress') {
+        content = <Progress value={value} />;
     } else if (type === 'projectStatus') {
         content = <ProjectStatusChip value={value} />;
     } else {
