@@ -1,4 +1,4 @@
-import { Form, Money, Value } from '@/components';
+import { Form, Money } from '@/components';
 import { CURRENCIES } from '@/constants';
 import { usePage } from '@/contexts/Page';
 import { gql, useMutation, useQuery } from '@apollo/client';
@@ -125,10 +125,10 @@ export default function InvoiceEdit() {
                                         {time.project.name} › {time.task.name}
                                     </TableCell>
                                     <TableCell align="right">
-                                        <Value value={time.date} />
+                                        {time.date}
                                     </TableCell>
                                     <TableCell align="right">
-                                        <Value value={time.duration} />
+                                        {time.duration}
                                     </TableCell>
                                     <TableCell align="right">
                                         <Money currencyName={time.currency} value={time.earnings} />

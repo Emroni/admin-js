@@ -10,4 +10,3 @@ export { default as ProjectStatusChip } from './ProjectStatusChip/ProjectStatusC
 export { default as Summary } from './Summary/Summary';
 export { default as Table } from './Table/Table';
 export { default as TaskTimer } from './TaskTimer/TaskTimer';
-export { default as Value } from './Value/Value';
