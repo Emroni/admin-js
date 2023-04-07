@@ -1,5 +1,4 @@
 import { Menu, Table } from '@/components';
-import { PROJECT_STATUS } from '@/constants';
 import { gql, useQuery } from '@apollo/client';
 import { Add } from '@mui/icons-material';
 import { useState } from 'react';
@@ -64,7 +63,7 @@ export default function ProjectsTable({ clientId, defaultPerPage = 10, invoiceId
         onPageChange={setPage}
         onPerPageChange={setPerPage}
     >
-        <Table.Column name="status" options={PROJECT_STATUS} />
+        <Table.Column name="status" type="projectStatus" />
         <Table.Column name="name" />
         {withClient && (
             <Table.Column name="client.name" label="Client" getLink={project => `/clients/${project.client?.id}`} />

@@ -1,5 +1,5 @@
 type ProjectBilling = 'hourly' | 'fixed';
-type ProjectStatus = 'billed' | 'complete' | 'in_progress' | 'new' | 'on_hold';
+type ProjectStatusChip = 'billed' | 'complete' | 'in_progress' | 'new' | 'on_hold';
 
 interface Project extends Entity, ProjectFields {
     client: Client;
@@ -18,7 +18,7 @@ interface ProjectFields {
     billing: ProjectBilling;
     clientId: number;
     name: string;
-    status: ProjectStatus;
+    status: ProjectStatusChip;
 }
 
 interface ProjectQuery {

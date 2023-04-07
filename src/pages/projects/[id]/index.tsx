@@ -1,5 +1,4 @@
 import { Menu, Summary } from '@/components';
-import { PROJECT_STATUS } from '@/constants';
 import { usePage } from '@/contexts/Page';
 import { InvoicesTable, TasksTable, TimesTable } from '@/partials';
 import { gql, useMutation, useQuery } from '@apollo/client';
@@ -64,7 +63,7 @@ export default function ProjectView() {
             router.push(`/clients/${project?.client.id}`);
         }
     }
-    
+
     const action = <Menu>
         <Menu.Item icon={Edit} label="Edit" link={`/projects/${project?.id}/edit`} />
         <Menu.Item color="error" disabled={!project?.deletable} icon={Delete} label="Delete" onClick={handleDelete} />
@@ -72,9 +71,9 @@ export default function ProjectView() {
 
     return <>
         <Summary action={action} entity={project} loading={mutation.loading}>
+            <Summary.Field name="status" type="projectStatus" />
             <Summary.Field name="name" />
             <Summary.Field name="client.name" label="Client" getLink={`/clients/${project?.client.id}`} />
-            <Summary.Field name="status" options={PROJECT_STATUS} />
             <Summary.Field name="earnings" currency={project?.currency} type="money" />
             <Summary.Field name="estimatedDuration" />
             <Summary.Field name="workedDuration" />

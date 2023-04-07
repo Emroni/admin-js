@@ -4,6 +4,7 @@ export { default as Form } from './Form/Form';
 export { default as Login } from './Login/Login';
 export { default as Menu } from './Menu/Menu';
 export { default as Navigation } from './Navigation/Navigation';
+export { default as ProjectStatusChip } from './ProjectStatusChip/ProjectStatusChip';
 export { default as Summary } from './Summary/Summary';
 export { default as Table } from './Table/Table';
 export { default as TaskTimer } from './TaskTimer/TaskTimer';

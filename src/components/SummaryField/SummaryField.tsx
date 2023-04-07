@@ -2,6 +2,7 @@ import { getLabel, getNestedValue } from '@/helpers';
 import { Link, TableCell, TableRow } from '@mui/material';
 import NextLink from 'next/link';
 import { useEffect, useState } from 'react';
+import BooleanChip from '../BooleanChip/BooleanChip';
 import Value from '../Value/Value';
 
 export default function SummaryField({ children, currency, entity, label, name, options, type, getLink }: SummaryFieldProps) {
@@ -28,6 +29,8 @@ export default function SummaryField({ children, currency, entity, label, name, 
     if (children) {
         const Component = children;
         content = <Component value={value} />;
+    } else if (type === 'projectStatus') {
+        content = <ProjectStatusChip value={value} />;
     } else {
         content = <Value currency={currency} options={options} type={type} value={value} />;
     }
