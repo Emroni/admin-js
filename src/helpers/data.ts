@@ -1,5 +1,19 @@
+import dayjs from 'dayjs';
+
 export function getNestedValue(data: IndexedObject, path: string) {
     return path.split('.').reduce((parent: IndexedObject, child: string) => parent?.[child], data || {});
+}
+
+export function getDatesRange(from: Date, to: Date, format = 'YYYY-MM-DD') {
+    const endDate = dayjs.utc(to);
+    let startDate = dayjs.utc(from);
+    const dates: string[] = [];
+    while (startDate.isBefore(endDate) || startDate.isSame(endDate)) {
+        dates.push(startDate.format(format));
+        startDate = startDate.add(1, 'day');
+    }
+
+    return dates;
 }
 
 export function getDurationHours(duration: Date) {
