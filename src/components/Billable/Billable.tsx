@@ -1,4 +1,4 @@
-import { Card, Value } from '@/components';
+import { Card, Money } from '@/components';
 import { getMinutesDuration, getUnique } from '@/helpers';
 import { gql, useQuery } from '@apollo/client';
 import { AccessTime, AccessTimeFilled } from '@mui/icons-material';
@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 export default function Billable({ clientId }: BillableProps) {
 
     const [columns, setColumns] = useState<BillableColumn[]>([]);
-    const [currency, setCurrency] = useState<string | undefined>(undefined);
+    const [currencyName, setCurrencyName] = useState<CurrencyName | undefined>(undefined);
     const [rows, setRows] = useState<BillableRow[]>([]);
     const [showHours, setShowHours] = useState(false);
     const [totalAmount, setTotalAmount] = useState<number>(0);
@@ -46,9 +46,9 @@ export default function Billable({ clientId }: BillableProps) {
         const times = query.data?.times.rows.filter(time => time.project.status === 'in_progress');
 
         if (times?.length) {
-            // Get currency
-            const newCurrency = times[0].currency;
-            setCurrency(newCurrency);
+            // Get currency name
+            const newCurrencyName = times[0].currency;
+            setCurrencyName(newCurrencyName);
 
             // Parse dates
             const dates = times.map(time => time.date);
@@ -130,7 +130,7 @@ export default function Billable({ clientId }: BillableProps) {
     </>;
 
     const title = <>
-        Billable <Value currency={currency} value={totalAmount} type="money" />
+        Billable <Money currencyName={currencyName} value={totalAmount} />
     </>;
 
     return <Card action={action} loading={query.loading} title={title}>
