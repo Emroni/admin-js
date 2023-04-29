@@ -42,6 +42,7 @@ export const queries = `
     Time: Time
     time(id: Int!): Time
     times(filter: TimesFilter, order: String, page: Int, perPage: Int): Times
+    timesBetween(from: DateScalar!, to: DateScalar!): [Time!]!
 `;
 
 export const mutations = `

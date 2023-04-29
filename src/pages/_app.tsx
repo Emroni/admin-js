@@ -3,13 +3,14 @@ import { PageProvider } from '@/contexts/Page';
 import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { CssBaseline, ThemeProvider } from '@mui/material';
+import { BarElement, CategoryScale, Chart, Legend, LinearScale, Title, Tooltip } from 'chart.js';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import type { AppProps } from 'next/app';
 import { useEffect, useState } from 'react';
 import theme from '../theme';
 
-
+Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 dayjs.extend(utc);
 
 export default function App({ Component, pageProps }: AppProps) {

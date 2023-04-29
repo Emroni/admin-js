@@ -41,6 +41,19 @@ export const queries = {
             where: parseFilter(args.filter),
         }),
     }),
+    timesBetween: (_parent: any, args: TimesBetweenArgs) => prisma.time.findMany({
+        orderBy: [
+            {
+                date: 'asc',
+            }
+        ],
+        where: {
+            date: {
+                lte: args.to,
+                gte: args.from,
+            },
+        },
+    }),
 };
 
 export const mutations = {
