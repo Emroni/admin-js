@@ -5,7 +5,7 @@ import * as taskResolver from '../task/resolvers';
 
 export const model = {
     deletable: (parent: Client) => model.projects(parent).then(projects => !projects.length),
-    currency: (parent: Client) => model.tasks(parent).then(tasks => tasks[0]?.currency),
+    currency: (parent: Client) => model.tasks(parent).then(tasks => tasks[tasks.length - 1]?.currency),
     earnings: (parent: Client) => model.tasks(parent).then(tasks => {
         const tasksEarnings = tasks.map(task => taskResolver.model.earnings(task as unknown as Task));
         return Promise.all(tasksEarnings).then(tasksEarnings => tasksEarnings.reduce((total, taskEarnings) => total + taskEarnings, 0))

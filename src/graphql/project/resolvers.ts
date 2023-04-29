@@ -8,7 +8,7 @@ export const model = {
             id: parent.clientId,
         },
     }),
-    currency: (parent: Project) => model.tasks(parent).then(tasks => tasks[0]?.currency),
+    currency: (parent: Project) => model.tasks(parent).then(tasks => tasks[tasks.length - 1]?.currency),
     deletable: (parent: Project) => model.tasks(parent).then(tasks => !tasks.length),
     earnings: (parent: Project) => model.tasks(parent).then(tasks => {
         const tasksEarnings = tasks.map(task => taskResolver.model.earnings(task as Task));
