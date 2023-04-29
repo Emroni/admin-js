@@ -6,10 +6,13 @@ import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 
+// TODO: Fix resizing
+
 const options = {
+    aspectRatio: 3,
     plugins: {
         legend: {
-            display: false
+            display: false,
         },
     },
     responsive: true,
