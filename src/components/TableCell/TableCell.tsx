@@ -37,12 +37,10 @@ export default function TableCell({ column, row }: TableCellProps) {
         content = <Progress value={value} />;
     } else if (column.type === 'projectStatus') {
         content = <ProjectStatusChip value={value} />;
-    } else if (content === null || content === undefined) {
-        content = <span>&nbsp;</span>;
     }
 
     return <MuiTableCell align={column.align}>
-        {link ? (
+        {(content && link) ? (
             <Link component={NextLink} href={link}>
                 {content}
             </Link>

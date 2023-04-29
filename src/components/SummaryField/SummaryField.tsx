@@ -39,8 +39,6 @@ export default function SummaryField({ children, currencyName, entity, label, na
         content = <Progress value={value} />;
     } else if (type === 'projectStatus') {
         content = <ProjectStatusChip value={value} />;
-    } else if (content === null || content === undefined) {
-        content = <span>&nbsp;</span>;
     }
 
     return <TableRow>
@@ -48,7 +46,7 @@ export default function SummaryField({ children, currencyName, entity, label, na
             {label || getLabel(name)}
         </TableCell>
         <TableCell>
-            {link ? (
+            {(content && link) ? (
                 <Link component={NextLink} href={link}>
                     {content}
                 </Link>
