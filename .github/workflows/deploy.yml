@@ -49,3 +49,11 @@ jobs:
 
       - name: Upload prisma folder
         run: rsync -avz --delete prisma ${{ secrets.USERNAME }}@${{ secrets.HOST }}:${{ secrets.TARGET_DIRECTORY }}
+
+      - name: Run migrations
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: cd /var/www/adminjs.emrekoc.io && npx --yes prisma migrate deploy
