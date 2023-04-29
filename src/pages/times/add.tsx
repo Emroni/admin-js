@@ -38,8 +38,8 @@ export default function TimeAdd() {
 
     return <Form initialValues={page.query} loading={!!mutation.data || mutation.loading} title="Add Time" onSubmit={handleSubmit}>
         <Form.Field name="taskId" label="Task" options={query.data?.tasks.rows} required />
-        <Form.Field name="date" required />
-        <Form.Field name="duration" required />
+        <Form.Field name="date" required type="date" />
+        <Form.Field name="duration" required type="time" />
     </Form>;
 
 }

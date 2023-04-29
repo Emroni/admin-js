@@ -1,7 +1,7 @@
 const fields = `
     date: DateScalar!
     duration: TimeScalar!
-    invoiceId: Int!
+    invoiceId: Int
     taskId: Int!
 `;
 

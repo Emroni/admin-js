@@ -62,8 +62,8 @@ export default function TimeEdit() {
 
     return <Form initialValues={time} loading={!time || mutation.loading} title={`Edit ${time?.name}`} onSubmit={handleSubmit}>
         <Form.Field name="taskId" label="Task" options={query.data?.tasks.rows} required />
-        <Form.Field name="date" required />
-        <Form.Field name="duration" required />
+        <Form.Field name="date" required type="date" />
+        <Form.Field name="duration" required type="time" />
     </Form>;
 
 }
