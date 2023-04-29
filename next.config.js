@@ -5,7 +5,8 @@ const nextConfig = {
             transform: '@mui/icons-material/{{member}}',
         },
     },
-    reactStrictMode: true,
+    output: 'standalone',
+    swcMinify: true,
 }
 
 module.exports = nextConfig
