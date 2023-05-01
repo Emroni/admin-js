@@ -1,6 +1,6 @@
 import { Menu, Table } from '@/components';
 import { gql, useQuery } from '@apollo/client';
-import { Add } from '@mui/icons-material';
+import { Add, Circle } from '@mui/icons-material';
 import { Link, Typography } from '@mui/material';
 import NextLink from 'next/link';
 import { Fragment, useEffect, useState } from 'react';
@@ -78,7 +78,7 @@ export default function DashboardInvoices() {
                             amount: 0,
                             currency: time.currency,
                             client: time.client,
-                            id: invoices.total + index,
+                            id: -index,
                             projects: {},
                         };
                     }
@@ -114,6 +114,13 @@ export default function DashboardInvoices() {
         title="Invoices"
         getRowLink={invoice => invoice.sentDate ? `/invoices/${invoice.id}` : `/invoices/add?clientId=${invoice.client.id}`}
     >
+        <Table.Column name="type" label=" " order={false}>
+            {({ value }: TableColumnChildProps) => (
+                <Typography component="span" fontSize={12} title={value ? 'Sent' : 'Billable'}>
+                    <Circle color={value ? 'info' : 'secondary'} fontSize="inherit" />
+                </Typography>
+            )}
+        </Table.Column>
         <Table.Column name="number" order={false} />
         <Table.Column name="client.name" label="Client" getLink={invoice => `/clients/${invoice.client?.id}`} />
         <Table.Column name="projects" order={false}>
