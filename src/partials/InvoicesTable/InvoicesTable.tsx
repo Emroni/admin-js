@@ -1,9 +1,9 @@
-import { Menu, Table } from '@/components';
+import { Enumeration, Menu, Table } from '@/components';
 import { gql, useQuery } from '@apollo/client';
 import { Add } from '@mui/icons-material';
-import { Link, Typography } from '@mui/material';
+import { Link } from '@mui/material';
 import NextLink from 'next/link';
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 
 export default function InvoicesTable({ clientId, defaultPerPage = 10, projectId, taskId }: InvoicesTableProps) {
 
@@ -13,7 +13,7 @@ export default function InvoicesTable({ clientId, defaultPerPage = 10, projectId
 
     const withClient = !clientId;
     const withProjects = !projectId;
-    
+
     const query = useQuery<InvoicesQuery>(gql`query ($filter: InvoicesFilter, $order: String, $page: Int, $perPage: Int, $withClient: Boolean!, $withProjects: Boolean!) {
         invoices (filter: $filter, order: $order, page: $page, perPage: $perPage) {
             order,
@@ -53,7 +53,7 @@ export default function InvoicesTable({ clientId, defaultPerPage = 10, projectId
             withProjects,
         },
     });
-    
+
     function handleOrderChange(order: string | null) {
         const newOrder = order || 'name asc';
         setOrder(newOrder);
@@ -78,18 +78,15 @@ export default function InvoicesTable({ clientId, defaultPerPage = 10, projectId
         )}
         {withProjects && (
             <Table.Column name="projects" order={false}>
-                {({ value }: TableColumnChildProps) => value?.map((project: Project, index: number) => (
-                    <Fragment key={index}>
-                        <Link component={NextLink} href={`/projects/${project.id}`}>
-                            {project.name}
-                        </Link>
-                        {(index < value.length - 1) && (
-                            <Typography component="span" color="grey.400" display="inline-block" marginRight={0.5}>
-                                ,
-                            </Typography>
+                {({ value }: TableColumnChildProps) => (
+                    <Enumeration items={value}>
+                        {(project: Project) => (
+                            <Link component={NextLink} href={`/projects/${project.id}`}>
+                                {project.name}
+                            </Link>
                         )}
-                    </Fragment>
-                ))}
+                    </Enumeration>
+                )}
             </Table.Column>
         )}
         <Table.Column name="amount" type="money" />

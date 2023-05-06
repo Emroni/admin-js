@@ -1,9 +1,9 @@
-import { Menu, Table } from '@/components';
+import { Enumeration, Menu, Table } from '@/components';
 import { gql, useQuery } from '@apollo/client';
 import { Add, Circle } from '@mui/icons-material';
 import { Link, Typography } from '@mui/material';
 import NextLink from 'next/link';
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function DashboardInvoices() {
 
@@ -124,18 +124,15 @@ export default function DashboardInvoices() {
         <Table.Column name="number" order={false} />
         <Table.Column name="client.name" label="Client" getLink={invoice => `/clients/${invoice.client?.id}`} />
         <Table.Column name="projects" order={false}>
-            {({ value }: TableColumnChildProps) => value?.map((project: Project, index: number) => (
-                <Fragment key={index}>
-                    <Link component={NextLink} href={`/projects/${project.id}`}>
-                        {project.name}
-                    </Link>
-                    {(index < value.length - 1) && (
-                        <Typography component="span" color="grey.400" display="inline-block" marginRight={0.5}>
-                            ,
-                        </Typography>
+            {({ value }: TableColumnChildProps) => (
+                <Enumeration items={value}>
+                    {(project: Project) => (
+                        <Link component={NextLink} href={`/projects/${project.id}`}>
+                            {project.name}
+                        </Link>
                     )}
-                </Fragment>
-            ))}
+                </Enumeration>
+            )}
         </Table.Column>
         <Table.Column name="amount" order={false} type="money" />
         <Table.Column name="sentDate" align="right" order={false} />

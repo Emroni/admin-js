@@ -3,6 +3,7 @@ export { default as Card } from './Card/Card';
 export { default as Form } from './Form/Form';
 export { default as Login } from './Login/Login';
 export { default as Menu } from './Menu/Menu';
+export { default as Enumeration } from './Enumeration/Enumeration';
 export { default as Money } from './Money/Money';
 export { default as Navigation } from './Navigation/Navigation';
 export { default as Progress } from './Progress/Progress';
