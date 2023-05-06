@@ -131,7 +131,7 @@ export default function InvoiceAdd() {
         router.push(`/invoices/${result.data.invoiceCreate.id}`);
     }
 
-    return <Form dirtyCheck={false} initialValues={initialValues} loading={!initialValues || !!mutation.data || mutation.loading} title="Add Invoice" onSubmit={handleSubmit}>
+    return <Form initialValues={initialValues} loading={!initialValues || !!mutation.data || mutation.loading} title="Add Invoice" onSubmit={handleSubmit}>
         <Form.Field name="number" />
         <Form.Field name="clientId" label="Client" options={clients} required onChange={handleClientChange} />
         <Form.Field name="type" required />

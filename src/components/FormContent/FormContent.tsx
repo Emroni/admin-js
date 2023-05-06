@@ -2,7 +2,7 @@ import { Box, Button } from '@mui/material';
 import { useFormikContext } from 'formik';
 import FormField from '../FormField/FormField';
 
-export default function FormContent({ dirtyCheck = true, fields, loading }: FormContentProps) {
+export default function FormContent({ dirtyCheck, fields, loading }: FormContentProps) {
 
     const form = useFormikContext();
 

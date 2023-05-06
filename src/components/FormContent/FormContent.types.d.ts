@@ -1,5 +1,5 @@
 interface FormContentProps {
-    dirtyCheck?: boolean;
+    dirtyCheck: boolean;
     fields: FormFieldProps[];
     loading?: boolean;
 }
