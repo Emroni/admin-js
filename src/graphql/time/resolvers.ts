@@ -6,7 +6,10 @@ export const model = {
     client: (parent: Time) => model.project(parent).client(),
     deletable: () => true,
     currency: (parent: Time) => model.task(parent).then(task => task?.currency),
-    earnings: (parent: Time) => model.task(parent).then(task => task?.rate ? model.hours(parent) * task.rate : 0),
+    earnings: (parent: Time) => model.task(parent).then(task => ([{
+        amount: task?.rate ? model.hours(parent) * task.rate : 0,
+        currency: task?.currency,
+    }])),
     hours: (parent: Time) => getDurationHours(parent.duration as unknown as Date), // TODO: Is there a better way to do this?
     invoice: (parent: Invoice) => parent.invoiceId ? prisma.invoice.findUnique({
         where: {

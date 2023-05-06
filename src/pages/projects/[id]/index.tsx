@@ -16,7 +16,6 @@ export default function ProjectView() {
         project(id: $id) {
             currency
             deletable
-            earnings
             estimatedDuration
             id
             name
@@ -26,6 +25,10 @@ export default function ProjectView() {
             client {
                 id
                 name
+            }
+            earnings {
+                amount
+                currency
             }
         }
     }`, {
@@ -74,7 +77,7 @@ export default function ProjectView() {
             <Summary.Field name="status" type="projectStatus" />
             <Summary.Field name="name" />
             <Summary.Field name="client.name" label="Client" getLink={`/clients/${project?.client.id}`} />
-            <Summary.Field name="earnings" currencyName={project?.currency} type="money" />
+            <Summary.Field name="earnings" type="moneyEnumeration" />
             <Summary.Field name="estimatedDuration" />
             <Summary.Field name="workedDuration" />
             <Summary.Field name="progress" type="progress" />

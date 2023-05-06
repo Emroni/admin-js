@@ -23,11 +23,14 @@ export default function TimesTable({ clientId, defaultPerPage = 10, invoiceId, p
                 id
                 date
                 duration
-                earnings
                 currency
                 client @include(if: $withClient) {
                     id
                     name
+                }
+                earnings {
+                    amount
+                    currency
                 }
                 invoice @include(if: $withInvoice) {
                     id
@@ -94,7 +97,7 @@ export default function TimesTable({ clientId, defaultPerPage = 10, invoiceId, p
         )}
         <Table.Column name="date" align="right" />
         <Table.Column name="duration" align="right"/>
-        <Table.Column name="earnings" order={false} type="money" />
+        <Table.Column name="earnings" type="moneyEnumeration" order={false} />
     </Table>;
 
 }

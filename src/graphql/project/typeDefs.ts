@@ -9,7 +9,7 @@ export const types = `
         client: Client!
         currency: String
         deletable: Boolean!
-        earnings: Float!
+        earnings: [Money!]!
         estimatedDuration: String!
         estimatedHours: Float!
         id: Int!

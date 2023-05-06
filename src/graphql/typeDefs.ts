@@ -34,4 +34,9 @@ export const typeDefs = `
         ${task.mutations}
         ${time.mutations}
     }
+
+    type Money {
+        amount: Float!
+        currency: String!
+    }
 `;

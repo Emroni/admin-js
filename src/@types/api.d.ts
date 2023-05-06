@@ -28,3 +28,8 @@ interface EntityPropertyOption {
     name?: string;
     value?: number | string;
 }
+
+interface Money {
+    amount: number;
+    currency: CurrencyName;
+}

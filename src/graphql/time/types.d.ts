@@ -1,7 +1,7 @@
 interface Time extends Entity, TimeFields {
     client: Client;
     currency: CurrencyName;
-    earnings: number;
+    earnings: Money[];
     hours: number;
     project: Project;
     task: Task;

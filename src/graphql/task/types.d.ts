@@ -1,6 +1,6 @@
 interface Task extends Entity, TaskFields {
     client: Client;
-    earnings: number;
+    earnings: Money[];
     estimatedDuration: string;
     progress: number;
     project: Project;

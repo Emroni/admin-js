@@ -1,4 +1,4 @@
 interface MoneyProps {
+    amount?: number;
     currencyName?: CurrencyName;
-    value?: number;
 }

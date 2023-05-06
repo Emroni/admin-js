@@ -2,7 +2,7 @@ import { CURRENCIES } from '@/constants';
 import { Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-export default function Money({ currencyName, value }: MoneyProps) {
+export default function Money({ amount, currencyName }: MoneyProps) {
 
     const [base, setBase] = useState('0');
     const [cents, setCents] = useState('0');
@@ -15,16 +15,16 @@ export default function Money({ currencyName, value }: MoneyProps) {
         setCurrency(newCurrency);
 
         // Get color
-        const newColor = value ? undefined : 'grey.400';
+        const newColor = amount ? undefined : 'grey.400';
         setColor(newColor);
 
-        // Parse value
-        const amount = (value || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).split('.');
-        setBase(amount[0]);
-        setCents(amount[1]);
+        // Parse amount
+        const value = (amount || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).split('.');
+        setBase(value[0]);
+        setCents(value[1]);
     }, [
+        amount,
         currencyName,
-        value,
     ]);
 
     return <>

@@ -4,6 +4,7 @@ import NextLink from 'next/link';
 import { useEffect, useState } from 'react';
 import BooleanChip from '../BooleanChip/BooleanChip';
 import Money from '../Money/Money';
+import MoneyEnumeration from '../MoneyEnumeration/MoneyEnumeration';
 import Progress from '../Progress/Progress';
 import ProjectStatusChip from '../ProjectStatusChip/ProjectStatusChip';
 
@@ -32,7 +33,9 @@ export default function TableCell({ column, row }: TableCellProps) {
     } else if (column.type === 'boolean') {
         content = <BooleanChip value={value} />;
     } else if (column.type === 'money') {
-        content = <Money currencyName={row.currency} value={value} />;
+        content = <Money amount={value} currencyName={row.currency} />;
+    } else if (column.type === 'moneyEnumeration') {
+        content = <MoneyEnumeration items={value} />;
     } else if (column.type === 'progress') {
         content = <Progress value={value} />;
     } else if (column.type === 'projectStatus') {

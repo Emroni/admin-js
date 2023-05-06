@@ -1,3 +1,0 @@
-interface InvoicedEnumerationProps {
-    invoices?: Invoice[];
-}

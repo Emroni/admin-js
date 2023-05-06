@@ -16,7 +16,6 @@ export default function TaskView() {
         task(id: $id) {
             currency
             deletable
-            earnings
             estimatedDuration
             id
             name
@@ -28,6 +27,10 @@ export default function TaskView() {
             client {
                 id
                 name
+            }
+            earnings {
+                amount
+                currency
             }
             project {
                 id
@@ -82,7 +85,7 @@ export default function TaskView() {
             <Summary.Field name="project.name" label="Project" getLink={`/projects/${task?.project.id}`} />
             <Summary.Field name="price" currencyName={task?.currency} type="money" />
             <Summary.Field name="rate" currencyName={task?.currency} type="money" />
-            <Summary.Field name="earnings" currencyName={task?.currency} type="money" />
+            <Summary.Field name="earnings" type="moneyEnumeration" />
             <Summary.Field name="estimatedDuration" />
             <Summary.Field name="workedDuration" />
             <Summary.Field name="progress" type="progress" />

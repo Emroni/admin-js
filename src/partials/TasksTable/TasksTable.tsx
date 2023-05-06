@@ -19,7 +19,6 @@ export default function TasksTable({ clientId, defaultPerPage = 10, invoiceId, p
             perPage,
             rows {
                 currency
-                earnings
                 estimatedDuration
                 id
                 name
@@ -31,6 +30,10 @@ export default function TasksTable({ clientId, defaultPerPage = 10, invoiceId, p
                 client @include(if: $withClient) {
                     id
                     name
+                }
+                earnings {
+                    amount
+                    currency
                 }
                 project @include(if: $withProject) {
                     id
@@ -81,7 +84,7 @@ export default function TasksTable({ clientId, defaultPerPage = 10, invoiceId, p
         )}
         <Table.Column name="price" type="money" />
         <Table.Column name="rate" type="money" />
-        <Table.Column name="earnings" order={false} type="money" />
+        <Table.Column name="earnings" order={false} type="moneyEnumeration" />
         <Table.Column name="estimatedDuration" order={false} align="right" />
         <Table.Column name="workedDuration" order={false} align="right" />
         <Table.Column name="progress" order={false} type="progress" />

@@ -1,4 +1,4 @@
-import { getDurationMinutes, getHoursDuration, parseFilterIds,  parseOrder } from '@/helpers';
+import { getDurationMinutes, getHoursDuration, parseFilterIds, parseOrder } from '@/helpers';
 import { Task } from '@prisma/client';
 import dayjs from 'dayjs';
 import { prisma } from '../';
@@ -6,7 +6,10 @@ import { prisma } from '../';
 export const model = {
     client: (parent: Task) => model.project(parent).client(),
     deletable: (parent: Task) => model.times(parent).then(times => !times.length),
-    earnings: (parent: Task) => parent.price || model.workedHours(parent).then(workedHours => workedHours * parent.rate),
+    earnings: async (parent: Task) => ([{
+        amount: parent.price || (await model.workedHours(parent).then(workedHours => workedHours * parent.rate)),
+        currency: parent.currency,
+    }]),
     invoices: (parent: Task) => model.times(parent).then(times => {
         return prisma.invoice.findMany({
             orderBy: parseOrder('id desc'),

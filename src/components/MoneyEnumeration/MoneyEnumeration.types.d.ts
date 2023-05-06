@@ -1,0 +1,3 @@
+interface MoneyEnumerationProps {
+    items: Money[];
+}

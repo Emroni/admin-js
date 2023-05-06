@@ -18,7 +18,6 @@ export default function ProjectsTable({ clientId, defaultPerPage = 10, invoiceId
             perPage,
             rows {
                 currency
-                earnings
                 estimatedDuration
                 id
                 name
@@ -28,6 +27,10 @@ export default function ProjectsTable({ clientId, defaultPerPage = 10, invoiceId
                 client @include(if: $withClient) {
                     id
                     name
+                }
+                earnings {
+                    amount
+                    currency
                 }
             }
             total
@@ -68,7 +71,7 @@ export default function ProjectsTable({ clientId, defaultPerPage = 10, invoiceId
         {withClient && (
             <Table.Column name="client.name" label="Client" getLink={project => `/clients/${project.client?.id}`} />
         )}
-        <Table.Column name="earnings" align="right" order={false} type="money" />
+        <Table.Column name="earnings" type="moneyEnumeration" order={false} />
         <Table.Column name="estimatedDuration" align="right" order={false} />
         <Table.Column name="workedDuration" align="right" order={false} />
         <Table.Column name="progress" order={false} type="progress" />

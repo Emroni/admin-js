@@ -8,6 +8,7 @@ export const types = `
     type Client {
         currency: String
         deletable: Boolean!
+        earnings: [Money!]!
         estimatedDuration: String!
         estimatedHours: Float!
         id: Int!

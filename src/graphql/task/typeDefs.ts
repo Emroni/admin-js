@@ -12,7 +12,7 @@ export const types = `
     type Task {
         client: Client!
         deletable: Boolean!
-        earnings: Float!
+        earnings: [Money!]!
         estimatedDuration: String!
         id: Int!
         invoices: [Invoice!]!

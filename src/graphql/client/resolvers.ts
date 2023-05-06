@@ -1,9 +1,27 @@
 import { getDurationMinutes, getHoursDuration, parseOrder } from '@/helpers';
 import { prisma } from '../';
+import * as taskResolver from '../task/resolvers';
 
 export const model = {
     deletable: (parent: Client) => model.projects(parent).then(projects => !projects.length),
     currency: (parent: Client) => model.tasks(parent).then(tasks => tasks[tasks.length - 1]?.currency),
+    earnings: (parent: Client) => model.tasks(parent).then(tasks => {
+        // TODO: Is there a better way to do this?
+        const tasksEarnings = tasks.map(task => taskResolver.model.earnings(task as Task));
+        return Promise.all(tasksEarnings).then(tasksEarnings => {
+            const map: Map<string, number> = new Map();
+            tasksEarnings.forEach(taskEarnings => {
+                taskEarnings.forEach(taskEarning => {
+                    const amount = (map.get(taskEarning.currency) || 0) + taskEarning.amount;
+                    map.set(taskEarning.currency, amount);
+                });
+            });
+            return Array.from(map).map(([currency, amount]) => ({
+                amount,
+                currency,
+            }));
+        })
+    }),
     estimatedDuration: (parent: Client) => model.estimatedHours(parent).then(getHoursDuration),
     estimatedHours: (parent: Client) => model.tasks(parent).then(tasks => {
         if (tasks.some(task => !task.estimatedHours)) {
