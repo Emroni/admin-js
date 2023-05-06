@@ -36,7 +36,7 @@ export const types = `
 
     input ProjectsFilter {
         invoiceId: Int
-        ${fields.replace(/\!/g, '')}
+        ${fields.replace(/!/g, '')}
     }
 `;
 

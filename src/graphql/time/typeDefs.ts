@@ -34,7 +34,7 @@ export const types = `
     input TimesFilter {
         clientId: Int
         projectId: Int
-        ${fields.replace(/\!/g, '')}
+        ${fields.replace(/!/g, '')}
     }
 `;
 
