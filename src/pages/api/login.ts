@@ -4,7 +4,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     // Parse body
-    const { password, username } = JSON.parse(req.body);
+    const { password, username } = req.body;
 
     // Check values
     const usernameVerified = username === process.env.AUTH_USERNAME;

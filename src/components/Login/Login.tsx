@@ -20,6 +20,10 @@ export default function Login({ onAuthenticated }: LoginProps) {
                 password,
                 username,
             }),
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
             method: 'post',
         })
             .then(response => response.json())
