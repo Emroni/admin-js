@@ -1,9 +1,5 @@
 interface EnumerationProps {
-    children: ReactComponentElement<EnumerationChildProps>?;
+    children: ReactComponentElement;
     items: any[];
     list?: boolean;
-}
-
-interface EnumerationChildProps {
-    item: any;
 }

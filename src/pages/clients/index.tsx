@@ -1,4 +1,4 @@
-import { Menu, Table } from '@/components';
+import { InvoicedEnumeration, Menu, Table } from '@/components';
 import { gql, useQuery } from '@apollo/client';
 import { Add } from '@mui/icons-material';
 import { useState } from 'react';
@@ -16,12 +16,15 @@ export default function Clients() {
             perPage,
             rows {
                 currency
-                earnings
                 estimatedDuration
                 id
                 name
                 progress
                 workedDuration
+                invoices {
+                    amount
+                    currency
+                }
                 projects {
                     id
                 }
@@ -56,7 +59,11 @@ export default function Clients() {
     >
         <Table.Column name="name" />
         <Table.Column name="projects.length" label="Projects" align="right" />
-        <Table.Column name="earnings" align="right" order={false} type="money" />
+        <Table.Column name="invoices" label="Invoiced" order={false} align="right">
+            {({ value }: TableColumnChildProps) => (
+                <InvoicedEnumeration invoices={value} />
+            )}
+        </Table.Column>
         <Table.Column name="estimatedDuration" order={false} align="right" />
         <Table.Column name="workedDuration" order={false} align="right" />
         <Table.Column name="progress" order={false} type="progress" />

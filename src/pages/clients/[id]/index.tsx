@@ -1,4 +1,4 @@
-import { Billable, Menu, Summary } from '@/components';
+import { Billable, InvoicedEnumeration, Menu, Summary } from '@/components';
 import { usePage } from '@/contexts/Page/Page';
 import { InvoicesTable, ProjectsTable, TasksTable, TimesTable } from '@/partials';
 import { gql, useMutation, useQuery } from '@apollo/client';
@@ -17,13 +17,16 @@ export default function ClientView() {
             address
             currency
             deletable
-            earnings
             email
             estimatedDuration
             id
             name
             progress
             workedDuration
+            invoices {
+                amount
+                currency
+            }
         }
     }`, {
         variables: {
@@ -71,7 +74,11 @@ export default function ClientView() {
             <Summary.Field name="name" />
             <Summary.Field name="email" getLink={`mailto:${client?.email}`} />
             <Summary.Field name="address" />
-            <Summary.Field name="earnings" currencyName={client?.currency} type="money" />
+            <Summary.Field name="invoices" label="Invoiced">
+                {({ value }: TableColumnChildProps) => (
+                    <InvoicedEnumeration invoices={value} />
+                )}
+            </Summary.Field>
             <Summary.Field name="estimatedDuration" />
             <Summary.Field name="workedDuration" />
             <Summary.Field name="progress" type="progress" />
