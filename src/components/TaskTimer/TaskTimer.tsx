@@ -1,4 +1,4 @@
-import { usePage } from '@/contexts/Page';
+import { usePage } from '@/contexts/Page/Page';
 import { gql, useMutation } from '@apollo/client';
 import { PlayArrow, Stop } from '@mui/icons-material';
 import { IconButton, Typography } from '@mui/material';

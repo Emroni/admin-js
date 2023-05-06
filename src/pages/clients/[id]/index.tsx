@@ -1,5 +1,5 @@
 import { Billable, Menu, Summary } from '@/components';
-import { usePage } from '@/contexts/Page';
+import { usePage } from '@/contexts/Page/Page';
 import { InvoicesTable, ProjectsTable, TasksTable, TimesTable } from '@/partials';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { Delete, Edit } from '@mui/icons-material';

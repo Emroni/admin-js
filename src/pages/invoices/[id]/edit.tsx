@@ -1,6 +1,6 @@
 import { Form, Money } from '@/components';
 import { CURRENCIES } from '@/constants';
-import { usePage } from '@/contexts/Page';
+import { usePage } from '@/contexts/Page/Page';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { useRouter } from 'next/router';

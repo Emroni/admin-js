@@ -1,5 +1,5 @@
 import { Login } from '@/components';
-import { PageProvider } from '@/contexts/Page';
+import { PageProvider } from '@/contexts/Page/Page';
 import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { CssBaseline, ThemeProvider } from '@mui/material';

@@ -1,5 +1,5 @@
 import { Menu, Summary } from '@/components';
-import { usePage } from '@/contexts/Page';
+import { usePage } from '@/contexts/Page/Page';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { Delete, Edit } from '@mui/icons-material';
 import { useRouter } from 'next/router';

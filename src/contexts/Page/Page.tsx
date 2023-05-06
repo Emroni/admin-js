@@ -19,12 +19,14 @@ export function PageProvider({ children }: PageProps) {
 
     useEffect(() => {
         // Get query
-        const newQuery: IndexedObject = {
-            ...router.query,
-        };
-        if (router.query.id !== undefined) {
-            newQuery.id = parseInt(router.query.id as string);
-        }
+        const newQuery: IndexedObject = {};
+        Object.entries(router.query).forEach(([key, value]) => {
+            let val: any = value;
+            if (typeof value === 'string') {
+                val = parseInt(value);
+            }
+            newQuery[key] = val;
+        });
         setQuery(newQuery);
 
         // Get category
