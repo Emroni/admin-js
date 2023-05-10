@@ -1,7 +1,8 @@
 import { Login } from '@/components';
 import { PageProvider } from '@/contexts/Page/Page';
-import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache } from '@apollo/client';
+import { ApolloClient, ApolloProvider, createHttpLink, from, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import { onError } from '@apollo/client/link/error';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { BarElement, CategoryScale, Chart, Legend, LinearScale, Title, Tooltip } from 'chart.js';
 import dayjs from 'dayjs';
@@ -40,6 +41,11 @@ export default function App({ Component, pageProps }: AppProps) {
             };
         });
 
+        // Get error link
+        const errorLink = onError(({ graphQLErrors }) => {
+            graphQLErrors?.forEach(error => console.error(error.message));
+        });
+
         // Get http link
         const httpLink = createHttpLink({
             uri: '/api/graphql',
@@ -48,7 +54,7 @@ export default function App({ Component, pageProps }: AppProps) {
         // Get client
         const newCient = new ApolloClient({
             cache: new InMemoryCache(),
-            link: authLink.concat(httpLink),
+            link: from([authLink, errorLink, httpLink]),
         });
         setClient(newCient);
     }, []);
