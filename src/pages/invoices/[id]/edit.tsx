@@ -1,4 +1,4 @@
-import { Form, Money } from '@/components';
+import { Form, MoneyEnumeration } from '@/components';
 import { CURRENCIES } from '@/constants';
 import { usePage } from '@/contexts/Page/Page';
 import { gql, useMutation, useQuery } from '@apollo/client';
@@ -131,7 +131,7 @@ export default function InvoiceEdit() {
                                         {time.duration}
                                     </TableCell>
                                     <TableCell align="right">
-                                        <Money currencyName={time.currency} value={time.earnings} />
+                                        <MoneyEnumeration items={time.earnings} />
                                     </TableCell>
                                 </TableRow>
                             ))}
