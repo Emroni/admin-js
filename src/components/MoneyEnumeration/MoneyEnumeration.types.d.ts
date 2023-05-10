@@ -1,3 +1,4 @@
 interface MoneyEnumerationProps {
-    items: Money[];
+    items?: Money[];
+    list?: boolean;
 }

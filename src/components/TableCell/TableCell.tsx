@@ -34,7 +34,7 @@ export default function TableCell({ column, row }: TableCellProps) {
     } else if (column.type === 'money') {
         content = <Money amount={value} currencyName={row.currency} />;
     } else if (column.type === 'moneyEnumeration') {
-        content = <MoneyEnumeration items={value} />;
+        content = <MoneyEnumeration items={value} list />;
     } else if (column.type === 'progress') {
         content = <Progress value={value} />;
     }
