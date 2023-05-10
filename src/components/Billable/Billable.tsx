@@ -1,4 +1,4 @@
-import { Card, Money } from '@/components';
+import { Card, MoneyEnumeration } from '@/components';
 import { getMinutesDuration, getUnique } from '@/helpers';
 import { gql, useQuery } from '@apollo/client';
 import { AccessTime, AccessTimeFilled } from '@mui/icons-material';
@@ -9,10 +9,9 @@ import { useEffect, useState } from 'react';
 export default function Billable({ clientId }: BillableProps) {
 
     const [columns, setColumns] = useState<BillableColumn[]>([]);
-    const [currencyName, setCurrencyName] = useState<CurrencyName | undefined>(undefined);
     const [rows, setRows] = useState<BillableRow[]>([]);
     const [showHours, setShowHours] = useState(false);
-    const [totalAmount, setTotalAmount] = useState<number>(0);
+    const [totalEarnings, setTotalEarnings] = useState<Money[]>([]);
     const [totalMinutes, setTotalMinutes] = useState<number>(0);
 
     const query = useQuery<TimesQuery>(gql`query($clientId: Int!) {
@@ -21,8 +20,11 @@ export default function Billable({ clientId }: BillableProps) {
                 currency
                 date
                 duration
-                earnings
                 id
+                earnings {
+                    amount
+                    currency
+                }
                 project {
                     id
                     name
@@ -46,9 +48,7 @@ export default function Billable({ clientId }: BillableProps) {
         const times = query.data?.times.rows.filter(time => time.project.status === 'in_progress');
 
         if (times?.length) {
-            // Get currency name
-            const newCurrencyName = times[0].currency;
-            setCurrencyName(newCurrencyName);
+            const newTotalEarningsMap: Map<CurrencyName, number> = new Map();
 
             // Parse dates
             const dates = times.map(time => time.date);
@@ -93,6 +93,12 @@ export default function Billable({ clientId }: BillableProps) {
                 column.minutes += min;
                 row.total.minutes += min;
                 value.minutes += min;
+
+                // Add to total earnings
+                time.earnings.forEach(earning => {
+                    const amount = (newTotalEarningsMap.get(earning.currency) || 0) + earning.amount;
+                    newTotalEarningsMap.set(earning.currency, amount);
+                });
             });
             newRows.sort((a, b) => a.label < b.label ? -1 : 1);
 
@@ -100,9 +106,12 @@ export default function Billable({ clientId }: BillableProps) {
             setColumns(newColumns);
             setRows(newRows);
 
-            // Get total amount
-            const newTotalAmount = times.reduce((total, time) => total + time.earnings, 0);
-            setTotalAmount(newTotalAmount);
+            // Get total earnings
+            const newTotalEarnings = Array.from(newTotalEarningsMap).map(([currency, amount]) => ({
+                amount,
+                currency,
+            }));
+            setTotalEarnings(newTotalEarnings);
 
             // Get total minutes
             const newTotalMinutes = newColumns.reduce((total, column) => total + column.minutes, 0);
@@ -130,7 +139,7 @@ export default function Billable({ clientId }: BillableProps) {
     </>;
 
     const title = <>
-        Billable <Money currencyName={currencyName} value={totalAmount} />
+        Billable <MoneyEnumeration items={totalEarnings} />
     </>;
 
     return <Card action={action} loading={query.loading} title={title}>
