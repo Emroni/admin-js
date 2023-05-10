@@ -1,6 +1,6 @@
 import { Menu, Summary } from '@/components';
 import { usePage } from '@/contexts/Page/Page';
-import { InvoicesTable, TasksTable, TimesTable } from '@/partials';
+import { InvoicesTable, ProjectStatusChip, TasksTable, TimesTable } from '@/partials';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { Delete, Edit } from '@mui/icons-material';
 import { useRouter } from 'next/router';
@@ -74,7 +74,11 @@ export default function ProjectView() {
 
     return <>
         <Summary action={action} entity={project} loading={mutation.loading}>
-            <Summary.Field name="status" type="projectStatus" />
+            <Summary.Field name="status">
+                {({ value }: SummaryFieldChildProps) => (
+                    <ProjectStatusChip value={value} />
+                )}
+            </Summary.Field>
             <Summary.Field name="name" />
             <Summary.Field name="client.name" label="Client" getLink={`/clients/${project?.client.id}`} />
             <Summary.Field name="earnings" type="moneyEnumeration" />

@@ -6,7 +6,6 @@ import BooleanChip from '../BooleanChip/BooleanChip';
 import Money from '../Money/Money';
 import MoneyEnumeration from '../MoneyEnumeration/MoneyEnumeration';
 import Progress from '../Progress/Progress';
-import ProjectStatusChip from '../ProjectStatusChip/ProjectStatusChip';
 
 export default function TableCell({ column, row }: TableCellProps) {
 
@@ -38,8 +37,6 @@ export default function TableCell({ column, row }: TableCellProps) {
         content = <MoneyEnumeration items={value} />;
     } else if (column.type === 'progress') {
         content = <Progress value={value} />;
-    } else if (column.type === 'projectStatus') {
-        content = <ProjectStatusChip value={value} />;
     }
 
     return <MuiTableCell align={column.align}>

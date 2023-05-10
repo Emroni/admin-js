@@ -1,4 +1,4 @@
-type ValueType = 'boolean' | 'money' | 'moneyEnumeration' | 'progress' | 'projectStatus' | 'text';
+type ValueType = 'boolean' | 'money' | 'moneyEnumeration' | 'progress' | 'text';
 
 interface DateInterval {
     days: number;

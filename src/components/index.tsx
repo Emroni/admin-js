@@ -8,7 +8,6 @@ export { default as Money } from './Money/Money';
 export { default as MoneyEnumeration } from './MoneyEnumeration/MoneyEnumeration';
 export { default as Navigation } from './Navigation/Navigation';
 export { default as Progress } from './Progress/Progress';
-export { default as ProjectStatusChip } from './ProjectStatusChip/ProjectStatusChip';
 export { default as Summary } from './Summary/Summary';
 export { default as Table } from './Table/Table';
 export { default as TaskTimer } from './TaskTimer/TaskTimer';

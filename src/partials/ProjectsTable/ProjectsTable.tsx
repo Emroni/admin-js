@@ -2,6 +2,7 @@ import { Menu, Table } from '@/components';
 import { gql, useQuery } from '@apollo/client';
 import { Add } from '@mui/icons-material';
 import { useState } from 'react';
+import ProjectStatusChip from '../ProjectStatusChip/ProjectStatusChip';
 
 export default function ProjectsTable({ clientId, defaultPerPage = 10, invoiceId }: ProjectsTableProps) {
 
@@ -66,7 +67,11 @@ export default function ProjectsTable({ clientId, defaultPerPage = 10, invoiceId
         onPageChange={setPage}
         onPerPageChange={setPerPage}
     >
-        <Table.Column name="status" type="projectStatus" />
+        <Table.Column name="status">
+            {({ value }: TableColumnChildProps) => (
+                <ProjectStatusChip value={value} />
+            )}
+        </Table.Column >
         <Table.Column name="name" />
         {withClient && (
             <Table.Column name="client.name" label="Client" getLink={project => `/clients/${project.client?.id}`} />

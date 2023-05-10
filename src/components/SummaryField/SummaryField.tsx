@@ -6,7 +6,6 @@ import BooleanChip from '../BooleanChip/BooleanChip';
 import Money from '../Money/Money';
 import MoneyEnumeration from '../MoneyEnumeration/MoneyEnumeration';
 import Progress from '../Progress/Progress';
-import ProjectStatusChip from '../ProjectStatusChip/ProjectStatusChip';
 
 export default function SummaryField({ children, currencyName, entity, label, name, options, type, getLink }: SummaryFieldProps) {
 
@@ -40,8 +39,6 @@ export default function SummaryField({ children, currencyName, entity, label, na
         content = <MoneyEnumeration items={value} />;
     } else if (type === 'progress') {
         content = <Progress value={value} />;
-    } else if (type === 'projectStatus') {
-        content = <ProjectStatusChip value={value} />;
     }
 
     return <TableRow>

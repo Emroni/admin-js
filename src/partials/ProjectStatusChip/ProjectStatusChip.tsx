@@ -2,7 +2,6 @@ import { PROJECT_STATUS } from '@/constants';
 import { Chip } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-
 export default function ProjectStatusChip({ value }:ProjectStatusChipProps) {
 
     const [color, setColor] = useState<any>(undefined);
