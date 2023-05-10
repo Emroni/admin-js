@@ -39,11 +39,14 @@ export default function DashboardInvoices() {
                 currency
                 date
                 duration
-                earnings
                 id
                 client {
                     id
                     name
+                }
+                earnings {
+                    amount
+                    currency
                 }
                 project {
                     id
@@ -68,33 +71,37 @@ export default function DashboardInvoices() {
             };
 
             // Parse times into billables
-            const billables: IndexedObject = {};
+            const billables: Map<string, DashboardInvoicesBillable> = new Map();
             times.rows.forEach((time, index) => {
                 if (time.project.status === 'in_progress') {
-                    // Add client
-                    let billable = billables[time.client.id];
-                    if (!billable) {
-                        billable = billables[time.client.id] = {
-                            amount: 0,
-                            currency: time.currency,
-                            client: time.client,
-                            id: -index,
-                            projects: {},
-                        };
-                    }
+                    time.earnings.forEach(earning => {
+                        // Add billable
+                        const id = `${time.client.id}-${earning.currency}`;
+                        let billable = billables.get(id);
+                        if (!billable) {
+                            billable = {
+                                amount: 0,
+                                client: time.client,
+                                currency: time.currency,
+                                id: -index,
+                                projects: new Map<number, Project>(),
+                            };
+                            billables.set(id, billable);
+                        }
 
-                    // Parse data
-                    billable.projects[time.project.id] = time.project;
-                    billable.amount += time.earnings;
+                        // Parse data
+                        billable.projects.set(time.project.id, time.project);
+                        billable.amount += earning.amount;
+                    });
                 }
             });
 
             // Merge billables into data
-            Object.values(billables).forEach(billable => {
+            billables.forEach(billable => {
                 newData.rows.push({
                     ...billable,
-                    projects: Object.values(billable.projects).sort((a: any, b: any) => a.name < b.name ? -1 : 1),
-                });
+                    projects: Array.from(billable.projects.values()).sort((a: any, b: any) => a.name < b.name ? -1 : 1),
+                } as any);
                 newData.total++;
             });
 
