@@ -119,7 +119,7 @@ export default function DashboardInvoices() {
         action={action}
         data={data}
         title="Invoices"
-        getRowLink={invoice => invoice.sentDate ? `/invoices/${invoice.id}` : `/invoices/add?clientId=${invoice.client.id}`}
+        getRowLink={invoice => invoice.sentDate ? `/invoices/${invoice.id}` : `/invoices/add?clientId=${invoice.client.id}&currency=${invoice.currency}`}
     >
         <Table.Column name="type" label=" " order={false}>
             {({ value }: TableColumnChildProps) => (

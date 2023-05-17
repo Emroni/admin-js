@@ -23,7 +23,10 @@ export function PageProvider({ children }: PageProps) {
         Object.entries(router.query).forEach(([key, value]) => {
             let val: any = value;
             if (typeof value === 'string') {
-                val = parseInt(value);
+                const num = parseInt(value);
+                if (!isNaN(num)) {
+                    val = num;
+                }
             }
             newQuery[key] = val;
         });

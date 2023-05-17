@@ -1,18 +1,19 @@
-import { Form, Money } from '@/components';
+import { Form, MoneyEnumeration } from '@/components';
 import { CURRENCIES } from '@/constants';
 import { usePage } from '@/contexts/Page/Page';
 import { getSorted, getUnique } from '@/helpers';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { Checkbox, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import dayjs from 'dayjs';
-import { FormikContextType } from 'formik';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 export default function InvoiceAdd() {
 
     const [clients, setClients] = useState<Client[]>([]);
+    const [currencies, setCurrencies] = useState<Currency[]>([]);
     const [initialValues, setInitialValues] = useState<IndexedObject>({});
+    const [times, setTimes] = useState<Time[]>([]);
     const router = useRouter();
     const page = usePage();
 
@@ -28,11 +29,14 @@ export default function InvoiceAdd() {
                 currency
                 date
                 duration
-                earnings
                 id
                 client {
                     id
                     name
+                }
+                earnings {
+                    amount
+                    currency
                 }
                 project {
                     name
@@ -65,19 +69,13 @@ export default function InvoiceAdd() {
             const newClients = getSorted(uniqueClients, 'name');
             setClients(newClients);
 
-            // Get client times
-            const clientTimes = query.data.times.rows.filter(time => time.client.id === page.query.clientId);
-
             // Get initial values
             const prevInvoice = query.data.invoices.rows[0];
-            const newInitialValues = {
-                amount: clientTimes.reduce((total, time) => total + time.earnings, 0),
-                currency: getUnique(clientTimes.map(row => row.currency))[0] || null,
+            const newInitialValues: IndexedObject = {
+                clientId: page.query.clientId,
                 number: prevInvoice.number ? `${prevInvoice.number.slice(0, 3)}${parseInt(prevInvoice.number.slice(3)) + 1}` : undefined,
                 sentDate: dayjs.utc().format('YYYY-MM-DD'),
-                times: clientTimes.map(time => time.id),
                 type: prevInvoice.type,
-                ...page.query,
             };
             setInitialValues(newInitialValues);
         }
@@ -86,39 +84,106 @@ export default function InvoiceAdd() {
         query.data,
     ]);
 
-    function handleClientChange(clientId: any, form: FormikContextType<IndexedObject>) {
-        if (query.data) {
-            // Get client times
-            const clientTimes = query.data.times.rows.filter(time => time.client.id === clientId);
+    useEffect(() => {
+        if (query.data && initialValues.clientId && !initialValues.currency) {
+            // Get currency
+            const clientTimes = query.data.times.rows.filter(time => time.client.id === initialValues.clientId) || [];
+            const currencyNames = getUnique(clientTimes.map(row => row.currency));
 
-            // Set times
-            const times: any[] = clientTimes.map(time => time.id);
-            form.setFieldValue('times', times);
-            handleTimesChange(times, form);
+            // Get currencies
+            const newCurrencies = CURRENCIES.filter(currency => currencyNames.includes(currency.name));
+            setCurrencies(newCurrencies);
 
-            // Set currency
-            const currency = getUnique(clientTimes.map(row => row.currency))[0] || null;
-            form.setFieldValue('currency', currency);
+            // Update initial values
+            const newInitialValues = {
+                ...initialValues,
+                currency: page.query.currency || currencyNames[0] || null,
+            };
+            setInitialValues(newInitialValues);
+        }
+    }, [
+        initialValues,
+        page.query,
+        query.data,
+    ]);
+
+    useEffect(() => {
+        if (query.data && initialValues.currency && !initialValues.times) {
+            // Get times
+            const newTimes = query.data.times.rows.filter(time => time.client.id === initialValues.clientId && time.currency === initialValues.currency);
+            setTimes(newTimes);
+
+            // Update initial values
+            const newInitialValues = {
+                ...initialValues,
+                times: newTimes.map(time => time.id),
+            };
+            setInitialValues(newInitialValues);
+        }
+    }, [
+        initialValues,
+        query.data,
+    ]);
+
+    useEffect(() => {
+        if (query.data && initialValues.times && initialValues.amount === undefined) {
+            // Update initial values
+            const newInitialValues = {
+                ...initialValues,
+                amount: times.filter(time => initialValues.times.includes(time.id)).reduce((total, time) => total + time.earnings[0].amount, 0),
+            };
+            setInitialValues(newInitialValues);
+        }
+    }, [
+        initialValues,
+        query.data,
+        times,
+    ]);
+
+    function handleChange(values: IndexedObject) {
+        // Prepare initial values
+        const newInitialValues = {
+            ...values,
+        };
+        
+        // Check for update
+        let update = true;
+        if (initialValues.clientId !== values.clientId) {
+            delete newInitialValues.amount;
+            delete newInitialValues.currency;
+            delete newInitialValues.times;
+        } else if (initialValues.currency !== values.currency) {
+            delete newInitialValues.amount;
+            delete newInitialValues.times;
+        } else if (initialValues.times !== values.times) {
+            delete newInitialValues.amount;
+        } else {
+            update = false;
+        }
+
+        // Update initial values
+        if (update) {
+            setInitialValues(newInitialValues);
         }
     }
 
-    function handleTimeClick(time: Time, form: FormikContextType<IndexedObject>) {
+    function handleTimeClick(time: Time) {
         // Add or remove time from times
-        const times = form.values.times.slice();
-        const timeIndex = form.values.times.indexOf(time.id);
+        const times = initialValues.times?.slice() || [];
+        const timeIndex = times.indexOf(time.id);
         if (timeIndex === -1) {
             times.push(time.id);
         } else {
             times.splice(timeIndex, 1);
         }
-        form.setFieldValue('times', times);
-        handleTimesChange(times, form);
-    }
 
-    function handleTimesChange(times: any, form: FormikContextType<IndexedObject>) {
-        // Set amount
-        const amount = query.data?.times.rows.filter(time => times.includes(time.id)).reduce((total, time) => total + time.earnings, 0);
-        form.setFieldValue('amount', amount);
+        // Update initial values
+        const newInitialValues = {
+            ...initialValues,
+            amount: undefined,
+            times,
+        };
+        setInitialValues(newInitialValues);
     }
 
     async function handleSubmit(values: IndexedObject) {
@@ -131,16 +196,16 @@ export default function InvoiceAdd() {
         router.push(`/invoices/${result.data.invoiceCreate.id}`);
     }
 
-    return <Form initialValues={initialValues} loading={!initialValues || !!mutation.data || mutation.loading} title="Add Invoice" onSubmit={handleSubmit}>
+    return <Form initialValues={initialValues} loading={!initialValues || !!mutation.data || mutation.loading} title="Add Invoice" onChange={handleChange} onSubmit={handleSubmit}>
         <Form.Field name="number" />
-        <Form.Field name="clientId" label="Client" options={clients} required onChange={handleClientChange} />
+        <Form.Field name="clientId" label="Client" options={clients} required />
         <Form.Field name="type" required />
-        <Form.Field name="currency" options={CURRENCIES} required />
+        <Form.Field name="currency" options={currencies} required />
         <Form.Field name="amount" type="number" required />
         <Form.Field name="sentDate" type="date" />
         <Form.Field name="paidDate" type="date" />
-        <Form.Field name="times" onChange={handleTimesChange}>
-            {({ form, value }: FormFieldChildProps) => (
+        <Form.Field name="times">
+            {({ value }: FormFieldChildProps) => (
                 <Paper variant="outlined">
                     <Table size="small">
                         <TableHead>
@@ -161,8 +226,8 @@ export default function InvoiceAdd() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {query.data?.times.rows.filter(time => time.client.id === form.values.clientId).map(time => (
-                                <TableRow key={time.id} onClick={() => handleTimeClick(time, form)}>
+                            {times.map(time => (
+                                <TableRow key={time.id} onClick={() => handleTimeClick(time)}>
                                     <TableCell padding="none">
                                         <Checkbox checked={value.includes(time.id)} size="small" />
                                     </TableCell>
@@ -176,7 +241,7 @@ export default function InvoiceAdd() {
                                         {time.duration}
                                     </TableCell>
                                     <TableCell align="right">
-                                        <Money currencyName={time.currency} value={time.earnings} />
+                                        <MoneyEnumeration items={time.earnings} />
                                     </TableCell>
                                 </TableRow>
                             ))}
