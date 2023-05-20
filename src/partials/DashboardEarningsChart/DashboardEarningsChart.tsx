@@ -43,6 +43,9 @@ export default function DashboardEarningsChart() {
             const newDataMaps: ChartDataMaps = new Map();
             query.data.timesBetween.forEach(time => {
                 time.earnings.forEach(earning => {
+                    // Get formatted date
+                    const date = dayjs.utc(time.date).format('ddd DD/MM');
+
                     // Add data map
                     let map = newDataMaps.get(earning.currency);
                     if (!map) {
@@ -51,8 +54,8 @@ export default function DashboardEarningsChart() {
                     }
 
                     // Add amount
-                    const amount = (map.get(time.date) || 0) + earning.amount;
-                    map.set(time.date, amount);
+                    const amount = (map.get(date) || 0) + earning.amount;
+                    map.set(date, amount);
                 });
             });
             setDataMaps(newDataMaps);
@@ -62,9 +65,9 @@ export default function DashboardEarningsChart() {
     ]);
 
     function handleTooltip(item: any) {
-        return `${item.label}: ${item.value.toFixed(2)}`;
+        return `${item.label}: ${item.value.toLocaleString('en-US')}`;
     }
 
-    return <Chart dataMaps={dataMaps} from={from} title="Earnings" to={to} onTooltip={handleTooltip} />;
+    return <Chart dataMaps={dataMaps} format="ddd DD/MM" from={from} title="Earnings" to={to} unit="days" onTooltip={handleTooltip} />;
 
 }

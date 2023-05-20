@@ -1,4 +1,5 @@
-export { default as DashboardBalance } from './DashboardBalance/DashboardBalance';
+export { default as DashboardForecastChart } from './DashboardForecastChart/DashboardForecastChart';
+export { default as DashboardBankAccounts } from './DashboardBankAccounts/DashboardBankAccounts';
 export { default as DashboardEarningsChart } from './DashboardEarningsChart/DashboardEarningsChart';
 export { default as DashboardHoursChart } from './DashboardHoursChart/DashboardHoursChart';
 export { default as DashboardInvoices } from './DashboardInvoices/DashboardInvoices';

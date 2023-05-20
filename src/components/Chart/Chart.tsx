@@ -1,7 +1,6 @@
 import { Card } from '@/components';
 import { getDatesRange } from '@/helpers';
 import { ChartData } from 'chart.js';
-import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 
@@ -13,30 +12,31 @@ const backgroundColors = [
     '#66bb6a',
 ];
 
-export default function Chart({ dataMaps, from, loading, title, to, onTooltip }: ChartProps) {
+export default function Chart({ dataMaps, format, from, loading, title, to, unit, onTooltip }: ChartProps) {
 
     const [data, setData] = useState<ChartData<'bar'> | null>(null);
 
     useEffect(() => {
         // Parse dates
-        const dates = getDatesRange(from, to);
+        const dates = getDatesRange(from, to, unit);
         const datesMap: Map<string, ChartItem> = new Map();
-        dates.map(date => {
-            datesMap.set(date, {
+        dates.forEach(date => {
+            const label = date.format(format);
+            datesMap.set(label, {
                 value: 0,
-                label: date,
+                label,
             });
         });
 
         // Get datasets
         const datasets: ChartDataset[] = Array.from(dataMaps.entries()).map(([label, map], index) => ({
             backgroundColor: backgroundColors[index],
-            data: dates.map(date => map.get(date) || 0),
+            data: dates.map(date => map.get(date.format(format)) || 0),
             label,
         }));
 
         // Get labels
-        const labels = Array.from(datesMap.keys()).map(date => dayjs.utc(date).format('ddd DD/MM'));
+        const labels = Array.from(datesMap.keys());
         
         // Get data
         const newData = {
@@ -46,8 +46,10 @@ export default function Chart({ dataMaps, from, loading, title, to, onTooltip }:
         setData(newData);
     }, [
         dataMaps,
+        format,
         from,
         to,
+        unit,
     ]);
 
     return <Card loading={loading} title={title}>

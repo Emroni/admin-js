@@ -41,8 +41,12 @@ export default function DashboardHoursChart() {
             // Get data map
             const map: ChartDataMap = new Map();
             query.data.timesBetween.forEach(time => {
-                const amount = (map.get(time.date) || 0) + time.hours;
-                map.set(time.date, amount);
+                // Get formatted date
+                const date = dayjs.utc(time.date).format('ddd DD/MM');
+
+                // Add amount
+                const amount = (map.get(date) || 0) + time.hours;
+                map.set(date, amount);
             });
 
             // Get data maps
@@ -58,6 +62,6 @@ export default function DashboardHoursChart() {
         return getHoursDuration(item.value);
     }
 
-    return <Chart dataMaps={dataMaps} from={from} title="Hours" to={to} onTooltip={handleTooltip} />;
+    return <Chart dataMaps={dataMaps} format="ddd DD/MM" from={from} title="Hours" to={to} unit="days" onTooltip={handleTooltip} />;
 
 }

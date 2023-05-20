@@ -1,4 +1,6 @@
 interface BankAccount extends Entity, BankAccountFields {
+    fromExpenses: Expense[];
+    toExpenses: Expense[];
 }
 
 interface BankAccountFields {

@@ -4,7 +4,7 @@ import { gql, useMutation, useQuery } from '@apollo/client';
 import { Grid, InputAdornment, TextField } from '@mui/material';
 import { Fragment } from 'react';
 
-export default function DashboardBalance() {
+export default function DashboardBankAccounts() {
 
     const query = useQuery<BankAccountsQuery>(gql`query {
         bankAccounts {

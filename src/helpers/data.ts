@@ -4,15 +4,14 @@ export function getNestedValue(data: IndexedObject, path: string) {
     return path.split('.').reduce((parent: IndexedObject, child: string) => parent?.[child], data || {});
 }
 
-export function getDatesRange(from: Date, to: Date, format = 'YYYY-MM-DD') {
+export function getDatesRange(from: Date, to: Date, unit = 'days') {
     const endDate = dayjs.utc(to);
     let startDate = dayjs.utc(from);
-    const dates: string[] = [];
+    const dates: dayjs.Dayjs[] = [];
     while (startDate.isBefore(endDate) || startDate.isSame(endDate)) {
-        dates.push(startDate.format(format));
-        startDate = startDate.add(1, 'day');
+        dates.push(startDate);
+        startDate = startDate.add(1, unit as any);
     }
-
     return dates;
 }
 
@@ -67,8 +66,10 @@ export function parseDateInterval(value?: string) {
 
     // Return date interval
     return {
+        amount,
         days: unit === 'D' ? amount : 0,
         months: unit === 'M' ? amount : 0,
+        unit: (unit === 'D' && 'days') || (unit === 'M' && 'months') || (unit === 'W' && 'weeks') || (unit === 'Y' && 'years'),
         value,
         weeks: unit === 'W' ? amount : 0,
         years: unit === 'Y' ? amount : 0,
