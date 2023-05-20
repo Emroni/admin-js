@@ -9,74 +9,80 @@ datasource db {
 }
 
 model BankAccount {
-    id              Int         @id @default(autoincrement())
-    amount          Float
-    currency        String
-    name            String      @unique
+    id                  Int             @id @default(autoincrement())
+    amount              Float
+    currency            String
+    name                String          @unique
+    fromExpenses        Expense[]       @relation("ExpenseFromBankAccount")
+    toExpenses          Expense[]       @relation("ExpenseToBankAccount")
 }
 
 model Client {
-    id              Int         @id @default(autoincrement())
-    address         String?     @db.Text
-    email           String?
-    name            String      @unique
-    invoices        Invoice[]
-    projects        Project[]
+    id                  Int             @id @default(autoincrement())
+    address             String?         @db.Text
+    email               String?
+    name                String          @unique
+    invoices            Invoice[]
+    projects            Project[]
 }
 
 model Expense {
-    id              Int         @id @default(autoincrement())
-    active          Boolean
-    amount          Float
-    currency        String
-    date            DateTime    @db.Date
-    name            String      @unique
-    repeats         String
-    type            String
+    id                  Int             @id @default(autoincrement())
+    active              Boolean
+    amount              Float
+    currency            String
+    date                DateTime        @db.Date
+    name                String          @unique
+    repeats             String
+    type                String
+    fromBankAccount     BankAccount?    @relation("ExpenseFromBankAccount", fields: [fromBankAccountId], references: [id])
+    fromBankAccountId   Int?
+    toBankAccount       BankAccount?    @relation("ExpenseToBankAccount", fields: [toBankAccountId], references: [id])
+    toBankAccountId     Int?
 }
 
 model Invoice {
-    id              Int         @id @default(autoincrement())
-    number          String?
-    currency        String
-    amount          Float
-    type            String
-    description     String?
-    sentDate        DateTime?   @db.Date
-    paidDate        DateTime?   @db.Date
-    client          Client      @relation(fields: [clientId], references: [id])
-    clientId        Int
-    times           Time[]
+    id                  Int             @id @default(autoincrement())
+    number              String?
+    currency            String
+    amount              Float
+    type                String
+    description         String?
+    sentDate            DateTime?       @db.Date
+    paidDate            DateTime?       @db.Date
+    client              Client          @relation(fields: [clientId], references: [id])
+    clientId            Int
+    times               Time[]
 }
 
 model Project {
-    id              Int         @id @default(autoincrement())
-    name            String
-    status          String
-    client          Client      @relation(fields: [clientId], references: [id])
-    clientId        Int
-    tasks           Task[]
+    id                  Int             @id @default(autoincrement())
+    name                String
+    status              String
+    client              Client          @relation(fields: [clientId], references: [id])
+    clientId            Int
+    tasks               Task[]
 }
 
 model Task {
-    id              Int         @id @default(autoincrement())
-    currency        String
-    estimatedHours  Float
-    name            String
-    price           Int
-    rate            Int
-    timer           DateTime?
-    project         Project     @relation(fields: [projectId], references: [id])
-    projectId       Int
-    times           Time[]
+    id                  Int             @id @default(autoincrement())
+    currency            String
+    estimatedHours      Float
+    name                String
+    price               Int
+    rate                Int
+    timer               DateTime?
+    project             Project         @relation(fields: [projectId], references: [id])
+    projectId           Int
+    times               Time[]
 }
 
 model Time {
-    id              Int         @id @default(autoincrement())
-    date            DateTime    @db.Date
-    duration        DateTime    @db.Time
-    invoice         Invoice?    @relation(fields: [invoiceId], references: [id])
-    invoiceId       Int?
-    task            Task        @relation(fields: [taskId], references: [id])
-    taskId          Int
+    id                  Int             @id @default(autoincrement())
+    date                DateTime        @db.Date
+    duration            DateTime        @db.Time
+    invoice             Invoice?        @relation(fields: [invoiceId], references: [id])
+    invoiceId           Int?
+    task                Task            @relation(fields: [taskId], references: [id])
+    taskId              Int
 }

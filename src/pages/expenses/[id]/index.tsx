@@ -23,6 +23,15 @@ export default function ExpenseView() {
             nextDate
             repeats
             type
+
+            fromBankAccount {
+                id
+                name
+            }
+            toBankAccount {
+                id
+                name
+            }
         }
     }`, {
         variables: {
@@ -70,6 +79,8 @@ export default function ExpenseView() {
             <Summary.Field name="active" type="boolean" />
             <Summary.Field name="name" />
             <Summary.Field name="type" />
+            <Summary.Field name="fromBankAccount.name" label="From" getLink={`/bank-accounts/${expense?.fromBankAccount?.id}`} />
+            <Summary.Field name="toBankAccount.name" label="To" getLink={`/bank-accounts/${expense?.toBankAccount?.id}`} />
             <Summary.Field name="date" />
             <Summary.Field name="nextDate" />
             <Summary.Field name="repeats" />

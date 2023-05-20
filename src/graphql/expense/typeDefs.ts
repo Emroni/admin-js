@@ -3,16 +3,20 @@ const fields = `
     amount: Float!
     currency: String!
     date: DateScalar!
+    fromBankAccountId: Int
     name: String!
     repeats: String!
+    toBankAccountId: Int
     type: String!
 `;
 
 export const types = `
     type Expense {
         deletable: Boolean!
+        fromBankAccount: BankAccount
         id: Int!
         nextDate: DateScalar!
+        toBankAccount: BankAccount
         ${fields}
     }
 

@@ -7,7 +7,9 @@ const fields = `
 export const types = `
     type BankAccount {
         deletable: Boolean!
+        fromExpenses: [Expense!]!
         id: Int!
+        toExpenses: [Expense!]!
         ${fields}
     }
 

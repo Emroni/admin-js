@@ -9,7 +9,7 @@ export default function ProjectAdd() {
     const router = useRouter();
     const page = usePage();
 
-    const query = useQuery<ClientsQuery & ProjectQuery>(gql`query {
+    const query = useQuery<ClientsQuery>(gql`query {
         clients {
             rows {
                 id

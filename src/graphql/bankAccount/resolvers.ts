@@ -3,6 +3,16 @@ import { prisma } from '../';
 
 export const model = {
     deletable: () => true, // TODO: Add deletable logic
+    fromExpenses: (parent: BankAccount) => prisma.expense.findMany({
+        where: {
+            fromBankAccountId: parent.id,
+        },
+    }),
+    toExpenses: (parent: BankAccount) => prisma.expense.findMany({
+        where: {
+            toBankAccountId: parent.id,
+        },
+    }),
 };
 
 export const queries = {
