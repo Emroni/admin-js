@@ -3,10 +3,12 @@ type ChartDataMaps = Map<string, ChartDataMap>;
 
 interface ChartProps {
     dataMaps: ChartDataMaps;
+    format: string;
     from: Date;
     loading?: boolean;
     title: string;
     to: Date;
+    unit: 'days' | 'months' | 'weeks' | 'years';
     onTooltip?(item: ChartTooltipItem): string;
 }
 
