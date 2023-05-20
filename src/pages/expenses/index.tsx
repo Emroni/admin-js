@@ -23,6 +23,15 @@ export default function Expenses() {
                 nextDate
                 repeats
                 type
+
+                fromBankAccount {
+                    id
+                    name
+                }
+                toBankAccount {
+                    id
+                    name
+                }
             }
             total
         }
@@ -55,6 +64,8 @@ export default function Expenses() {
         <Table.Column name="active" type="boolean" />
         <Table.Column name="name" />
         <Table.Column name="type" />
+        <Table.Column name="fromBankAccount.name" label="From" getLink={row => `/bank-accounts/${row.fromBankAccount?.id}`} />
+        <Table.Column name="toBankAccount.name" label="To" getLink={row => `/bank-accounts/${row.toBankAccount?.id}`} />
         <Table.Column name="nextDate" order={false} />
         <Table.Column name="repeats" />
         <Table.Column name="amount" type="money" />

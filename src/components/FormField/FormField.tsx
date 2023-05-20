@@ -43,6 +43,11 @@ export default function FormField({ children, disabled, label, loading, name, op
         value={value}
         onChange={handleChange}
     >
+        {options && !required && (
+            <MenuItem value="">
+                None
+            </MenuItem>
+        )}
         {options?.map((option, index) => (
             <MenuItem key={option.id || option.name || option.value || index} value={option.value || option.id || option.name}>
                 {option.label || option.name || option.value}

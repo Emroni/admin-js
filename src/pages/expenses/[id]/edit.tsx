@@ -11,7 +11,13 @@ export default function ExpenseEdit() {
     const page = usePage();
     const router = useRouter();
 
-    const query = useQuery<ExpenseQuery>(gql`query($id: Int!) {
+    const query = useQuery<BankAccountsQuery & ExpenseQuery>(gql`query($id: Int!) {
+        bankAccounts {
+            rows {
+                id
+                name
+            }
+        }
         expense(id: $id) {
             active
             amount
@@ -27,7 +33,7 @@ export default function ExpenseEdit() {
             id: page.query.id,
         },
     });
-
+    
     const [mutate, mutation] = useMutation(gql`mutation($id: Int!, $input: ExpenseFields) {
         expenseUpdate (id: $id, input: $input) {
             active
@@ -67,6 +73,8 @@ export default function ExpenseEdit() {
         <Form.Field name="active" type="switch" />
         <Form.Field name="name" required />
         <Form.Field name="type" required />
+        <Form.Field name="fromBankAccountId" label="From" options={query.data?.bankAccounts.rows} />
+        <Form.Field name="toBankAccountId" label="To" options={query.data?.bankAccounts.rows} />
         <Form.Field name="date" required />
         <Form.Field name="currency" options={CURRENCIES} required />
         <Form.Field name="repeats" required />

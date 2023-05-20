@@ -1,5 +1,7 @@
 interface Expense extends Entity, ExpenseFields {
+    fromBankAccount: BankAccount?;
     nextDate: Date;
+    toBankAccount: BankAccount?;
 }
 
 interface ExpenseFields {
@@ -7,8 +9,10 @@ interface ExpenseFields {
     amount: number;
     currency: CurrencyName;
     date: Date;
+    fromBankAccountId: number?;
     name: string;
     repeats: string;
+    toBankAccountId: number?;
     type: string;
 }
 

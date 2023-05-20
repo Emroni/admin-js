@@ -3,7 +3,12 @@ import dayjs from 'dayjs';
 import { prisma } from '../';
 
 export const model = {
-    deletable: () => true,
+    deletable: () => true, // TODO: Add deletable logic
+    fromBankAccount: (parent: Expense) => parent.fromBankAccountId ? prisma.bankAccount.findUnique({
+        where: {
+            id: parent.fromBankAccountId,
+        },
+    }) : null,
     nextDate: (parent: Expense) => {
         const today = dayjs.utc();
         const dateInterval = parseDateInterval(parent.repeats);
@@ -17,6 +22,11 @@ export const model = {
         }
         return date;
     },
+    toBankAccount: (parent: Expense) => parent.toBankAccountId ? prisma.bankAccount.findUnique({
+        where: {
+            id: parent.toBankAccountId,
+        },
+    }) : null,
 };
 
 export const queries = {

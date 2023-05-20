@@ -4,7 +4,7 @@ import { prisma } from '../';
 
 export const model = {
     client: (parent: Time) => model.project(parent).client(),
-    deletable: () => true,
+    deletable: () => true, // TODO: Add deletable logic
     currency: (parent: Time) => model.task(parent).then(task => task?.currency),
     earnings: (parent: Time) => model.task(parent).then(task => ([{
         amount: task?.rate ? model.hours(parent) * task.rate : 0,
