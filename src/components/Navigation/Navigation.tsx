@@ -1,5 +1,5 @@
 import { gql, useQuery } from '@apollo/client';
-import { Dashboard, People, Receipt, Sell, Task, Timer, Work } from '@mui/icons-material';
+import { AccountBalanceWallet, Dashboard, People, Receipt, Sell, Task, Timer, Work } from '@mui/icons-material';
 import { Box, ListItemIcon, ListItemText, MenuItem, MenuList } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -35,6 +35,7 @@ export default function Navigation() {
             { icon: <Task />, path: '/tasks', title: 'Tasks' },
             { icon: <Timer />, path: '/times', title: 'Times' },
             { icon: <Sell />, path: '/expenses', title: 'Expenses' },
+            { icon: <AccountBalanceWallet />, path: '/bank-accounts', title: 'Bank Accounts' },
         ].map(item => ({
             ...item,
             selected: item.path === '/' ? (item.path === router.pathname) : router.pathname.startsWith(item.path),
