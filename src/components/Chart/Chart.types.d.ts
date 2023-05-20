@@ -1,8 +1,5 @@
-type ChartDataMap = Map<string, number>;
-type ChartDataMaps = Map<string, ChartDataMap>;
-
 interface ChartProps {
-    dataMaps: ChartDataMaps;
+    dataMaps: ChartDataMap[];
     format: string;
     from: Date;
     loading?: boolean;
@@ -10,6 +7,12 @@ interface ChartProps {
     to: Date;
     unit: 'days' | 'months' | 'weeks' | 'years';
     onTooltip?(item: ChartTooltipItem): string;
+}
+
+interface ChartDataMap {
+    color: string;
+    data: Map<string, value>;
+    label: string;
 }
 
 interface ChartDataset {

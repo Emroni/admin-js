@@ -3,9 +3,15 @@ import { gql, useQuery } from '@apollo/client';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 
+const colors = [
+    '#66bb6a',
+    '#29b6f6',
+    '#ce93d8',
+];
+
 export default function DashboardEarningsChart() {
 
-    const [dataMaps, setDataMaps] = useState<ChartDataMaps>(new Map());
+    const [dataMaps, setDataMaps] = useState<ChartDataMap[]>([]);
     const [from, setFrom] = useState(new Date());
     const [to, setTo] = useState(new Date());
 
@@ -39,25 +45,32 @@ export default function DashboardEarningsChart() {
 
     useEffect(() => {
         if (query.data) {
-            // Get data maps
-            const newDataMaps: ChartDataMaps = new Map();
+            // Prepare data mappings
+            const dataMapping: Map<string, ChartDataMap> = new Map();
             query.data.timesBetween.forEach(time => {
                 time.earnings.forEach(earning => {
                     // Get formatted date
                     const date = dayjs.utc(time.date).format('ddd DD/MM');
 
                     // Add data map
-                    let map = newDataMaps.get(earning.currency);
-                    if (!map) {
-                        map = new Map();
-                        newDataMaps.set(earning.currency, map);
+                    let dataMap = dataMapping.get(earning.currency);
+                    if (!dataMap) {
+                        dataMap = {
+                            color: colors[dataMapping.size % colors.length],
+                            data: new Map(),
+                            label: earning.currency,
+                        };
+                        dataMapping.set(earning.currency, dataMap);
                     }
 
                     // Add amount
-                    const amount = (map.get(date) || 0) + earning.amount;
-                    map.set(date, amount);
+                    const amount = (dataMap.data.get(date) || 0) + earning.amount;
+                    dataMap.data.set(date, amount);
                 });
             });
+
+            // Get data maps
+            const newDataMaps: ChartDataMap[] = Array.from(dataMapping.values());
             setDataMaps(newDataMaps);
         }
     }, [

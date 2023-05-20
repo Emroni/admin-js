@@ -10,7 +10,7 @@ export default function Dashboard() {
             <Box flex={1}>
                 <DashboardBankAccounts />
             </Box>
-            <Box flex={3}>
+            <Box flex={{ xs: 1, lg: 3 }}>
                 <DashboardForecastChart />
             </Box>
         </Box>

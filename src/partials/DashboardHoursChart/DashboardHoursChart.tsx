@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 export default function DashboardHoursChart() {
 
-    const [dataMaps, setDataMaps] = useState<ChartDataMaps>(new Map());
+    const [dataMaps, setDataMaps] = useState<ChartDataMap[]>([]);
     const [from, setFrom] = useState(new Date());
     const [to, setTo] = useState(new Date());
 
@@ -38,20 +38,27 @@ export default function DashboardHoursChart() {
 
     useEffect(() => {
         if (query.data) {
-            // Get data map
-            const map: ChartDataMap = new Map();
+            // Create data map
+            const dataMap: ChartDataMap = {
+                color: '#29b6f6',
+                data: new Map(),
+                label: 'Hours',
+            };
+
+            // Parse times
             query.data.timesBetween.forEach(time => {
                 // Get formatted date
                 const date = dayjs.utc(time.date).format('ddd DD/MM');
 
                 // Add amount
-                const amount = (map.get(date) || 0) + time.hours;
-                map.set(date, amount);
+                const amount = (dataMap.data.get(date) || 0) + time.hours;
+                dataMap.data.set(date, amount);
             });
 
             // Get data maps
-            const newDataMaps = new Map();
-            newDataMaps.set('Hours', map);
+            const newDataMaps = [
+                dataMap,
+            ]
             setDataMaps(newDataMaps);
         }
     }, [

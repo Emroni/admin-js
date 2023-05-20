@@ -6,12 +6,6 @@ import { Bar } from 'react-chartjs-2';
 
 // TODO: Fix resizing
 
-const backgroundColors = [
-    '#29b6f6',
-    '#ce93d8',
-    '#66bb6a',
-];
-
 export default function Chart({ dataMaps, format, from, loading, title, to, unit, onTooltip }: ChartProps) {
 
     const [data, setData] = useState<ChartData<'bar'> | null>(null);
@@ -29,10 +23,10 @@ export default function Chart({ dataMaps, format, from, loading, title, to, unit
         });
 
         // Get datasets
-        const datasets: ChartDataset[] = Array.from(dataMaps.entries()).map(([label, map], index) => ({
-            backgroundColor: backgroundColors[index],
-            data: dates.map(date => map.get(date.format(format)) || 0),
-            label,
+        const datasets: ChartDataset[] = dataMaps.map(dataMap => ({
+            backgroundColor: dataMap.color,
+            data: dates.map(date => dataMap.data.get(date.format(format)) || 0),
+            label: dataMap.label,
         }));
 
         // Get labels

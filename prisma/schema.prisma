@@ -11,8 +11,9 @@ datasource db {
 model BankAccount {
     id                  Int             @id @default(autoincrement())
     amount              Float
+    color               String?
     currency            String
-    name                String          @unique
+    name                String
     fromExpenses        Expense[]       @relation("ExpenseFromBankAccount")
     toExpenses          Expense[]       @relation("ExpenseToBankAccount")
 }

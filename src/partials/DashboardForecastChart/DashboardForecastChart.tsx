@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 export default function DashboardForecastChart() {
 
-    const [dataMaps, setDataMaps] = useState<ChartDataMaps>(new Map());
+    const [dataMaps, setDataMaps] = useState<ChartDataMap[]>([]);
     const [from] = useState(new Date());
     const [to] = useState(dayjs.utc().add(6, 'month').toDate());
 
@@ -14,6 +14,7 @@ export default function DashboardForecastChart() {
         bankAccounts {
             rows {
                 amount
+                color
                 currency
                 id
                 name
@@ -42,12 +43,14 @@ export default function DashboardForecastChart() {
     useEffect(() => {
         if (query.data) {
             // Get data maps
-            const newDataMaps: ChartDataMaps = new Map();
-            query.data.bankAccounts.rows.forEach(bankAccount => {
-                // Add data map
-                const map: Map<string, number> = new Map();
-                newDataMaps.set(bankAccount.name, map);
-
+            const newDataMaps = query.data.bankAccounts.rows.map(bankAccount => {
+                // Create data map
+                const dataMap: ChartDataMap = {
+                    color: bankAccount.color,
+                    data: new Map(),
+                    label: bankAccount.name,
+                };
+                
                 // Create timeline
                 const timeline = getDatesRange(from, to, 'months').map(date => ({
                     amount: 0,
@@ -87,8 +90,10 @@ export default function DashboardForecastChart() {
                     const prevMonth = timeline[index - 1];
                     month.amount += prevMonth ? prevMonth.amount : bankAccount.amount;
                     month.amount -= month.expenses;
-                    map.set(month.name, month.amount);
+                    dataMap.data.set(month.name, month.amount);
                 });
+
+                return dataMap;
             });
             setDataMaps(newDataMaps);
         }

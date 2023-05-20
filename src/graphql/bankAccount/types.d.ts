@@ -5,6 +5,7 @@ interface BankAccount extends Entity, BankAccountFields {
 
 interface BankAccountFields {
     amount: number;
+    color: string;
     currency: CurrencyName;
     name: string;
 }

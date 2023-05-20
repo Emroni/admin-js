@@ -1,5 +1,6 @@
 const fields = `
     amount: Float!
+    color: String
     currency: String!
     name: String!
 `;
