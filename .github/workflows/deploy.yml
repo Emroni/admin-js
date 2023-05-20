@@ -56,4 +56,4 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          script: cd /var/www/adminjs.emrekoc.io && npx --yes prisma migrate deploy
+          script: cd ${{ secrets.TARGET_DIRECTORY }} && npx --yes prisma migrate deploy
