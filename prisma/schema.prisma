@@ -8,6 +8,13 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+model BankAccount {
+    id              Int         @id @default(autoincrement())
+    amount          Float
+    currency        String
+    name            String      @unique
+}
+
 model Client {
     id              Int         @id @default(autoincrement())
     address         String?     @db.Text

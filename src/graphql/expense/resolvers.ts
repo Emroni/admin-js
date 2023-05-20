@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import { prisma } from '../';
 
 export const model = {
-    deletable: () => true,
+    deletable: () => true, // TODO: Add deletable logic
     nextDate: (parent: Expense) => {
         const today = dayjs.utc();
         const dateInterval = parseDateInterval(parent.repeats);

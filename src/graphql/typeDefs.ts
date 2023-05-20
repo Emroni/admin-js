@@ -1,3 +1,4 @@
+import * as bankAccount from './bankAccount/typeDefs';
 import * as client from './client/typeDefs';
 import * as expense from './expense/typeDefs';
 import * as invoice from './invoice/typeDefs';
@@ -10,6 +11,7 @@ export const typeDefs = `
     scalar DateTimeScalar
     scalar TimeScalar
 
+    ${bankAccount.types}
     ${client.types}
     ${expense.types}
     ${invoice.types}
@@ -18,6 +20,7 @@ export const typeDefs = `
     ${time.types}
 
     type Query {
+        ${bankAccount.queries}
         ${client.queries}
         ${expense.queries}
         ${invoice.queries}
@@ -27,6 +30,7 @@ export const typeDefs = `
     }
 
     type Mutation {
+        ${bankAccount.mutations}
         ${client.mutations}
         ${expense.mutations}
         ${invoice.mutations}
