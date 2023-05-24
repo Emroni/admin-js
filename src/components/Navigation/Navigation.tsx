@@ -1,6 +1,7 @@
 import { gql, useQuery } from '@apollo/client';
 import { AccountBalanceWallet, Dashboard, People, Receipt, Sell, Task, Timer, Work } from '@mui/icons-material';
 import { Box, ListItemIcon, ListItemText, MenuItem, MenuList } from '@mui/material';
+import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import TaskTimer from '../TaskTimer/TaskTimer';
@@ -48,7 +49,7 @@ export default function Navigation() {
     return <Box bgcolor="grey.900" display="flex" flexDirection="column" height="100vh" justifyContent="space-between" paddingY={1}>
         <MenuList disablePadding>
             {items.map((item, index) => (
-                <MenuItem key={index} selected={item.selected} onClick={() => router.push(item.path)}>
+                <MenuItem component={NextLink} href={item.path} key={index} selected={item.selected}>
                     <ListItemIcon>
                         {item.icon}
                     </ListItemIcon>
