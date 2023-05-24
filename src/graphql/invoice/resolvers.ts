@@ -73,7 +73,7 @@ export const mutations = {
         },
     }),
     invoiceUpdate: (_parent: any, args: GraphqlUpdateArgs<InvoiceFields>) => prisma.invoice.update({
-        data: parseInput(args.input),
+        data: parseInput(args.input, true),
         where: {
             id: args.id,
         },
@@ -113,7 +113,7 @@ function parseFilter(filter?: InvoicesFilter) {
     return where;
 }
 
-function parseInput(input: Partial<InvoiceFields>) {
+function parseInput(input: Partial<InvoiceFields>, update?: boolean) {
     return {
         ...input,
         client: input.clientId ? {
@@ -122,10 +122,12 @@ function parseInput(input: Partial<InvoiceFields>) {
             },
         } : undefined,
         clientId: undefined,
-        times: input.times ? {
-            connect: input.times.map(id => ({
+        times: input.timesIds ? {
+            set: update ? [] : undefined,
+            connect: input.timesIds.map(id => ({
                 id: Number(id),
             })),
         } : undefined,
+        timesIds: undefined,
     } as any;
 }

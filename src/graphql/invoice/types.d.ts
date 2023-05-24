@@ -1,6 +1,7 @@
 interface Invoice extends Entity, InvoiceFields {
     client: Client;
     name: string;
+    times: Time[];
 }
 
 interface InvoiceFields {
@@ -9,9 +10,9 @@ interface InvoiceFields {
     currency: CurrencyName;
     description: string?;
     number: string?;
-    paidDate: Date?;
-    sentDate: Date?;
-    times: number[];
+    paidDate: string?;
+    sentDate: string?;
+    timesIds: number[];
     type: string;
 }
 

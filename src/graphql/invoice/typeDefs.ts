@@ -7,6 +7,7 @@ const fields = `
     description: String
     sentDate: DateScalar
     paidDate: DateScalar
+    timesIds: [Int!]
 `;
 
 export const types = `
@@ -34,7 +35,6 @@ export const types = `
     }
 
     input InvoiceFields {
-        times: [Int!]!
         ${fields}
     }
 

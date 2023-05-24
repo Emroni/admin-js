@@ -8,7 +8,10 @@ export default function FormField({ children, disabled, label, loading, name, op
     const form = useFormikContext();
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-        let value: any = e.target.value;
+        handleSetValue(e.target.value);
+    }
+
+    function handleSetValue(value: any) {
         if (type === 'number') {
             value = parseFloat(value);
         }
@@ -21,7 +24,7 @@ export default function FormField({ children, disabled, label, loading, name, op
 
     if (children) {
         const Component: any = children;
-        return <Component form={form} name={name} value={value} setValue={helpers.setValue} />;
+        return <Component form={form} name={name} value={value} setValue={handleSetValue} />;
     }
 
     if (type === 'switch') {

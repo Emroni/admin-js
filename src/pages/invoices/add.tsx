@@ -11,8 +11,8 @@ import { useEffect, useState } from 'react';
 export default function InvoiceAdd() {
 
     const [clients, setClients] = useState<Client[]>([]);
-    const [currencies, setCurrencies] = useState<Currency[]>([]);
-    const [initialValues, setInitialValues] = useState<IndexedObject>({});
+    const [currencies, setCurrencies] = useState<Currency[]>(CURRENCIES);
+    const [initialValues, setInitialValues] = useState<Partial<InvoiceFields>>({});
     const [times, setTimes] = useState<Time[]>([]);
     const router = useRouter();
     const page = usePage();
@@ -50,15 +50,7 @@ export default function InvoiceAdd() {
 
     const [mutate, mutation] = useMutation(gql`mutation($input: InvoiceFields) {
         invoiceCreate (input: $input) {
-            clientId
             id
-            number
-            currency
-            amount
-            type
-            description
-            sentDate
-            paidDate
         }
     }`);
 
@@ -71,7 +63,7 @@ export default function InvoiceAdd() {
 
             // Get initial values
             const prevInvoice = query.data.invoices.rows[0];
-            const newInitialValues: IndexedObject = {
+            const newInitialValues: Partial<InvoiceFields> = {
                 clientId: page.query.clientId,
                 number: prevInvoice.number ? `${prevInvoice.number.slice(0, 3)}${parseInt(prevInvoice.number.slice(3)) + 1}` : undefined,
                 sentDate: dayjs.utc().format('YYYY-MM-DD'),
@@ -85,7 +77,7 @@ export default function InvoiceAdd() {
     ]);
 
     useEffect(() => {
-        if (query.data && initialValues.clientId && !initialValues.currency) {
+        if (query.data && initialValues.clientId && initialValues.currency === undefined) {
             // Get currency
             const clientTimes = query.data.times.rows.filter(time => time.client.id === initialValues.clientId) || [];
             const currencyNames = getUnique(clientTimes.map(row => row.currency));
@@ -108,7 +100,7 @@ export default function InvoiceAdd() {
     ]);
 
     useEffect(() => {
-        if (query.data && initialValues.currency && !initialValues.times) {
+        if (query.data && initialValues.currency && initialValues.timesIds === undefined) {
             // Get times
             const newTimes = query.data.times.rows.filter(time => time.client.id === initialValues.clientId && time.currency === initialValues.currency);
             setTimes(newTimes);
@@ -116,7 +108,7 @@ export default function InvoiceAdd() {
             // Update initial values
             const newInitialValues = {
                 ...initialValues,
-                times: newTimes.map(time => time.id),
+                timesIds: newTimes.map(time => time.id),
             };
             setInitialValues(newInitialValues);
         }
@@ -126,11 +118,11 @@ export default function InvoiceAdd() {
     ]);
 
     useEffect(() => {
-        if (query.data && initialValues.times && initialValues.amount === undefined) {
+        if (query.data && initialValues.timesIds && initialValues.amount === undefined) {
             // Update initial values
             const newInitialValues = {
                 ...initialValues,
-                amount: times.filter(time => initialValues.times.includes(time.id)).reduce((total, time) => total + time.earnings[0].amount, 0),
+                amount: times.filter(time => initialValues.timesIds?.includes(time.id)).reduce((total, time) => total + time.earnings[0].amount, 0),
             };
             setInitialValues(newInitialValues);
         }
@@ -139,8 +131,8 @@ export default function InvoiceAdd() {
         query.data,
         times,
     ]);
-
-    function handleChange(values: IndexedObject) {
+    
+    function handleChange(values: Partial<InvoiceFields>) {
         // Prepare initial values
         const newInitialValues = {
             ...values,
@@ -151,11 +143,11 @@ export default function InvoiceAdd() {
         if (initialValues.clientId !== values.clientId) {
             delete newInitialValues.amount;
             delete newInitialValues.currency;
-            delete newInitialValues.times;
+            delete newInitialValues.timesIds;
         } else if (initialValues.currency !== values.currency) {
             delete newInitialValues.amount;
-            delete newInitialValues.times;
-        } else if (initialValues.times !== values.times) {
+            delete newInitialValues.timesIds;
+        } else if (initialValues.timesIds !== values.timesIds) {
             delete newInitialValues.amount;
         } else {
             update = false;
@@ -169,24 +161,24 @@ export default function InvoiceAdd() {
 
     function handleTimeClick(time: Time) {
         // Add or remove time from times
-        const times = initialValues.times?.slice() || [];
-        const timeIndex = times.indexOf(time.id);
-        if (timeIndex === -1) {
-            times.push(time.id);
+        const timesIds = initialValues.timesIds?.slice() || [];
+        const timeIdIndex = timesIds.indexOf(time.id);
+        if (timeIdIndex === -1) {
+            timesIds.push(time.id);
         } else {
-            times.splice(timeIndex, 1);
+            timesIds.splice(timeIdIndex, 1);
         }
 
         // Update initial values
         const newInitialValues = {
             ...initialValues,
             amount: undefined,
-            times,
+            timesIds,
         };
         setInitialValues(newInitialValues);
     }
 
-    async function handleSubmit(values: IndexedObject) {
+    async function handleSubmit(values: Partial<InvoiceFields>) {
         const result = await mutate({
             variables: {
                 input: values,
@@ -195,7 +187,7 @@ export default function InvoiceAdd() {
         mutation.client.clearStore();
         router.push(`/invoices/${result.data.invoiceCreate.id}`);
     }
-
+    
     return <Form initialValues={initialValues} loading={!initialValues || !!mutation.data || mutation.loading} title="Add Invoice" onChange={handleChange} onSubmit={handleSubmit}>
         <Form.Field name="number" />
         <Form.Field name="clientId" label="Client" options={clients} required />
@@ -204,7 +196,7 @@ export default function InvoiceAdd() {
         <Form.Field name="amount" type="number" required />
         <Form.Field name="sentDate" type="date" />
         <Form.Field name="paidDate" type="date" />
-        <Form.Field name="times">
+        <Form.Field name="timesIds">
             {({ value }: FormFieldChildProps) => (
                 <Paper variant="outlined">
                     <Table size="small">
