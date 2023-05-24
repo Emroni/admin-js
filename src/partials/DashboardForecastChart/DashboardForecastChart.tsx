@@ -10,7 +10,7 @@ export default function DashboardForecastChart() {
     const [from] = useState(new Date());
     const [to] = useState(dayjs.utc().add(6, 'month').toDate());
 
-    const query = useQuery<BankAccountsQuery>(gql`query {
+    const query = useQuery<BankAccountsQuery & InvoicesQuery>(gql`query {
         bankAccounts {
             rows {
                 amount
@@ -38,6 +38,16 @@ export default function DashboardForecastChart() {
                 }
             }
         }
+        invoices (filter: { paidDate: null }, order: "id asc", page: 0, perPage: 1000) {
+            rows {
+                amount
+                id
+                dueDate
+                bankAccount {
+                    id
+                }
+            }
+        }
     }`);
 
     useEffect(() => {
@@ -55,6 +65,7 @@ export default function DashboardForecastChart() {
                 const timeline = getDatesRange(from, to, 'months').map(date => ({
                     amount: 0,
                     expenses: 0,
+                    invoiced: 0,
                     name: date.format('MMMM'),
                 }));
 
@@ -85,11 +96,22 @@ export default function DashboardForecastChart() {
                     }
                 });
 
+                // Parse invoices
+                query.data?.invoices.rows.forEach(invoice => {
+                    if (invoice.bankAccount?.id === bankAccount.id) {
+                        const date = dayjs.utc(invoice.dueDate);
+                        const monthName = date.format('MMMM');
+                        const month = timeline.find(m => m.name === monthName);
+                        if (month) {
+                            month.invoiced += invoice.amount;
+                        }
+                    }
+                });
+
                 // Parse timeline amounts
                 timeline.forEach((month, index) => {
                     const prevMonth = timeline[index - 1];
-                    month.amount += prevMonth ? prevMonth.amount : bankAccount.amount;
-                    month.amount -= month.expenses;
+                    month.amount += (prevMonth ? prevMonth.amount : bankAccount.amount) + month.invoiced - month.expenses;
                     dataMap.data.set(month.name, month.amount);
                 });
 

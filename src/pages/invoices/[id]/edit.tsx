@@ -15,7 +15,13 @@ export default function InvoiceEdit() {
     const page = usePage();
     const router = useRouter();
 
-    const query = useQuery<ClientsQuery & InvoiceQuery & TimesQuery>(gql`query($id: Int!) {
+    const query = useQuery<BankAccountsQuery & ClientsQuery & InvoiceQuery & TimesQuery>(gql`query($id: Int!) {
+        bankAccounts {
+            rows {
+                id
+                name
+            }
+        }
         clients {
             rows {
                 id
@@ -23,6 +29,7 @@ export default function InvoiceEdit() {
             }
         }
         invoice(id: $id) {
+            bankAccountId
             clientId
             id
             number
@@ -96,6 +103,7 @@ export default function InvoiceEdit() {
         // Get initial values
         const newInitialValues = {
             amount: newInvoice?.amount,
+            bankAccountId: newInvoice?.bankAccountId,
             clientId: newInvoice?.clientId,
             currency: newInvoice?.currency,
             description: newInvoice?.description,
@@ -166,6 +174,7 @@ export default function InvoiceEdit() {
         <Form.Field name="type" required />
         <Form.Field name="currency" disabled options={CURRENCIES} required />
         <Form.Field name="amount" type="number" required />
+        <Form.Field name="bankAccountId" label="Bank account" options={query.data?.bankAccounts.rows} />
         <Form.Field name="sentDate" type="date" />
         <Form.Field name="paidDate" type="date" />
         <Form.Field name="timesIds">

@@ -1,4 +1,5 @@
 interface Invoice extends Entity, InvoiceFields {
+    bankAccount: BankAccount?;
     client: Client;
     name: string;
     times: Time[];
@@ -6,6 +7,7 @@ interface Invoice extends Entity, InvoiceFields {
 
 interface InvoiceFields {
     amount: Float!
+    bankAccountId: number?;
     clientId: number;
     currency: CurrencyName;
     description: string?;

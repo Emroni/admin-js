@@ -23,6 +23,10 @@ export default function InvoiceView() {
             description
             sentDate
             paidDate
+            bankAccount {
+                id
+                name
+            }
             client {
                 id
                 name
@@ -74,6 +78,7 @@ export default function InvoiceView() {
             <Summary.Field name="number" />
             <Summary.Field name="client.name" label="Client" getLink={`/clients/${invoice?.client.id}`} />
             <Summary.Field name="amount" currencyName={invoice?.currency} type="money" />
+            <Summary.Field name="bankAccount.name" label="Bank Account" getLink={`/bank-accounts/${invoice?.bankAccount?.id}`} />
             <Summary.Field name="sentDate" />
             <Summary.Field name="paidDate" />
         </Summary>

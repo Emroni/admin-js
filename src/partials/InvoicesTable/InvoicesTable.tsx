@@ -28,6 +28,10 @@ export default function InvoicesTable({ clientId, defaultPerPage = 10, projectId
                 description
                 sentDate
                 paidDate
+                bankAccount {
+                    id
+                    name
+                }
                 client @include(if: $withClient) {
                     id
                     name
@@ -89,6 +93,7 @@ export default function InvoicesTable({ clientId, defaultPerPage = 10, projectId
                 )}
             </Table.Column>
         )}
+        <Table.Column name="bankAccount.name" label="Bank account" getLink={invoice => `/bank-accounts/${invoice.bankAccount?.id}`} />
         <Table.Column name="amount" type="money" />
         <Table.Column name="sentDate" />
         <Table.Column name="paidDate" />

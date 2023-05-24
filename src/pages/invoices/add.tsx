@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 
 export default function InvoiceAdd() {
 
+    const [bankAccounts, setBankAccounts] = useState<BankAccount[]>([]);
     const [clients, setClients] = useState<Client[]>([]);
     const [currencies, setCurrencies] = useState<Currency[]>(CURRENCIES);
     const [initialValues, setInitialValues] = useState<Partial<InvoiceFields>>({});
@@ -17,9 +18,17 @@ export default function InvoiceAdd() {
     const router = useRouter();
     const page = usePage();
 
-    const query = useQuery<InvoicesQuery & TimesQuery>(gql`query {
+    const query = useQuery<BankAccountsQuery & InvoicesQuery & TimesQuery>(gql`query {
+        bankAccounts {
+            rows {
+                currency
+                id
+                name
+            }
+        }
         invoices (order: "id desc", page: 0, perPage: 1) {
             rows {
+                bankAccountId
                 number
                 type
             }
@@ -64,6 +73,7 @@ export default function InvoiceAdd() {
             // Get initial values
             const prevInvoice = query.data.invoices.rows[0];
             const newInitialValues: Partial<InvoiceFields> = {
+                bankAccountId: prevInvoice.bankAccountId,
                 clientId: page.query.clientId,
                 number: prevInvoice.number ? `${prevInvoice.number.slice(0, 3)}${parseInt(prevInvoice.number.slice(3)) + 1}` : undefined,
                 sentDate: dayjs.utc().format('YYYY-MM-DD'),
@@ -81,6 +91,10 @@ export default function InvoiceAdd() {
             // Get currency
             const clientTimes = query.data.times.rows.filter(time => time.client.id === initialValues.clientId) || [];
             const currencyNames = getUnique(clientTimes.map(row => row.currency));
+
+            // Get bank accounts
+            const newBankAccounts = query.data.bankAccounts.rows.filter(bankAccount => currencyNames.includes(bankAccount.currency));
+            setBankAccounts(newBankAccounts);
 
             // Get currencies
             const newCurrencies = CURRENCIES.filter(currency => currencyNames.includes(currency.name));
@@ -194,6 +208,7 @@ export default function InvoiceAdd() {
         <Form.Field name="type" required />
         <Form.Field name="currency" options={currencies} required />
         <Form.Field name="amount" type="number" required />
+        <Form.Field name="bankAccountId" label="Bank account" options={bankAccounts} />
         <Form.Field name="sentDate" type="date" />
         <Form.Field name="paidDate" type="date" />
         <Form.Field name="timesIds">

@@ -1,4 +1,5 @@
 const fields = `
+    bankAccountId: Int
     clientId: Int!
     number: String
     currency: String!
@@ -12,6 +13,7 @@ const fields = `
 
 export const types = `
     type Invoice {
+        bankAccount: BankAccount
         client: Client!
         deletable: Boolean!
         dueDate: DateScalar!

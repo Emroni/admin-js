@@ -3,6 +3,11 @@ import dayjs from 'dayjs';
 import { prisma } from '../';
 
 export const model = {
+    bankAccount: (parent: Invoice) => parent.bankAccountId ? prisma.bankAccount.findUnique({
+        where: {
+            id: parent.bankAccountId,
+        },
+    }) : null,
     client: (parent: Invoice) => prisma.client.findUnique({
         where: {
             id: parent.clientId,
@@ -116,6 +121,12 @@ function parseFilter(filter?: InvoicesFilter) {
 function parseInput(input: Partial<InvoiceFields>, update?: boolean) {
     return {
         ...input,
+        bankAccount: input.bankAccountId ? {
+            connect: {
+                id: input.bankAccountId,
+            },
+        } : undefined,
+        bankAccountId: undefined,
         client: input.clientId ? {
             connect: {
                 id: input.clientId,

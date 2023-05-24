@@ -10,6 +10,7 @@ export const types = `
         deletable: Boolean!
         fromExpenses: [Expense!]!
         id: Int!
+        invoices: [Invoice!]!
         toExpenses: [Expense!]!
         ${fields}
     }

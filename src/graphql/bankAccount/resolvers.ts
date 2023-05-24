@@ -8,6 +8,11 @@ export const model = {
             fromBankAccountId: parent.id,
         },
     }),
+    invoices: (parent: BankAccount) => prisma.invoice.findMany({
+        where: {
+            bankAccountId: parent.id,
+        },
+    }),
     toExpenses: (parent: BankAccount) => prisma.expense.findMany({
         where: {
             toBankAccountId: parent.id,

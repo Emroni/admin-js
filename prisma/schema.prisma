@@ -15,6 +15,7 @@ model BankAccount {
     currency            String
     name                String
     fromExpenses        Expense[]       @relation("ExpenseFromBankAccount")
+    invoices            Invoice[]       @relation
     toExpenses          Expense[]       @relation("ExpenseToBankAccount")
 }
 
@@ -51,6 +52,8 @@ model Invoice {
     description         String?
     sentDate            DateTime?       @db.Date
     paidDate            DateTime?       @db.Date
+    bankAccount         BankAccount?    @relation(fields: [bankAccountId], references: [id])
+    bankAccountId       Int?
     client              Client          @relation(fields: [clientId], references: [id])
     clientId            Int
     times               Time[]
